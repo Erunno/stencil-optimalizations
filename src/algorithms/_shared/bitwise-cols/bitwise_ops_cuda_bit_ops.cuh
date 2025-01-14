@@ -58,4 +58,5 @@ public:
 };
 
 } // namespace algorithms
+
 #endif // ALGORITHMS_BITWISE_OPS_CUDA_BIT_OPS_CUH
