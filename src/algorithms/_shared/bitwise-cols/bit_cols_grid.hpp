@@ -112,14 +112,14 @@ class BitColsGrid {
 
         Grid grid(_original_x_size, _original_y_size);
         auto raw_data = grid.data();
-        
+
         for (size_type y = 0; y < _original_y_size; y += BITS_IN_COL) {
             for (size_type x = 0; x < _original_x_size; ++x) {
                 auto col = get_bit_col(x, y / BITS_IN_COL);
 
                 for (size_type bit = 0; bit < BITS_IN_COL; ++bit) {
                     auto value = (col >> bit) & 1;
-                    raw_data[in_grid_idx(x,y + bit)] = value;
+                    raw_data[in_grid_idx(x, y + bit)] = value;
                 }
             }
         }

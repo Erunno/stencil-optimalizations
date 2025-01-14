@@ -27,7 +27,8 @@ int main() {
     // std::size_t x = 512 * 32, y = 1024 * 32;
     std::size_t x = 512 * 32, y = 1024 * 32;
     // std::size_t x = 512 * 128, y = 1024 * 128;
-    std::string spacefiller_in_the_middle = "spacefiller[" + std::to_string(x / 2 - 10) + ", " + std::to_string(y / 2 - 10) + "];";
+    std::string spacefiller_in_the_middle =
+        "spacefiller[" + std::to_string(x / 2 - 10) + ", " + std::to_string(y / 2 - 10) + "];";
     std::string glider_in_bottom_right = "glider[" + std::to_string(x - 10) + ", " + std::to_string(y - 10) + "];";
 
     (void)x;
@@ -77,7 +78,7 @@ int main() {
         // .pattern_expression="glider[10,10]",
         // .pattern_expression="glider[1000,2000]",
         // .pattern_expression = glider_in_bottom_right,
-        .pattern_expression=spacefiller_in_the_middle,
+        .pattern_expression = spacefiller_in_the_middle,
 
         //////////////////////////////
         // SPEEDUP                  //

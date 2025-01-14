@@ -15,7 +15,7 @@ template <std::size_t Bits>
 class GoLCudaNaiveBitwise : public infrastructure::Algorithm<2, char> {
 
   public:
-    GoLCudaNaiveBitwise() {};
+    GoLCudaNaiveBitwise() = default;
 
     using size_type = std::size_t;
     using col_type = typename BitsConst<Bits>::col_type;
@@ -31,7 +31,7 @@ class GoLCudaNaiveBitwise : public infrastructure::Algorithm<2, char> {
         cuda_data.x_size = bit_grid->x_size();
         cuda_data.y_size = bit_grid->y_size();
 
-        auto size = bit_grid->size();
+        const auto size = bit_grid->size();
 
         CUCH(cudaMalloc(&cuda_data.input, size * sizeof(col_type)));
         CUCH(cudaMalloc(&cuda_data.output, size * sizeof(col_type)));
@@ -46,7 +46,7 @@ class GoLCudaNaiveBitwise : public infrastructure::Algorithm<2, char> {
     void finalize_data_structures() override {
         CUCH(cudaDeviceSynchronize());
 
-        auto data = bit_grid->data();
+        const auto data = bit_grid->data();
 
         CUCH(cudaMemcpy(data, cuda_data.output, bit_grid->size() * sizeof(col_type), cudaMemcpyDeviceToHost));
 

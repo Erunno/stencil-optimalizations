@@ -9,7 +9,6 @@ using Pattern = std::vector<std::vector<CellState>>;
 
 class PatternDict {
   public:
-
     static Pattern empty_pattern() {
         return {{}};
     }

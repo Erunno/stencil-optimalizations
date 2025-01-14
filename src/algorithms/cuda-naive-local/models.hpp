@@ -53,7 +53,6 @@ struct WarpInformation {
     idx_t y_start;
 };
 
-
-} // namespace algorithms
+} // namespace algorithms::cuda_naive_local
 
 #endif // CUDA_NAIVE_MODELS_HPP

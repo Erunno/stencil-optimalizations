@@ -89,7 +89,7 @@ class Grid {
         }
 
         size_type total_size = 1;
-        
+
         for (int i = 0; i < DIMS; i++) {
             tile_sizes_per_dimensions.push_back(total_size);
             total_size *= dimension_sizes[i];
@@ -114,7 +114,7 @@ class Grid {
 
     auto as_const_tile() const {
         return GridTile<DIMS, const ElementType>(static_cast<const ElementType*>(elements.data()),
-                                            const_cast<size_type*>(tile_sizes_per_dimensions.data()));
+                                                 const_cast<size_type*>(tile_sizes_per_dimensions.data()));
     }
 
     static constexpr int dimensions() {

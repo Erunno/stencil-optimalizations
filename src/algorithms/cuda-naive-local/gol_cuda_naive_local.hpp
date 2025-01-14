@@ -18,7 +18,7 @@ template <std::size_t Bits, typename state_store_type = std::uint32_t>
 class GoLCudaNaiveLocal : public infrastructure::Algorithm<2, char> {
 
   public:
-    GoLCudaNaiveLocal() {};
+    GoLCudaNaiveLocal() = default;
 
     using size_type = std::size_t;
     using col_type = typename BitsConst<Bits>::col_type;
@@ -31,8 +31,8 @@ class GoLCudaNaiveLocal : public infrastructure::Algorithm<2, char> {
     void set_and_format_input_data(const DataGrid& data) override {
         bit_grid = std::make_unique<BitGrid>(data);
 
-        cuda_data.warp_dims = { .x = 8, .y = 4};
-        cuda_data.warp_tile_dims = { .x = 16, .y = 8};
+        cuda_data.warp_dims = {.x = 8, .y = 4};
+        cuda_data.warp_tile_dims = {.x = 16, .y = 8};
         thread_block_size = 32 * 8;
 
         assert(warp_size() == 32);
@@ -44,11 +44,12 @@ class GoLCudaNaiveLocal : public infrastructure::Algorithm<2, char> {
         cuda_data.y_size = bit_grid->y_size();
 
         auto size = bit_grid->size();
-        
+
         CUCH(cudaMalloc(&cuda_data.input, size * sizeof(col_type)));
         CUCH(cudaMalloc(&cuda_data.output, size * sizeof(col_type)));
 
-        CUCH(cudaMalloc(&cuda_data.change_state_store.before_last, state_store_word_count() * sizeof(state_store_type)));
+        CUCH(
+            cudaMalloc(&cuda_data.change_state_store.before_last, state_store_word_count() * sizeof(state_store_type)));
         CUCH(cudaMalloc(&cuda_data.change_state_store.last, state_store_word_count() * sizeof(state_store_type)));
         CUCH(cudaMalloc(&cuda_data.change_state_store.current, state_store_word_count() * sizeof(state_store_type)));
 
@@ -101,7 +102,7 @@ class GoLCudaNaiveLocal : public infrastructure::Algorithm<2, char> {
 
     std::size_t get_thread_block_count() {
         auto warps_per_block = thread_block_size / warp_size();
-        auto computed_elems_in_block = warps_per_block * warp_tile_size(); 
+        auto computed_elems_in_block = warps_per_block * warp_tile_size();
 
         return bit_grid->size() / computed_elems_in_block;
     }
@@ -113,17 +114,21 @@ class GoLCudaNaiveLocal : public infrastructure::Algorithm<2, char> {
     void reset_changed_stores() {
         state_store_type zero = 0;
 
-        CUCH(cudaMemset(cuda_data.change_state_store.before_last, ~zero, state_store_word_count() * sizeof(state_store_type)));
+        CUCH(cudaMemset(cuda_data.change_state_store.before_last, ~zero,
+                        state_store_word_count() * sizeof(state_store_type)));
         CUCH(cudaMemset(cuda_data.change_state_store.last, ~zero, state_store_word_count() * sizeof(state_store_type)));
-        CUCH(cudaMemset(cuda_data.change_state_store.current, ~zero, state_store_word_count() * sizeof(state_store_type)));
+        CUCH(cudaMemset(cuda_data.change_state_store.current, ~zero,
+                        state_store_word_count() * sizeof(state_store_type)));
     }
 
     void check_state_stores() {
         std::vector<state_store_type> last(state_store_word_count(), 0);
         std::vector<state_store_type> current(state_store_word_count(), 0);
 
-        CUCH(cudaMemcpy(last.data(), cuda_data.change_state_store.last, state_store_word_count() * sizeof(state_store_type), cudaMemcpyDeviceToHost));
-        CUCH(cudaMemcpy(current.data(), cuda_data.change_state_store.current, state_store_word_count() * sizeof(state_store_type), cudaMemcpyDeviceToHost));
+        CUCH(cudaMemcpy(last.data(), cuda_data.change_state_store.last,
+                        state_store_word_count() * sizeof(state_store_type), cudaMemcpyDeviceToHost));
+        CUCH(cudaMemcpy(current.data(), cuda_data.change_state_store.current,
+                        state_store_word_count() * sizeof(state_store_type), cudaMemcpyDeviceToHost));
 
         std::size_t changed_tiles_in_last = 0;
         std::size_t changed_tiles_in_current = 0;
@@ -148,13 +153,13 @@ class GoLCudaNaiveLocal : public infrastructure::Algorithm<2, char> {
     }
 
     void print_state_store(state_store_type* store) {
-        auto x_tiles = bit_grid->x_size() / cuda_data.warp_tile_dims.x;
-        auto y_tiles = bit_grid->y_size() / cuda_data.warp_tile_dims.y;
+        const auto x_tiles = bit_grid->x_size() / cuda_data.warp_tile_dims.x;
+        const auto y_tiles = bit_grid->y_size() / cuda_data.warp_tile_dims.y;
 
         constexpr std::size_t MAX_WIDTH = 32 * 4;
-        auto shrink_factor = x_tiles / MAX_WIDTH;
+        const auto shrink_factor = x_tiles / MAX_WIDTH;
 
-        auto used_bits_in_word = tiles_per_block();
+        const auto used_bits_in_word = tiles_per_block();
 
         for (std::size_t y = 0; y < y_tiles; y += shrink_factor) {
             for (std::size_t x = 0; x < x_tiles; x += shrink_factor) {
@@ -162,13 +167,13 @@ class GoLCudaNaiveLocal : public infrastructure::Algorithm<2, char> {
 
                 for (std::size_t i_y = y; i_y < y + shrink_factor; i_y++) {
                     for (std::size_t i_x = x; i_x < x + shrink_factor; i_x++) {
-                        auto idx = i_y * x_tiles + i_x;
+                        const auto idx = i_y * x_tiles + i_x;
 
-                        auto word_idx = idx / used_bits_in_word;
-                        auto bit_idx = idx % used_bits_in_word;
+                        const auto word_idx = idx / used_bits_in_word;
+                        const auto bit_idx = idx % used_bits_in_word;
 
-                        auto word = store[word_idx];
-                        auto bit = (word >> bit_idx) & 1;
+                        const auto word = store[word_idx];
+                        const auto bit = (word >> bit_idx) & 1;
 
                         if (bit) {
                             changed = true;
@@ -179,7 +184,8 @@ class GoLCudaNaiveLocal : public infrastructure::Algorithm<2, char> {
 
                 if (changed) {
                     std::cout << "X";
-                } else {
+                }
+                else {
                     std::cout << ".";
                 }
             }
@@ -188,9 +194,8 @@ class GoLCudaNaiveLocal : public infrastructure::Algorithm<2, char> {
 
         std::cout << std::endl;
     }
-    
 };
 
-} // namespace algorithms
+} // namespace algorithms::cuda_naive_local
 
 #endif // GOL_CUDA_NAIVE_HPP

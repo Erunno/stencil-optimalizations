@@ -19,7 +19,7 @@ class CudaBitwiseOps<std::uint16_t> {
     using col_type = std::uint16_t;
 
 public:
-    __device__ static inline col_type compute_center_col(
+    __device__ static __forceinline__ col_type compute_center_col(
         col_type lt, col_type ct, col_type rt, 
         col_type lc, col_type cc, col_type rc,
         col_type lb, col_type cb, col_type rb) {
@@ -34,7 +34,7 @@ class CudaBitwiseOps<std::uint32_t> {
     using col_type = std::uint32_t;
 
 public:
-    __device__ static inline col_type compute_center_col(
+    __device__ static __forceinline__ col_type compute_center_col(
         col_type lt, col_type ct, col_type rt, 
         col_type lc, col_type cc, col_type rc,
         col_type lb, col_type cb, col_type rb) {
@@ -48,7 +48,7 @@ class CudaBitwiseOps<std::uint64_t> {
     using col_type = std::uint64_t;
 
 public:
-    __device__ static inline col_type compute_center_col(
+    __device__ static __forceinline__ col_type compute_center_col(
         col_type lt, col_type ct, col_type rt, 
         col_type lc, col_type cc, col_type rc,
         col_type lb, col_type cb, col_type rb) {

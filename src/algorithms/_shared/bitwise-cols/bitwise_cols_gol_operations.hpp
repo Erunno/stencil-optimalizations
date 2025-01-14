@@ -50,7 +50,7 @@ struct BitwiseColsOps {
         col_type result = 0;
 
         templates::static_for<1, BITS_IN_COL - 1>::run(
-            [&lc, &cc, &rc, &result]<std::size_t N>() { result |= compute_inner_cell<N>(lc, cc, rc); });
+            [lc, cc, rc, &result]<std::size_t N>() { result |= compute_inner_cell<N>(lc, cc, rc); });
 
         return result;
     }
@@ -61,18 +61,18 @@ struct BitwiseColsOps {
         constexpr col_type cell_mask = static_cast<col_type>(0b010) << (N - 1);
         constexpr col_type one = cell_mask;
 
-        auto cell = cc & cell_mask;
+        const auto cell = cc & cell_mask;
 
-        auto neighborhood = combine_neighborhoods_into_one_word<N>(lc, cc, rc);
-        auto alive_neighbours = __builtin_popcountll(neighborhood);
+        const auto neighborhood = combine_neighborhoods_into_one_word<N>(lc, cc, rc);
+        const auto alive_neighbors = __builtin_popcountll(neighborhood);
 
-        // auto alive_neighbours =
+        // auto alive_neighbors =
         //     __builtin_popcountll(lc & cell_mask) +
         //     __builtin_popcountll(cc & cell_mask) +
         //     __builtin_popcountll(rc & cell_mask);
 
         if (cell != 0) {
-            if (alive_neighbours < 2 || alive_neighbours > 3) {
+            if (alive_neighbors < 2 || alive_neighbors > 3) {
                 result &= ~one;
             }
             else {
@@ -80,7 +80,7 @@ struct BitwiseColsOps {
             }
         }
         else {
-            if (alive_neighbours == 3) {
+            if (alive_neighbors == 3) {
                 result |= one;
             }
             else {
@@ -133,7 +133,7 @@ struct BitwiseColsOps {
         
         auto cell = cc & CELL_MASK;
 
-        // auto alive_neighbours = 
+        // auto alive_neighbors = 
         //     __builtin_popcountll(cl & SITE_MASK) +
         //     __builtin_popcountll(cc & CENTER_MASK) +
         //     __builtin_popcountll(cr & SITE_MASK) +
@@ -141,10 +141,10 @@ struct BitwiseColsOps {
         //     __builtin_popcountll(c_ & UP_BOTTOM_MASK) +
         //     __builtin_popcountll(r_ & UP_BOTTOM_MASK);
 
-        auto alive_neighbours = __builtin_popcountll(neighborhood);
+        auto alive_neighbors = __builtin_popcountll(neighborhood);
 
         if (cell != 0) {
-            if (alive_neighbours < 2 || alive_neighbours > 3) {
+            if (alive_neighbors < 2 || alive_neighbors > 3) {
                 return 0;
             }
             else {
@@ -152,7 +152,7 @@ struct BitwiseColsOps {
             }
         }
         else {
-            if (alive_neighbours == 3) {
+            if (alive_neighbors == 3) {
                 return CELL_MASK;
             }
             else {

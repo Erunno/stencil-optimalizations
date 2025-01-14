@@ -30,8 +30,8 @@ class GoLCpuBitwiseCols : public infrastructure::Algorithm<2, char> {
     }
 
     void run(size_type iterations) override {
-        auto x_size = bit_grid->x_size();
-        auto y_size = bit_grid->y_size();
+        const auto x_size = bit_grid->x_size();
+        const auto y_size = bit_grid->y_size();
 
         auto source = bit_grid.get();
         auto target = intermediate_bit_grid.get();
@@ -96,8 +96,8 @@ class GoLCpuBitwiseCols : public infrastructure::Algorithm<2, char> {
     // clang-format on
 
     void load_one(const BitGrid* grid, col_type& col, size_type x, size_type y) {
-        auto x_size = grid->x_size();
-        auto y_size = grid->y_size();
+        const auto x_size = grid->x_size();
+        const auto y_size = grid->y_size();
 
         if (x < 0 || x >= x_size || y < 0 || y >= y_size) {
             col = 0;

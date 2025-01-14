@@ -11,7 +11,7 @@ namespace algorithms {
 class GoLCudaNaive : public infrastructure::Algorithm<2, char> {
 
   public:
-    GoLCudaNaive() {};
+    GoLCudaNaive() = default;
 
     using size_type = std::size_t;
     using DataGrid = infrastructure::Grid<2, char>;
@@ -24,7 +24,7 @@ class GoLCudaNaive : public infrastructure::Algorithm<2, char> {
         cuda_data.x_size = grid.size_in<0>();
         cuda_data.y_size = grid.size_in<1>();
 
-        auto size = grid.size();
+        const auto size = grid.size();
 
         CUCH(cudaMalloc(&cuda_data.input, size * sizeof(char)));
         CUCH(cudaMalloc(&cuda_data.output, size * sizeof(char)));
@@ -39,7 +39,7 @@ class GoLCudaNaive : public infrastructure::Algorithm<2, char> {
     void finalize_data_structures() override {
         CUCH(cudaDeviceSynchronize());
 
-        auto data = grid.data();
+        const auto data = grid.data();
 
         CUCH(cudaMemcpy(data, cuda_data.output, grid.size() * sizeof(char), cudaMemcpyDeviceToHost));
 

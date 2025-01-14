@@ -21,7 +21,7 @@ enum class ExecModel {
 template <std::size_t Bits, ExecModel Model>
 class An5dAlg : public infrastructure::Algorithm<2, char> {
   public:
-    An5dAlg() {};
+    An5dAlg() = default;
 
     using col_type = typename BitsConst<Bits>::col_type;
     using BitGrid = algorithms::BitColsGrid<col_type>;

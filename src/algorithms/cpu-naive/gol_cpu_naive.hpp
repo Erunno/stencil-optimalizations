@@ -26,8 +26,8 @@ class GoLCpuNaive : public infrastructure::Algorithm<2, char> {
         DataGrid* source = &_result;
         DataGrid* target = &_intermediate;
 
-        auto x_size = _result.size_in<0>();
-        auto y_size = _result.size_in<1>();
+        const auto x_size = _result.size_in<0>();
+        const auto y_size = _result.size_in<1>();
 
         if (this->params.animate_output) {
             print(*source, 0);
@@ -37,10 +37,10 @@ class GoLCpuNaive : public infrastructure::Algorithm<2, char> {
             for (size_type x = 0; x < x_size; ++x) {
                 for (size_type y = 0; y < y_size; ++y) {
 
-                    auto alive_neighbours = count_alive_neighbours(*source, x, y);
+                    const auto alive_neighbors = count_alive_neighbors(*source, x, y);
 
                     if ((*source)[x][y] == 1) {
-                        if (alive_neighbours < 2 || alive_neighbours > 3) {
+                        if (alive_neighbors < 2 || alive_neighbors > 3) {
                             (*target)[x][y] = 0;
                         }
                         else {
@@ -48,7 +48,7 @@ class GoLCpuNaive : public infrastructure::Algorithm<2, char> {
                         }
                     }
                     else {
-                        if (alive_neighbours == 3) {
+                        if (alive_neighbors == 3) {
                             (*target)[x][y] = 1;
                         }
                         else {
@@ -76,8 +76,8 @@ class GoLCpuNaive : public infrastructure::Algorithm<2, char> {
     }
 
   private:
-    size_type count_alive_neighbours(const DataGrid& grid, size_type x, size_type y) {
-        size_type alive_neighbours = 0;
+    size_type count_alive_neighbors(const DataGrid& grid, size_type x, size_type y) {
+        size_type alive_neighbors = 0;
 
         size_type x_size = grid.size_in<0>();
         size_type y_size = grid.size_in<1>();
@@ -88,19 +88,19 @@ class GoLCpuNaive : public infrastructure::Algorithm<2, char> {
                 if (i == 0 && j == 0)
                     continue;
 
-                auto x_neighbour = x + i;
-                auto y_neighbour = y + j;
+                const auto x_neighbor = x + i;
+                const auto y_neighbor = y + j;
 
                 constexpr std::size_t zero = 0;
 
-                if (x_neighbour < zero || x_neighbour >= x_size || y_neighbour < zero || y_neighbour >= y_size)
+                if (x_neighbor < zero || x_neighbor >= x_size || y_neighbor < zero || y_neighbor >= y_size)
                     continue;
 
-                alive_neighbours += grid[x_neighbour][y_neighbour] > 0 ? 1 : 0;
+                alive_neighbors += grid[x_neighbor][y_neighbor] > 0 ? 1 : 0;
             }
         }
 
-        return alive_neighbours;
+        return alive_neighbors;
     }
 
     void move_cursor_up_left(const DataGrid& grid) {

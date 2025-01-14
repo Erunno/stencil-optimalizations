@@ -11,12 +11,12 @@ namespace algorithms {
 
 using idx_t = std::int64_t;
 
-__device__ inline idx_t get_idx(idx_t x, idx_t y, idx_t x_size) {
+__device__ static __forceinline__ idx_t get_idx(idx_t x, idx_t y, idx_t x_size) {
     return y * x_size + x;
 }
 
 template <typename col_type>
-__device__ inline col_type load(idx_t x, idx_t y, BitGridOnCuda<col_type> data) {
+__device__ static __forceinline__ col_type load(idx_t x, idx_t y, BitGridOnCuda<col_type> data) {
     if (x < 0 || y < 0 || x >= data.x_size || y >= data.y_size)
         return 0;
 
@@ -24,24 +24,24 @@ __device__ inline col_type load(idx_t x, idx_t y, BitGridOnCuda<col_type> data) 
 }
 
 template <typename col_type>
-__global__ void game_of_live_kernel(BitGridOnCuda<col_type> data) {
-    idx_t x = blockIdx.x * blockDim.x + threadIdx.x;
-    idx_t y = blockIdx.y * blockDim.y + threadIdx.y;
+__global__ static void game_of_live_kernel(BitGridOnCuda<col_type> data) {
+    const idx_t x = blockIdx.x * blockDim.x + threadIdx.x;
+    const idx_t y = blockIdx.y * blockDim.y + threadIdx.y;
 
     if (x >= data.x_size || y >= data.y_size)
         return;
 
-    col_type lt = load(x - 1, y - 1, data);
-    col_type ct = load(x, y - 1, data);
-    col_type rt = load(x + 1, y - 1, data);
+    const col_type lt = load(x - 1, y - 1, data);
+    const col_type ct = load(x, y - 1, data);
+    const col_type rt = load(x + 1, y - 1, data);
 
-    col_type lc = load(x - 1, y, data);
-    col_type cc = load(x, y, data);
-    col_type rc = load(x + 1, y, data);
+    const col_type lc = load(x - 1, y, data);
+    const col_type cc = load(x, y, data);
+    const col_type rc = load(x + 1, y, data);
 
-    col_type lb = load(x - 1, y + 1, data);
-    col_type cb = load(x, y + 1, data);
-    col_type rb = load(x + 1, y + 1, data);
+    const col_type lb = load(x - 1, y + 1, data);
+    const col_type cb = load(x, y + 1, data);
+    const col_type rb = load(x + 1, y + 1, data);
 
     data.output[get_idx(x, y, data.x_size)] =
         CudaBitwiseOps<col_type>::compute_center_col(lt, ct, rt, lc, cc, rc, lb, cb, rb);

@@ -6,8 +6,8 @@
 #include "../algorithms/cpu-bitwise-cols/gol_cpu_bitwise_cols.hpp"
 #include "../algorithms/cpu-naive/gol_cpu_naive.hpp"
 #include "../algorithms/cuda-naive-bitwise/gol_cuda_naive_bitwise.hpp"
-#include "../algorithms/cuda-naive/gol_cuda_naive.hpp"
 #include "../algorithms/cuda-naive-local/gol_cuda_naive_local.hpp"
+#include "../algorithms/cuda-naive/gol_cuda_naive.hpp"
 #include "./data_loader.hpp"
 #include "algorithm.hpp"
 #include "algorithm_repository.hpp"
@@ -96,15 +96,16 @@ class ExperimentManager {
         auto loader = fetch_loader<Dims, ElementType>(params);
 
         std::cout << title_color << "Loading data... " << param_color << "             " << params.data_loader_name
-                  << ((params.data_loader_name == "lexicon") ? title_color + " with pattern " + param_color + params.pattern_expression: "") 
+                  << ((params.data_loader_name == "lexicon")
+                          ? title_color + " with pattern " + param_color + params.pattern_expression
+                          : "")
                   << reset_color << std::endl;
 
-        
         Timer t;
 
         Grid<Dims, ElementType> data;
 
-        auto ms  = t.measure([&]() { data = loader->load_data(params); });
+        auto ms = t.measure([&]() { data = loader->load_data(params); });
         std::cout << label_color << "  Data loaded in " << param_color << ms << " ms" << reset_color << std::endl;
 
         auto alg = repo.fetch_algorithm(params.algorithm_name);
@@ -184,7 +185,6 @@ class ExperimentManager {
         timed_alg.initialize_data_structures();
         timed_alg.run(params.iterations);
         timed_alg.finalize_data_structures();
-
 
         std::unique_ptr<Grid<Dims, ElementType>> result_ptr = nullptr;
 
