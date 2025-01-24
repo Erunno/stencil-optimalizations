@@ -11,7 +11,6 @@ namespace algorithms::rel_work::eff_sim_ex_of_cell_auto_GPU {
 
 struct _32_bit_policy_vectors {
     static constexpr std::size_t ELEMENTS_PER_CELL = 4;
-    static constexpr std::size_t CELL_NEIGHBOURS = 8;
     
     static std::size_t ROW_SIZE(std::size_t grid_size) {
         return grid_size / ELEMENTS_PER_CELL;
@@ -24,8 +23,7 @@ struct _32_bit_policy_vectors {
 
 struct _64_bit_policy_vectors {
     static constexpr std::size_t ELEMENTS_PER_CELL = 8;
-    static constexpr std::size_t CELL_NEIGHBOURS = 8;
-    
+
     static std::size_t ROW_SIZE(std::size_t grid_size) {
         return grid_size / ELEMENTS_PER_CELL;
     }

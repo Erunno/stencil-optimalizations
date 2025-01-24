@@ -15,16 +15,18 @@ template <typename policy, typename CELL_TYPE>
 __global__ void GOL_packed_vectors (int GRID_SIZE, const CELL_TYPE *__restrict__ grid, CELL_TYPE *__restrict__ newGrid)
 {
     constexpr int ELEMENTS_PER_CELL = policy::ELEMENTS_PER_CELL;
+    constexpr CELL_TYPE CELL_TYPE_SIZE = sizeof(CELL_TYPE) * 8;
+    constexpr CELL_TYPE BITS_PER_CELL = CELL_TYPE_SIZE / ELEMENTS_PER_CELL;
 
-    constexpr CELL_TYPE vones = static_cast<CELL_TYPE>(-1) / static_cast<CELL_TYPE>(0xFFU);
+    constexpr CELL_TYPE vones = static_cast<CELL_TYPE>(-1) / static_cast<CELL_TYPE>((1 << BITS_PER_CELL) - 1);
 
-    constexpr CELL_TYPE vtwos = 2U * vones;
-    constexpr CELL_TYPE vfours = 4U * vones;
-    constexpr CELL_TYPE veights = 8U * vones;
+    constexpr CELL_TYPE vtwos = vones << 1U;
+    constexpr CELL_TYPE vfours = vones << 2U;
+    constexpr CELL_TYPE veights = vones << 3U;
 
     const int ROW_SIZE = GRID_SIZE / ELEMENTS_PER_CELL;
 
-    constexpr unsigned int shift_next = (ELEMENTS_PER_CELL-1)*8;
+    constexpr CELL_TYPE shift_next = (ELEMENTS_PER_CELL-1)*BITS_PER_CELL;
 
     // We want id ∈ [1,SIZE]
     const int iy = blockDim.y * blockIdx.y + threadIdx.y + 1;
@@ -48,12 +50,11 @@ __global__ void GOL_packed_vectors (int GRID_SIZE, const CELL_TYPE *__restrict__
     auto&& upright_cell = grid[id-(ROW_SIZE+3)];
     auto&& downright_cell = grid[id+(ROW_SIZE+1)];
 
-    const CELL_TYPE numNeighbors =
-        (up_cell >> 8U) + up_cell + (up_cell << 8U) +
-        (down_cell >> 8U) + down_cell + (down_cell << 8U) +
-        (left_cell << shift_next) + (upleft_cell << shift_next) + (downleft_cell << shift_next) +
-        (right_cell >> shift_next) + (upright_cell >> shift_next) + (downright_cell >> shift_next) +
-        (cell >> 8U) + (cell << 8U);
+    const CELL_TYPE numNeighbors = up_cell + down_cell +
+        ((up_cell + cell + down_cell) << BITS_PER_CELL) +
+        ((up_cell + cell + down_cell) >> BITS_PER_CELL) +
+        ((left_cell + upleft_cell + downleft_cell) << shift_next) +
+        ((right_cell + upright_cell + downright_cell) >> shift_next);
 
     // const auto alive_rule = __vcmpeq4(numNeighbors, vtwos) & cell;
     // const auto general_rule = __vcmpeq4(numNeighbors, threes) & vones;
@@ -69,8 +70,8 @@ __global__ void GOL_packed_vectors (int GRID_SIZE, const CELL_TYPE *__restrict__
 template <typename grid_cell_t, typename policy>
 void GOL_Packed_vectors<grid_cell_t, policy>::run_kernel(size_type iterations) {
     dim3 blockSize(BLOCK_SIZE, BLOCK_SIZE,1);
-    int linGridx = (int)ceil(ROW_SIZE/(float)BLOCK_SIZE);
-    int linGridy = (int)ceil(GRID_SIZE/(float)BLOCK_SIZE);
+    int linGridx = (ROW_SIZE+BLOCK_SIZE-1)/BLOCK_SIZE;
+    int linGridy = (GRID_SIZE+BLOCK_SIZE-1)/BLOCK_SIZE;
     dim3 gridSize(linGridx,linGridy,1);
  
     infrastructure::StopWatch stop_watch(this->params.max_runtime_seconds);
