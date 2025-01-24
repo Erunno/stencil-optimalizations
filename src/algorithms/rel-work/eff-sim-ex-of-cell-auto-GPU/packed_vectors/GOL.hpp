@@ -22,6 +22,19 @@ struct _32_bit_policy_vectors {
     static constexpr std::size_t sizeof_CELL_TYPE = sizeof(CELL_TYPE);
 };
 
+struct _64_bit_policy_vectors {
+    static constexpr std::size_t ELEMENTS_PER_CELL = 8;
+    static constexpr std::size_t CELL_NEIGHBOURS = 8;
+    
+    static std::size_t ROW_SIZE(std::size_t grid_size) {
+        return grid_size / ELEMENTS_PER_CELL;
+    }
+
+    using CELL_TYPE = uint64_t;
+
+    static constexpr std::size_t sizeof_CELL_TYPE = sizeof(CELL_TYPE);
+};
+
 template <typename grid_cell_t, typename policy>
 class GOL_Packed_vectors : public infrastructure::Algorithm<2, grid_cell_t> {
   public:
