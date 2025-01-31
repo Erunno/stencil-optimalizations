@@ -1,5 +1,7 @@
 # Slaying a Life
 
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/skrhakv/CryptoBench/blob/master/LICENSE)
+
 This repository is associated with the following paper:  
 
 ```
@@ -49,16 +51,14 @@ You can modify the program's runtime parameters in the [./gol-run-with-defaults.
 
 ## Results  
 
-Our measurement results are available in the [./cluster-experiments/final-measurements](./cluster-experiments/final-measurements) directory. It contains subfolders for each tested architecture: `hopper`, `ampere`, and `volta`. The results are stored in our proprietary format, which is the exact output of the program when run in the console (with `--colorful` set to `false` to avoid special characters).  
-
-To interpret the outputs, use the Python abstraction in [results_abstraction.py](./cluster-experiments/results_abstraction.py). This script defines a class for parsing and analyzing the results.
+Our measurement results are available in the [./cluster-experiments/final-measurements](./cluster-experiments/final-measurements) directory. It contains subfolders for each tested architecture: `hopper`, `ampere`, and `volta` (further information about our cluster [here](https://gitlab.mff.cuni.cz/mff/hpc/clusters)).
 
 Graphs similar to those in the paper can be found in [./cluster-experiments/generated-graphs](./cluster-experiments/generated-graphs). To generate graphs from your own measurements, use the [result_analysis.py](./cluster-experiments/result_analysis.py) script. You may need to modify the following control variables:  
 
 - [BASE_DIR](./cluster-experiments/result_analysis.py#L11)  
 - [ARCHITECTURES](./cluster-experiments/result_analysis.py#L10)
 - [MODE](./cluster-experiments/result_analysis.py#L15)
-  
+
 ### Replication  
 
 To replicate our experiments exactly, run the script [./cluster-experiments/run-all-experiments.sh](./cluster-experiments/run-all-experiments.sh):  
@@ -66,5 +66,5 @@ To replicate our experiments exactly, run the script [./cluster-experiments/run-
 ```bash
 $> cd cluster-experiments  # The working directory must be this folder
 $> ./run-all-experiments.sh > my-measurements/all-experiments.out
-$> ./result_analysis  # You will need to adjust control variables as discussed
+$> ./result_analysis.sh  # You will need to adjust control variables as discussed
 ```
