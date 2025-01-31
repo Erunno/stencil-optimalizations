@@ -66,6 +66,7 @@ To replicate our experiments exactly, run the script [./cluster-experiments/run-
 
 ```bash
 $> cd cluster-experiments  # The working directory must be this folder
+$> mkdir -p my-measurements
 $> ./run-all-experiments.sh > my-measurements/all-experiments.out
 $> python ./result_analysis.py  # You will need to adjust control variables as discussed
 ```
