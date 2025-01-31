@@ -1,4 +1,4 @@
-# Slaying a Life
+# Slaying a Life 🔥🦠
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENCE) [![doi](https://img.shields.io/badge/DOI-TODO-blue)](todo)
 
@@ -25,10 +25,10 @@ The paper discusses several optimization techniques. Below is an index to help n
 | | Python script for generating macros. | [Script](./src/algorithms/_shared/bitwise/bitwise-ops/python-macro-generators/cols_macro_gen.py) |  
 | | Generated macros. | [Macros](./src/algorithms/_shared/bitwise/bitwise-ops/macro-cols.hpp) |  
 | | Templated implementation (on CPUs only) | [Code](./src/algorithms/_shared/bitwise/bitwise-ops/templated-cols.hpp#L31)|
-| **Tiled Bitwise Optimization** | Uses the same kernel as the Linear approach but modifies `CudaBitwiseOps<word_type, bit_grid_mode>::compute_center_word`, which calls a different macro. | [Kernel](./src/algorithms/cuda-naive-bitwise/cuda_naive_bitwise_kernel.cu#L33) |  
+| **Tiled Bitwise Optimization** 🚀 | Uses the same kernel as the Linear approach but modifies `CudaBitwiseOps<word_type, bit_grid_mode>::compute_center_word`, which calls a different macro. | [Kernel](./src/algorithms/cuda-naive-bitwise/cuda_naive_bitwise_kernel.cu#L33) |  
 | | Python script for generating macros. | [Script](./src/algorithms/_shared/bitwise/bitwise-ops/python-macro-generators/tiles_macro_gen.py) |  
 | | Generated macros. | [Macros](./src/algorithms/_shared/bitwise/bitwise-ops/macro-tiles.hpp) |  
-| **Work Reduction Optimization** | The main kernel of the algorithm, along with various `__device__` functions used within the kernel. | [Kernel](./src/algorithms/cuda-naive-local-one-cell/cuda_local_one_cell.cu#L173) |  
+| **Work Reduction Optimization** 🚀 | The main kernel of the algorithm, along with various `__device__` functions used within the kernel. | [Kernel](./src/algorithms/cuda-naive-local-one-cell/cuda_local_one_cell.cu#L173) |  
 | **AN5D** | The base directory for AN5D implementations. Each subdirectory contains an implementation for a specific grid size, which must be compiled and run separately. | [AN5D test cases](./AN5D/) |  
 | **Packed** | Integrated the Packed algorithm into our framework. *Note: We fixed a minor bug (which did not affect performance) in our codebase.* | [Kernel](./src/algorithms/rel-work/eff-sim-ex-of-cell-auto-GPU/packed/GOL_packed.cu#L48) |  
 | | Baseline implementations from their work. | [Simple kernel](./src/algorithms/rel-work/eff-sim-ex-of-cell-auto-GPU/baseline/GOL_basic.cu#L13), [Shared memory kernel](./src/algorithms/rel-work/eff-sim-ex-of-cell-auto-GPU/baseline/GOL_shm.cu#L14), [Texture kernel](./src/algorithms/rel-work/eff-sim-ex-of-cell-auto-GPU/baseline/GOL_texture.cu#L13) |  
