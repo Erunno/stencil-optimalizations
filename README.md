@@ -35,7 +35,7 @@ The paper discusses several optimization techniques. Below is an index to help n
 
 ## Tutorial  
 
-We used `GCC 11.4.1` and `nvcc 12.6` to compile the code.  
+We used `GCC 11.4.1` and `nvcc 12.6.77` to compile the code.  
 
 ### Minimal Compilation and Execution  
 
@@ -72,7 +72,7 @@ $> ./result_analysis.sh  # You will need to adjust control variables as discusse
 
 ## Contact us
 
-If you have any questions regarding the optimizations, our implementation, or if you have any suggestions, please feel free to contact us by raising [an issue](/issues)!
+If you have any questions regarding the optimizations, our implementation, or if you have any suggestions, please feel free to contact us by raising [an issue](https://github.com/matyas-brabec/2025-ashes-gpulife/issues)!
 
 ## License
 
