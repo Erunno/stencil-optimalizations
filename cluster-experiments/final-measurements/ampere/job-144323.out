@@ -1,0 +1,2133 @@
+Starting job 144323
+Node:  ampere02
+SCRIPT_TEMPLATE: ./final-measurements/_scripts/reduced-work
+WORKER_ID: 1
+SCRIPT: ./final-measurements/_scripts/reduced-work--part_1.sh
+exp-0
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-cols-32
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: always-changing
+  pattern_expression: glider[0,0]
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: full-work
+  state_bits_count: 32
+  thread_block_size: 256
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              always-changing
+  Data loaded in   186.977 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-cols-32
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  640.107579 ms
+  initialize_data_structures: 1.899863 ms
+  run:                        3927.992845 ms
+   performed iters:  10000
+   runtime per iter: 0.392799 ms
+  finalize_data_structures:   2.221471 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  635.075545 ms
+  initialize_data_structures: 1.901195 ms
+  run:                        3928.095792 ms
+   performed iters:  10000
+   runtime per iter: 0.392810 ms
+  finalize_data_structures:   2.190924 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  640.701451 ms
+  initialize_data_structures: 1.894805 ms
+  run:                        3928.066207 ms
+   performed iters:  10000
+   runtime per iter: 0.392807 ms
+  finalize_data_structures:   2.261150 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  634.895421 ms
+  initialize_data_structures: 1.886122 ms
+  run:                        3928.145507 ms
+   performed iters:  10000
+   runtime per iter: 0.392815 ms
+  finalize_data_structures:   2.201790 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  640.538853 ms
+  initialize_data_structures: 1.890319 ms
+  run:                        3928.085136 ms
+   performed iters:  10000
+   runtime per iter: 0.392809 ms
+  finalize_data_structures:   1.781804 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  642.217571 ms
+  initialize_data_structures: 1.885310 ms
+  run:                        3928.316727 ms
+   performed iters:  10000
+   runtime per iter: 0.392832 ms
+  finalize_data_structures:   1.847573 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  633.789595 ms
+  initialize_data_structures: 1.899472 ms
+  run:                        3928.323698 ms
+   performed iters:  10000
+   runtime per iter: 0.392832 ms
+  finalize_data_structures:   1.793812 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  641.707637 ms
+  initialize_data_structures: 1.882587 ms
+  run:                        3928.268674 ms
+   performed iters:  10000
+   runtime per iter: 0.392827 ms
+  finalize_data_structures:   1.791188 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  642.263030 ms
+  initialize_data_structures: 1.901925 ms
+  run:                        3928.200671 ms
+   performed iters:  10000
+   runtime per iter: 0.392820 ms
+  finalize_data_structures:   2.214199 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  635.133874 ms
+  initialize_data_structures: 1.889156 ms
+  run:                        3928.175162 ms
+   performed iters:  10000
+   runtime per iter: 0.392818 ms
+  finalize_data_structures:   1.762494 ms
+
+exp-1
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-cols-32
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: lexicon
+  pattern_expression: spacefiller[2340, 2730]; spacefiller[2340, 5460]; spacefiller[2340, 8190]; spacefiller[2340, 10920]; spacefiller[2340, 13650]; spacefiller[4680, 2730]; spacefiller[4680, 5460]; spacefiller[4680, 8190]; spacefiller[4680, 10920]; spacefiller[4680, 13650]; spacefiller[7020, 2730]; spacefiller[7020, 5460]; spacefiller[7020, 8190]; spacefiller[7020, 10920]; spacefiller[7020, 13650]; spacefiller[9360, 2730]; spacefiller[9360, 5460]; spacefiller[9360, 8190]; spacefiller[9360, 10920]; spacefiller[9360, 13650]; spacefiller[11700, 2730]; spacefiller[11700, 5460]; spacefiller[11700, 8190]; spacefiller[11700, 10920]; spacefiller[11700, 13650]; spacefiller[14040, 2730]; spacefiller[14040, 5460]; spacefiller[14040, 8190]; spacefiller[14040, 10920]; spacefiller[14040, 13650];
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: 66-work
+  state_bits_count: 32
+  thread_block_size: 256
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              lexicon with pattern spacefiller[2340, 2730]; spacefiller[2340, 5460]; spacefiller[2340, 8190]; spacefiller[2340, 10920]; spacefiller[2340, 13650]; spacefiller[4680, 2730]; spacefiller[4680, 5460]; spacefiller[4680, 8190]; spacefiller[4680, 10920]; spacefiller[4680, 13650]; spacefiller[7020, 2730]; spacefiller[7020, 5460]; spacefiller[7020, 8190]; spacefiller[7020, 10920]; spacefiller[7020, 13650]; spacefiller[9360, 2730]; spacefiller[9360, 5460]; spacefiller[9360, 8190]; spacefiller[9360, 10920]; spacefiller[9360, 13650]; spacefiller[11700, 2730]; spacefiller[11700, 5460]; spacefiller[11700, 8190]; spacefiller[11700, 10920]; spacefiller[11700, 13650]; spacefiller[14040, 2730]; spacefiller[14040, 5460]; spacefiller[14040, 8190]; spacefiller[14040, 10920]; spacefiller[14040, 13650];
+  Data loaded in   29.0077 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-cols-32
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  640.219709 ms
+  initialize_data_structures: 1.884158 ms
+  run:                        2620.874230 ms
+   performed iters:  10000
+   runtime per iter: 0.262087 ms
+  finalize_data_structures:   2.174078 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  634.452059 ms
+  initialize_data_structures: 1.882306 ms
+  run:                        2620.808881 ms
+   performed iters:  10000
+   runtime per iter: 0.262081 ms
+  finalize_data_structures:   1.770907 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  640.206620 ms
+  initialize_data_structures: 1.877308 ms
+  run:                        2620.820499 ms
+   performed iters:  10000
+   runtime per iter: 0.262082 ms
+  finalize_data_structures:   2.162942 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  634.350926 ms
+  initialize_data_structures: 1.879290 ms
+  run:                        2620.736882 ms
+   performed iters:  10000
+   runtime per iter: 0.262074 ms
+  finalize_data_structures:   1.728983 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  640.263475 ms
+  initialize_data_structures: 1.883027 ms
+  run:                        2620.897255 ms
+   performed iters:  10000
+   runtime per iter: 0.262090 ms
+  finalize_data_structures:   1.742223 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  641.715288 ms
+  initialize_data_structures: 1.875065 ms
+  run:                        2620.846689 ms
+   performed iters:  10000
+   runtime per iter: 0.262085 ms
+  finalize_data_structures:   2.135109 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  634.884024 ms
+  initialize_data_structures: 1.879531 ms
+  run:                        2620.888242 ms
+   performed iters:  10000
+   runtime per iter: 0.262089 ms
+  finalize_data_structures:   1.724035 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  641.780818 ms
+  initialize_data_structures: 1.872520 ms
+  run:                        2620.857135 ms
+   performed iters:  10000
+   runtime per iter: 0.262086 ms
+  finalize_data_structures:   1.760601 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  640.629321 ms
+  initialize_data_structures: 1.881284 ms
+  run:                        2620.974352 ms
+   performed iters:  10000
+   runtime per iter: 0.262097 ms
+  finalize_data_structures:   1.752248 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  642.223790 ms
+  initialize_data_structures: 1.877438 ms
+  run:                        2620.953450 ms
+   performed iters:  10000
+   runtime per iter: 0.262095 ms
+  finalize_data_structures:   3.546301 ms
+
+exp-2
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-cols-32
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: lexicon
+  pattern_expression: spacefiller[4096, 4096]; spacefiller[4096, 8192]; spacefiller[4096, 12288]; spacefiller[8192, 4096]; spacefiller[8192, 8192]; spacefiller[8192, 12288]; spacefiller[12288, 4096]; spacefiller[12288, 8192]; spacefiller[12288, 12288];
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: 33-work
+  state_bits_count: 32
+  thread_block_size: 256
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              lexicon with pattern spacefiller[4096, 4096]; spacefiller[4096, 8192]; spacefiller[4096, 12288]; spacefiller[8192, 4096]; spacefiller[8192, 8192]; spacefiller[8192, 12288]; spacefiller[12288, 4096]; spacefiller[12288, 8192]; spacefiller[12288, 12288];
+  Data loaded in   28.983 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-cols-32
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  640.243085 ms
+  initialize_data_structures: 1.874464 ms
+  run:                        2039.670993 ms
+   performed iters:  10000
+   runtime per iter: 0.203967 ms
+  finalize_data_structures:   2.137793 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  634.523995 ms
+  initialize_data_structures: 1.858239 ms
+  run:                        2039.680581 ms
+   performed iters:  10000
+   runtime per iter: 0.203968 ms
+  finalize_data_structures:   1.738808 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  640.058480 ms
+  initialize_data_structures: 1.887033 ms
+  run:                        2039.698899 ms
+   performed iters:  10000
+   runtime per iter: 0.203970 ms
+  finalize_data_structures:   2.097432 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  634.387237 ms
+  initialize_data_structures: 1.848745 ms
+  run:                        2039.761964 ms
+   performed iters:  10000
+   runtime per iter: 0.203976 ms
+  finalize_data_structures:   1.738357 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  640.164401 ms
+  initialize_data_structures: 1.883608 ms
+  run:                        2039.672519 ms
+   performed iters:  10000
+   runtime per iter: 0.203967 ms
+  finalize_data_structures:   1.742713 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  641.417863 ms
+  initialize_data_structures: 1.850908 ms
+  run:                        2039.690717 ms
+   performed iters:  10000
+   runtime per iter: 0.203969 ms
+  finalize_data_structures:   2.114768 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  634.133553 ms
+  initialize_data_structures: 1.871298 ms
+  run:                        2039.716696 ms
+   performed iters:  10000
+   runtime per iter: 0.203972 ms
+  finalize_data_structures:   1.731296 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  640.214327 ms
+  initialize_data_structures: 1.855565 ms
+  run:                        2039.660060 ms
+   performed iters:  10000
+   runtime per iter: 0.203966 ms
+  finalize_data_structures:   1.700870 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  641.813444 ms
+  initialize_data_structures: 1.878220 ms
+  run:                        2039.644817 ms
+   performed iters:  10000
+   runtime per iter: 0.203964 ms
+  finalize_data_structures:   2.091433 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  634.721965 ms
+  initialize_data_structures: 1.843977 ms
+  run:                        2039.683145 ms
+   performed iters:  10000
+   runtime per iter: 0.203968 ms
+  finalize_data_structures:   1.731718 ms
+
+exp-3
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-cols-32
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: zeros
+  pattern_expression: glider[0,0]
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: no-work
+  state_bits_count: 32
+  thread_block_size: 256
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              zeros
+  Data loaded in   26.6723 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-cols-32
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  633.626022 ms
+  initialize_data_structures: 1.916006 ms
+  run:                        1539.680141 ms
+   performed iters:  10000
+   runtime per iter: 0.153968 ms
+  finalize_data_structures:   2.266138 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  634.708234 ms
+  initialize_data_structures: 1.920975 ms
+  run:                        1539.510162 ms
+   performed iters:  10000
+   runtime per iter: 0.153951 ms
+  finalize_data_structures:   2.268642 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  640.611119 ms
+  initialize_data_structures: 1.932071 ms
+  run:                        1539.556633 ms
+   performed iters:  10000
+   runtime per iter: 0.153956 ms
+  finalize_data_structures:   2.227429 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  634.788687 ms
+  initialize_data_structures: 1.920413 ms
+  run:                        1539.607761 ms
+   performed iters:  10000
+   runtime per iter: 0.153961 ms
+  finalize_data_structures:   1.788993 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  640.748117 ms
+  initialize_data_structures: 1.940454 ms
+  run:                        1539.683195 ms
+   performed iters:  10000
+   runtime per iter: 0.153968 ms
+  finalize_data_structures:   1.849496 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  642.007809 ms
+  initialize_data_structures: 1.906592 ms
+  run:                        1539.644686 ms
+   performed iters:  10000
+   runtime per iter: 0.153964 ms
+  finalize_data_structures:   1.868795 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  633.792815 ms
+  initialize_data_structures: 1.914404 ms
+  run:                        1539.565395 ms
+   performed iters:  10000
+   runtime per iter: 0.153957 ms
+  finalize_data_structures:   1.844088 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  641.987548 ms
+  initialize_data_structures: 1.997681 ms
+  run:                        1539.612607 ms
+   performed iters:  10000
+   runtime per iter: 0.153961 ms
+  finalize_data_structures:   1.830367 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  641.998254 ms
+  initialize_data_structures: 1.928987 ms
+  run:                        1539.582803 ms
+   performed iters:  10000
+   runtime per iter: 0.153958 ms
+  finalize_data_structures:   2.254830 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  634.957583 ms
+  initialize_data_structures: 1.914695 ms
+  run:                        1539.644385 ms
+   performed iters:  10000
+   runtime per iter: 0.153964 ms
+  finalize_data_structures:   1.802504 ms
+
+exp-4
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-cols-64
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: lexicon
+  pattern_expression: spacefiller[2340, 2730]; spacefiller[2340, 5460]; spacefiller[2340, 8190]; spacefiller[2340, 10920]; spacefiller[2340, 13650]; spacefiller[4680, 2730]; spacefiller[4680, 5460]; spacefiller[4680, 8190]; spacefiller[4680, 10920]; spacefiller[4680, 13650]; spacefiller[7020, 2730]; spacefiller[7020, 5460]; spacefiller[7020, 8190]; spacefiller[7020, 10920]; spacefiller[7020, 13650]; spacefiller[9360, 2730]; spacefiller[9360, 5460]; spacefiller[9360, 8190]; spacefiller[9360, 10920]; spacefiller[9360, 13650]; spacefiller[11700, 2730]; spacefiller[11700, 5460]; spacefiller[11700, 8190]; spacefiller[11700, 10920]; spacefiller[11700, 13650]; spacefiller[14040, 2730]; spacefiller[14040, 5460]; spacefiller[14040, 8190]; spacefiller[14040, 10920]; spacefiller[14040, 13650];
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: 66-work
+  state_bits_count: 32
+  thread_block_size: 128
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              lexicon with pattern spacefiller[2340, 2730]; spacefiller[2340, 5460]; spacefiller[2340, 8190]; spacefiller[2340, 10920]; spacefiller[2340, 13650]; spacefiller[4680, 2730]; spacefiller[4680, 5460]; spacefiller[4680, 8190]; spacefiller[4680, 10920]; spacefiller[4680, 13650]; spacefiller[7020, 2730]; spacefiller[7020, 5460]; spacefiller[7020, 8190]; spacefiller[7020, 10920]; spacefiller[7020, 13650]; spacefiller[9360, 2730]; spacefiller[9360, 5460]; spacefiller[9360, 8190]; spacefiller[9360, 10920]; spacefiller[9360, 13650]; spacefiller[11700, 2730]; spacefiller[11700, 5460]; spacefiller[11700, 8190]; spacefiller[11700, 10920]; spacefiller[11700, 13650]; spacefiller[14040, 2730]; spacefiller[14040, 5460]; spacefiller[14040, 8190]; spacefiller[14040, 10920]; spacefiller[14040, 13650];
+  Data loaded in   28.9831 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-cols-64
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  811.380470 ms
+  initialize_data_structures: 1.893873 ms
+  run:                        2516.407966 ms
+   performed iters:  10000
+   runtime per iter: 0.251641 ms
+  finalize_data_structures:   2.124474 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  815.391345 ms
+  initialize_data_structures: 1.874554 ms
+  run:                        2516.566516 ms
+   performed iters:  10000
+   runtime per iter: 0.251657 ms
+  finalize_data_structures:   1.763355 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  829.032700 ms
+  initialize_data_structures: 1.879521 ms
+  run:                        2516.441136 ms
+   performed iters:  10000
+   runtime per iter: 0.251644 ms
+  finalize_data_structures:   1.749635 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  820.084675 ms
+  initialize_data_structures: 1.892301 ms
+  run:                        2517.087607 ms
+   performed iters:  10000
+   runtime per iter: 0.251709 ms
+  finalize_data_structures:   1.760791 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  829.223499 ms
+  initialize_data_structures: 1.881834 ms
+  run:                        2516.419844 ms
+   performed iters:  10000
+   runtime per iter: 0.251642 ms
+  finalize_data_structures:   1.764167 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  825.512240 ms
+  initialize_data_structures: 1.899572 ms
+  run:                        2516.454956 ms
+   performed iters:  10000
+   runtime per iter: 0.251645 ms
+  finalize_data_structures:   2.157874 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  821.230824 ms
+  initialize_data_structures: 1.877478 ms
+  run:                        2516.427295 ms
+   performed iters:  10000
+   runtime per iter: 0.251643 ms
+  finalize_data_structures:   1.748512 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  833.330791 ms
+  initialize_data_structures: 1.877639 ms
+  run:                        2516.558143 ms
+   performed iters:  10000
+   runtime per iter: 0.251656 ms
+  finalize_data_structures:   1.774752 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  830.990780 ms
+  initialize_data_structures: 1.880081 ms
+  run:                        2517.547575 ms
+   performed iters:  10000
+   runtime per iter: 0.251755 ms
+  finalize_data_structures:   1.749104 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  826.925494 ms
+  initialize_data_structures: 1.883787 ms
+  run:                        2518.298594 ms
+   performed iters:  10000
+   runtime per iter: 0.251830 ms
+  finalize_data_structures:   2.133687 ms
+
+exp-5
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-cols-64
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: zeros
+  pattern_expression: glider[0,0]
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: no-work
+  state_bits_count: 32
+  thread_block_size: 128
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              zeros
+  Data loaded in   26.3336 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-cols-64
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  822.257811 ms
+  initialize_data_structures: 1.953172 ms
+  run:                        759.434293 ms
+   performed iters:  10000
+   runtime per iter: 0.075943 ms
+  finalize_data_structures:   1.728723 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  826.556884 ms
+  initialize_data_structures: 1.869236 ms
+  run:                        759.471950 ms
+   performed iters:  10000
+   runtime per iter: 0.075947 ms
+  finalize_data_structures:   2.166587 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  821.548175 ms
+  initialize_data_structures: 1.892050 ms
+  run:                        759.419231 ms
+   performed iters:  10000
+   runtime per iter: 0.075942 ms
+  finalize_data_structures:   1.723925 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  821.095468 ms
+  initialize_data_structures: 1.886341 ms
+  run:                        759.481055 ms
+   performed iters:  10000
+   runtime per iter: 0.075948 ms
+  finalize_data_structures:   1.737045 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  829.353627 ms
+  initialize_data_structures: 1.925151 ms
+  run:                        759.388264 ms
+   performed iters:  10000
+   runtime per iter: 0.075939 ms
+  finalize_data_structures:   1.723785 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  823.688142 ms
+  initialize_data_structures: 1.883918 ms
+  run:                        759.388965 ms
+   performed iters:  10000
+   runtime per iter: 0.075939 ms
+  finalize_data_structures:   1.727711 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  828.026734 ms
+  initialize_data_structures: 1.896397 ms
+  run:                        759.478951 ms
+   performed iters:  10000
+   runtime per iter: 0.075948 ms
+  finalize_data_structures:   1.712739 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  830.085097 ms
+  initialize_data_structures: 1.875194 ms
+  run:                        759.440493 ms
+   performed iters:  10000
+   runtime per iter: 0.075944 ms
+  finalize_data_structures:   2.142361 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  819.023656 ms
+  initialize_data_structures: 1.885881 ms
+  run:                        759.495346 ms
+   performed iters:  10000
+   runtime per iter: 0.075950 ms
+  finalize_data_structures:   1.715422 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  829.439617 ms
+  initialize_data_structures: 1.885480 ms
+  run:                        759.461805 ms
+   performed iters:  10000
+   runtime per iter: 0.075946 ms
+  finalize_data_structures:   1.759279 ms
+
+exp-6
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-cols-64
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: always-changing
+  pattern_expression: glider[0,0]
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: full-work
+  state_bits_count: 32
+  thread_block_size: 128
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              always-changing
+  Data loaded in   185.805 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-cols-64
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  819.431515 ms
+  initialize_data_structures: 1.907403 ms
+  run:                        4170.635353 ms
+   performed iters:  10000
+   runtime per iter: 0.417064 ms
+  finalize_data_structures:   1.779680 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  819.594722 ms
+  initialize_data_structures: 1.862415 ms
+  run:                        4170.574791 ms
+   performed iters:  10000
+   runtime per iter: 0.417057 ms
+  finalize_data_structures:   1.758708 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  822.527111 ms
+  initialize_data_structures: 1.908154 ms
+  run:                        4170.640200 ms
+   performed iters:  10000
+   runtime per iter: 0.417064 ms
+  finalize_data_structures:   1.749134 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  823.161162 ms
+  initialize_data_structures: 1.955757 ms
+  run:                        4170.594541 ms
+   performed iters:  10000
+   runtime per iter: 0.417059 ms
+  finalize_data_structures:   1.741803 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  829.476923 ms
+  initialize_data_structures: 1.864008 ms
+  run:                        4170.623965 ms
+   performed iters:  10000
+   runtime per iter: 0.417062 ms
+  finalize_data_structures:   2.177954 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  821.626604 ms
+  initialize_data_structures: 1.863186 ms
+  run:                        4170.611687 ms
+   performed iters:  10000
+   runtime per iter: 0.417061 ms
+  finalize_data_structures:   2.150042 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  829.096397 ms
+  initialize_data_structures: 1.864679 ms
+  run:                        4170.634021 ms
+   performed iters:  10000
+   runtime per iter: 0.417063 ms
+  finalize_data_structures:   1.745127 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  831.595819 ms
+  initialize_data_structures: 1.882115 ms
+  run:                        4170.647542 ms
+   performed iters:  10000
+   runtime per iter: 0.417065 ms
+  finalize_data_structures:   1.775082 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  812.071929 ms
+  initialize_data_structures: 1.864459 ms
+  run:                        4170.606569 ms
+   performed iters:  10000
+   runtime per iter: 0.417061 ms
+  finalize_data_structures:   1.741612 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  832.073643 ms
+  initialize_data_structures: 1.857228 ms
+  run:                        4170.649102 ms
+   performed iters:  10000
+   runtime per iter: 0.417065 ms
+  finalize_data_structures:   2.149611 ms
+
+exp-7
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-cols-64
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: lexicon
+  pattern_expression: spacefiller[4096, 4096]; spacefiller[4096, 8192]; spacefiller[4096, 12288]; spacefiller[8192, 4096]; spacefiller[8192, 8192]; spacefiller[8192, 12288]; spacefiller[12288, 4096]; spacefiller[12288, 8192]; spacefiller[12288, 12288];
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: 33-work
+  state_bits_count: 32
+  thread_block_size: 128
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              lexicon with pattern spacefiller[4096, 4096]; spacefiller[4096, 8192]; spacefiller[4096, 12288]; spacefiller[8192, 4096]; spacefiller[8192, 8192]; spacefiller[8192, 12288]; spacefiller[12288, 4096]; spacefiller[12288, 8192]; spacefiller[12288, 12288];
+  Data loaded in   29.0397 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-cols-64
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  820.288254 ms
+  initialize_data_structures: 1.893042 ms
+  run:                        1609.460292 ms
+   performed iters:  10000
+   runtime per iter: 0.160946 ms
+  finalize_data_structures:   1.747511 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  828.502345 ms
+  initialize_data_structures: 1.917860 ms
+  run:                        1609.594325 ms
+   performed iters:  10000
+   runtime per iter: 0.160959 ms
+  finalize_data_structures:   1.760380 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  823.002281 ms
+  initialize_data_structures: 1.893032 ms
+  run:                        1609.384407 ms
+   performed iters:  10000
+   runtime per iter: 0.160938 ms
+  finalize_data_structures:   1.728262 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  833.158830 ms
+  initialize_data_structures: 1.890758 ms
+  run:                        1609.537749 ms
+   performed iters:  10000
+   runtime per iter: 0.160954 ms
+  finalize_data_structures:   2.143121 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  824.944608 ms
+  initialize_data_structures: 1.899012 ms
+  run:                        1609.418178 ms
+   performed iters:  10000
+   runtime per iter: 0.160942 ms
+  finalize_data_structures:   1.745378 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  828.972550 ms
+  initialize_data_structures: 1.882936 ms
+  run:                        1609.446762 ms
+   performed iters:  10000
+   runtime per iter: 0.160945 ms
+  finalize_data_structures:   1.742773 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  828.433511 ms
+  initialize_data_structures: 1.878300 ms
+  run:                        1609.408483 ms
+   performed iters:  10000
+   runtime per iter: 0.160941 ms
+  finalize_data_structures:   2.142330 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  824.587666 ms
+  initialize_data_structures: 1.854334 ms
+  run:                        1609.438348 ms
+   performed iters:  10000
+   runtime per iter: 0.160944 ms
+  finalize_data_structures:   1.749935 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  829.140143 ms
+  initialize_data_structures: 1.870157 ms
+  run:                        1609.462656 ms
+   performed iters:  10000
+   runtime per iter: 0.160946 ms
+  finalize_data_structures:   1.752137 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  833.409079 ms
+  initialize_data_structures: 1.875295 ms
+  run:                        1609.512581 ms
+   performed iters:  10000
+   runtime per iter: 0.160951 ms
+  finalize_data_structures:   1.741572 ms
+
+exp-8
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-32--bit-tiles
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: lexicon
+  pattern_expression: spacefiller[2340, 2730]; spacefiller[2340, 5460]; spacefiller[2340, 8190]; spacefiller[2340, 10920]; spacefiller[2340, 13650]; spacefiller[4680, 2730]; spacefiller[4680, 5460]; spacefiller[4680, 8190]; spacefiller[4680, 10920]; spacefiller[4680, 13650]; spacefiller[7020, 2730]; spacefiller[7020, 5460]; spacefiller[7020, 8190]; spacefiller[7020, 10920]; spacefiller[7020, 13650]; spacefiller[9360, 2730]; spacefiller[9360, 5460]; spacefiller[9360, 8190]; spacefiller[9360, 10920]; spacefiller[9360, 13650]; spacefiller[11700, 2730]; spacefiller[11700, 5460]; spacefiller[11700, 8190]; spacefiller[11700, 10920]; spacefiller[11700, 13650]; spacefiller[14040, 2730]; spacefiller[14040, 5460]; spacefiller[14040, 8190]; spacefiller[14040, 10920]; spacefiller[14040, 13650];
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: 66-work
+  state_bits_count: 32
+  thread_block_size: 256
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              lexicon with pattern spacefiller[2340, 2730]; spacefiller[2340, 5460]; spacefiller[2340, 8190]; spacefiller[2340, 10920]; spacefiller[2340, 13650]; spacefiller[4680, 2730]; spacefiller[4680, 5460]; spacefiller[4680, 8190]; spacefiller[4680, 10920]; spacefiller[4680, 13650]; spacefiller[7020, 2730]; spacefiller[7020, 5460]; spacefiller[7020, 8190]; spacefiller[7020, 10920]; spacefiller[7020, 13650]; spacefiller[9360, 2730]; spacefiller[9360, 5460]; spacefiller[9360, 8190]; spacefiller[9360, 10920]; spacefiller[9360, 13650]; spacefiller[11700, 2730]; spacefiller[11700, 5460]; spacefiller[11700, 8190]; spacefiller[11700, 10920]; spacefiller[11700, 13650]; spacefiller[14040, 2730]; spacefiller[14040, 5460]; spacefiller[14040, 8190]; spacefiller[14040, 10920]; spacefiller[14040, 13650];
+  Data loaded in   28.9901 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-32--bit-tiles
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  65.421890 ms
+  initialize_data_structures: 1.897920 ms
+  run:                        2484.244090 ms
+   performed iters:  10000
+   runtime per iter: 0.248424 ms
+  finalize_data_structures:   2.161048 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  65.557627 ms
+  initialize_data_structures: 1.874984 ms
+  run:                        2484.232563 ms
+   performed iters:  10000
+   runtime per iter: 0.248423 ms
+  finalize_data_structures:   2.136972 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  65.423323 ms
+  initialize_data_structures: 1.891289 ms
+  run:                        2484.182277 ms
+   performed iters:  10000
+   runtime per iter: 0.248418 ms
+  finalize_data_structures:   2.083531 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  65.586950 ms
+  initialize_data_structures: 1.885691 ms
+  run:                        2484.255637 ms
+   performed iters:  10000
+   runtime per iter: 0.248426 ms
+  finalize_data_structures:   2.112375 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  65.466357 ms
+  initialize_data_structures: 1.903097 ms
+  run:                        2484.219003 ms
+   performed iters:  10000
+   runtime per iter: 0.248422 ms
+  finalize_data_structures:   1.719368 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  65.434249 ms
+  initialize_data_structures: 1.886863 ms
+  run:                        2484.202668 ms
+   performed iters:  10000
+   runtime per iter: 0.248420 ms
+  finalize_data_structures:   1.753229 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  65.624086 ms
+  initialize_data_structures: 1.876788 ms
+  run:                        2484.229868 ms
+   performed iters:  10000
+   runtime per iter: 0.248423 ms
+  finalize_data_structures:   1.743144 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  65.413888 ms
+  initialize_data_structures: 1.899512 ms
+  run:                        2484.246414 ms
+   performed iters:  10000
+   runtime per iter: 0.248425 ms
+  finalize_data_structures:   1.738167 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  65.411835 ms
+  initialize_data_structures: 1.883437 ms
+  run:                        2484.255999 ms
+   performed iters:  10000
+   runtime per iter: 0.248426 ms
+  finalize_data_structures:   2.130642 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  65.626211 ms
+  initialize_data_structures: 1.876867 ms
+  run:                        2484.254926 ms
+   performed iters:  10000
+   runtime per iter: 0.248425 ms
+  finalize_data_structures:   1.737376 ms
+
+exp-9
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-32--bit-tiles
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: zeros
+  pattern_expression: glider[0,0]
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: no-work
+  state_bits_count: 32
+  thread_block_size: 256
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              zeros
+  Data loaded in   26.438 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-32--bit-tiles
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  65.626972 ms
+  initialize_data_structures: 1.886762 ms
+  run:                        1448.715600 ms
+   performed iters:  10000
+   runtime per iter: 0.144872 ms
+  finalize_data_structures:   1.735693 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  65.417624 ms
+  initialize_data_structures: 1.883648 ms
+  run:                        1448.705153 ms
+   performed iters:  10000
+   runtime per iter: 0.144871 ms
+  finalize_data_structures:   1.748232 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  65.631869 ms
+  initialize_data_structures: 1.881344 ms
+  run:                        1448.695309 ms
+   performed iters:  10000
+   runtime per iter: 0.144870 ms
+  finalize_data_structures:   1.758237 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  65.429352 ms
+  initialize_data_structures: 1.898870 ms
+  run:                        1448.656500 ms
+   performed iters:  10000
+   runtime per iter: 0.144866 ms
+  finalize_data_structures:   1.729214 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  65.423903 ms
+  initialize_data_structures: 1.898240 ms
+  run:                        1448.638012 ms
+   performed iters:  10000
+   runtime per iter: 0.144864 ms
+  finalize_data_structures:   2.132815 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  65.567792 ms
+  initialize_data_structures: 1.885040 ms
+  run:                        1448.681748 ms
+   performed iters:  10000
+   runtime per iter: 0.144868 ms
+  finalize_data_structures:   2.056280 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  65.431094 ms
+  initialize_data_structures: 1.885561 ms
+  run:                        1448.653425 ms
+   performed iters:  10000
+   runtime per iter: 0.144865 ms
+  finalize_data_structures:   1.737616 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  65.413348 ms
+  initialize_data_structures: 1.896206 ms
+  run:                        1448.622829 ms
+   performed iters:  10000
+   runtime per iter: 0.144862 ms
+  finalize_data_structures:   1.702563 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  65.357373 ms
+  initialize_data_structures: 1.881805 ms
+  run:                        1448.657622 ms
+   performed iters:  10000
+   runtime per iter: 0.144866 ms
+  finalize_data_structures:   2.152565 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  65.554182 ms
+  initialize_data_structures: 1.893092 ms
+  run:                        1448.556718 ms
+   performed iters:  10000
+   runtime per iter: 0.144856 ms
+  finalize_data_structures:   1.729713 ms
+
+exp-10
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-32--bit-tiles
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: lexicon
+  pattern_expression: spacefiller[4096, 4096]; spacefiller[4096, 8192]; spacefiller[4096, 12288]; spacefiller[8192, 4096]; spacefiller[8192, 8192]; spacefiller[8192, 12288]; spacefiller[12288, 4096]; spacefiller[12288, 8192]; spacefiller[12288, 12288];
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: 33-work
+  state_bits_count: 32
+  thread_block_size: 256
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              lexicon with pattern spacefiller[4096, 4096]; spacefiller[4096, 8192]; spacefiller[4096, 12288]; spacefiller[8192, 4096]; spacefiller[8192, 8192]; spacefiller[8192, 12288]; spacefiller[12288, 4096]; spacefiller[12288, 8192]; spacefiller[12288, 12288];
+  Data loaded in   31.3087 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-32--bit-tiles
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  65.526038 ms
+  initialize_data_structures: 1.877037 ms
+  run:                        2000.871194 ms
+   performed iters:  10000
+   runtime per iter: 0.200087 ms
+  finalize_data_structures:   1.736345 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  65.358084 ms
+  initialize_data_structures: 1.884970 ms
+  run:                        2000.832305 ms
+   performed iters:  10000
+   runtime per iter: 0.200083 ms
+  finalize_data_structures:   1.785078 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  65.617507 ms
+  initialize_data_structures: 1.898070 ms
+  run:                        2000.772144 ms
+   performed iters:  10000
+   runtime per iter: 0.200077 ms
+  finalize_data_structures:   1.753871 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  65.474560 ms
+  initialize_data_structures: 1.896717 ms
+  run:                        2000.737490 ms
+   performed iters:  10000
+   runtime per iter: 0.200074 ms
+  finalize_data_structures:   1.745038 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  65.387798 ms
+  initialize_data_structures: 1.889888 ms
+  run:                        2000.864484 ms
+   performed iters:  10000
+   runtime per iter: 0.200086 ms
+  finalize_data_structures:   2.167558 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  65.553861 ms
+  initialize_data_structures: 1.881273 ms
+  run:                        2000.852626 ms
+   performed iters:  10000
+   runtime per iter: 0.200085 ms
+  finalize_data_structures:   2.112715 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  65.409902 ms
+  initialize_data_structures: 1.889737 ms
+  run:                        2000.867218 ms
+   performed iters:  10000
+   runtime per iter: 0.200087 ms
+  finalize_data_structures:   1.735813 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  65.418244 ms
+  initialize_data_structures: 1.875465 ms
+  run:                        2000.770892 ms
+   performed iters:  10000
+   runtime per iter: 0.200077 ms
+  finalize_data_structures:   1.781663 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  65.448801 ms
+  initialize_data_structures: 1.888515 ms
+  run:                        2000.797222 ms
+   performed iters:  10000
+   runtime per iter: 0.200080 ms
+  finalize_data_structures:   1.718397 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  65.326676 ms
+  initialize_data_structures: 1.874494 ms
+  run:                        2000.827407 ms
+   performed iters:  10000
+   runtime per iter: 0.200083 ms
+  finalize_data_structures:   2.114067 ms
+
+exp-11
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-32--bit-tiles
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: always-changing
+  pattern_expression: glider[0,0]
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: full-work
+  state_bits_count: 32
+  thread_block_size: 256
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              always-changing
+  Data loaded in   186.695 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-32--bit-tiles
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  59.730186 ms
+  initialize_data_structures: 1.900083 ms
+  run:                        3075.768561 ms
+   performed iters:  10000
+   runtime per iter: 0.307577 ms
+  finalize_data_structures:   1.768783 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  59.737997 ms
+  initialize_data_structures: 1.890178 ms
+  run:                        3075.770324 ms
+   performed iters:  10000
+   runtime per iter: 0.307577 ms
+  finalize_data_structures:   2.187619 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  59.658307 ms
+  initialize_data_structures: 1.903968 ms
+  run:                        3075.760038 ms
+   performed iters:  10000
+   runtime per iter: 0.307576 ms
+  finalize_data_structures:   1.775694 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  59.694221 ms
+  initialize_data_structures: 1.891639 ms
+  run:                        3075.782472 ms
+   performed iters:  10000
+   runtime per iter: 0.307578 ms
+  finalize_data_structures:   2.215831 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  59.698297 ms
+  initialize_data_structures: 1.898059 ms
+  run:                        3075.792247 ms
+   performed iters:  10000
+   runtime per iter: 0.307579 ms
+  finalize_data_structures:   1.790737 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  59.712259 ms
+  initialize_data_structures: 1.889336 ms
+  run:                        3075.759658 ms
+   performed iters:  10000
+   runtime per iter: 0.307576 ms
+  finalize_data_structures:   1.770085 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  59.638317 ms
+  initialize_data_structures: 1.896827 ms
+  run:                        3075.835032 ms
+   performed iters:  10000
+   runtime per iter: 0.307584 ms
+  finalize_data_structures:   2.190684 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  59.799451 ms
+  initialize_data_structures: 1.886862 ms
+  run:                        3075.766168 ms
+   performed iters:  10000
+   runtime per iter: 0.307577 ms
+  finalize_data_structures:   1.775974 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  59.646118 ms
+  initialize_data_structures: 1.894314 ms
+  run:                        3075.772287 ms
+   performed iters:  10000
+   runtime per iter: 0.307577 ms
+  finalize_data_structures:   1.769545 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  59.719329 ms
+  initialize_data_structures: 1.884729 ms
+  run:                        3075.773658 ms
+   performed iters:  10000
+   runtime per iter: 0.307577 ms
+  finalize_data_structures:   1.770917 ms
+
+exp-12
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-64--bit-tiles
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: lexicon
+  pattern_expression: spacefiller[4096, 4096]; spacefiller[4096, 8192]; spacefiller[4096, 12288]; spacefiller[8192, 4096]; spacefiller[8192, 8192]; spacefiller[8192, 12288]; spacefiller[12288, 4096]; spacefiller[12288, 8192]; spacefiller[12288, 12288];
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: 33-work
+  state_bits_count: 32
+  thread_block_size: 128
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              lexicon with pattern spacefiller[4096, 4096]; spacefiller[4096, 8192]; spacefiller[4096, 12288]; spacefiller[8192, 4096]; spacefiller[8192, 8192]; spacefiller[8192, 12288]; spacefiller[12288, 4096]; spacefiller[12288, 8192]; spacefiller[12288, 12288];
+  Data loaded in   28.901 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-64--bit-tiles
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  68.690980 ms
+  initialize_data_structures: 1.884840 ms
+  run:                        1438.590669 ms
+   performed iters:  10000
+   runtime per iter: 0.143859 ms
+  finalize_data_structures:   1.750686 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  68.633383 ms
+  initialize_data_structures: 1.879171 ms
+  run:                        1438.647836 ms
+   performed iters:  10000
+   runtime per iter: 0.143865 ms
+  finalize_data_structures:   2.132555 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  68.755407 ms
+  initialize_data_structures: 1.878931 ms
+  run:                        1438.566652 ms
+   performed iters:  10000
+   runtime per iter: 0.143857 ms
+  finalize_data_structures:   1.760932 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  68.611330 ms
+  initialize_data_structures: 1.889937 ms
+  run:                        1438.572331 ms
+   performed iters:  10000
+   runtime per iter: 0.143857 ms
+  finalize_data_structures:   1.737476 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  68.603788 ms
+  initialize_data_structures: 1.884508 ms
+  run:                        1438.597859 ms
+   performed iters:  10000
+   runtime per iter: 0.143860 ms
+  finalize_data_structures:   2.149200 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  68.740355 ms
+  initialize_data_structures: 1.880423 ms
+  run:                        1438.583949 ms
+   performed iters:  10000
+   runtime per iter: 0.143858 ms
+  finalize_data_structures:   1.726759 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  68.718131 ms
+  initialize_data_structures: 1.888464 ms
+  run:                        1439.215658 ms
+   performed iters:  10000
+   runtime per iter: 0.143922 ms
+  finalize_data_structures:   1.747361 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  68.572941 ms
+  initialize_data_structures: 1.883067 ms
+  run:                        1438.629949 ms
+   performed iters:  10000
+   runtime per iter: 0.143863 ms
+  finalize_data_structures:   1.741342 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  68.593051 ms
+  initialize_data_structures: 1.871799 ms
+  run:                        1438.621486 ms
+   performed iters:  10000
+   runtime per iter: 0.143862 ms
+  finalize_data_structures:   2.071422 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  68.714045 ms
+  initialize_data_structures: 1.883077 ms
+  run:                        1438.593323 ms
+   performed iters:  10000
+   runtime per iter: 0.143859 ms
+  finalize_data_structures:   1.716544 ms
+
+exp-13
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-64--bit-tiles
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: always-changing
+  pattern_expression: glider[0,0]
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: full-work
+  state_bits_count: 32
+  thread_block_size: 128
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              always-changing
+  Data loaded in   186.178 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-64--bit-tiles
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  67.909814 ms
+  initialize_data_structures: 1.864118 ms
+  run:                        2596.921141 ms
+   performed iters:  10000
+   runtime per iter: 0.259692 ms
+  finalize_data_structures:   2.197744 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  68.447160 ms
+  initialize_data_structures: 1.846952 ms
+  run:                        2597.508151 ms
+   performed iters:  10000
+   runtime per iter: 0.259751 ms
+  finalize_data_structures:   1.753670 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  67.885127 ms
+  initialize_data_structures: 1.857107 ms
+  run:                        2596.920439 ms
+   performed iters:  10000
+   runtime per iter: 0.259692 ms
+  finalize_data_structures:   2.208360 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  68.464226 ms
+  initialize_data_structures: 1.847553 ms
+  run:                        2596.893138 ms
+   performed iters:  10000
+   runtime per iter: 0.259689 ms
+  finalize_data_structures:   1.777386 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  68.453609 ms
+  initialize_data_structures: 1.855766 ms
+  run:                        2597.501080 ms
+   performed iters:  10000
+   runtime per iter: 0.259750 ms
+  finalize_data_structures:   1.732619 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  68.876671 ms
+  initialize_data_structures: 1.902096 ms
+  run:                        2596.918146 ms
+   performed iters:  10000
+   runtime per iter: 0.259692 ms
+  finalize_data_structures:   1.762404 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  68.622346 ms
+  initialize_data_structures: 1.825400 ms
+  run:                        2597.543414 ms
+   performed iters:  10000
+   runtime per iter: 0.259754 ms
+  finalize_data_structures:   1.740861 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  67.926400 ms
+  initialize_data_structures: 1.857188 ms
+  run:                        2596.861260 ms
+   performed iters:  10000
+   runtime per iter: 0.259686 ms
+  finalize_data_structures:   1.746810 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  67.930056 ms
+  initialize_data_structures: 1.874673 ms
+  run:                        2598.123303 ms
+   performed iters:  10000
+   runtime per iter: 0.259812 ms
+  finalize_data_structures:   2.176061 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  68.379047 ms
+  initialize_data_structures: 1.852200 ms
+  run:                        2596.967060 ms
+   performed iters:  10000
+   runtime per iter: 0.259697 ms
+  finalize_data_structures:   1.748182 ms
+
+exp-14
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-64--bit-tiles
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: lexicon
+  pattern_expression: spacefiller[2340, 2730]; spacefiller[2340, 5460]; spacefiller[2340, 8190]; spacefiller[2340, 10920]; spacefiller[2340, 13650]; spacefiller[4680, 2730]; spacefiller[4680, 5460]; spacefiller[4680, 8190]; spacefiller[4680, 10920]; spacefiller[4680, 13650]; spacefiller[7020, 2730]; spacefiller[7020, 5460]; spacefiller[7020, 8190]; spacefiller[7020, 10920]; spacefiller[7020, 13650]; spacefiller[9360, 2730]; spacefiller[9360, 5460]; spacefiller[9360, 8190]; spacefiller[9360, 10920]; spacefiller[9360, 13650]; spacefiller[11700, 2730]; spacefiller[11700, 5460]; spacefiller[11700, 8190]; spacefiller[11700, 10920]; spacefiller[11700, 13650]; spacefiller[14040, 2730]; spacefiller[14040, 5460]; spacefiller[14040, 8190]; spacefiller[14040, 10920]; spacefiller[14040, 13650];
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: 66-work
+  state_bits_count: 32
+  thread_block_size: 128
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              lexicon with pattern spacefiller[2340, 2730]; spacefiller[2340, 5460]; spacefiller[2340, 8190]; spacefiller[2340, 10920]; spacefiller[2340, 13650]; spacefiller[4680, 2730]; spacefiller[4680, 5460]; spacefiller[4680, 8190]; spacefiller[4680, 10920]; spacefiller[4680, 13650]; spacefiller[7020, 2730]; spacefiller[7020, 5460]; spacefiller[7020, 8190]; spacefiller[7020, 10920]; spacefiller[7020, 13650]; spacefiller[9360, 2730]; spacefiller[9360, 5460]; spacefiller[9360, 8190]; spacefiller[9360, 10920]; spacefiller[9360, 13650]; spacefiller[11700, 2730]; spacefiller[11700, 5460]; spacefiller[11700, 8190]; spacefiller[11700, 10920]; spacefiller[11700, 13650]; spacefiller[14040, 2730]; spacefiller[14040, 5460]; spacefiller[14040, 8190]; spacefiller[14040, 10920]; spacefiller[14040, 13650];
+  Data loaded in   29.0322 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-64--bit-tiles
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  68.723018 ms
+  initialize_data_structures: 1.896678 ms
+  run:                        1971.539556 ms
+   performed iters:  10000
+   runtime per iter: 0.197154 ms
+  finalize_data_structures:   1.743045 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  68.656057 ms
+  initialize_data_structures: 1.890458 ms
+  run:                        1971.521449 ms
+   performed iters:  10000
+   runtime per iter: 0.197152 ms
+  finalize_data_structures:   1.790156 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  68.724441 ms
+  initialize_data_structures: 1.884078 ms
+  run:                        1971.596372 ms
+   performed iters:  10000
+   runtime per iter: 0.197160 ms
+  finalize_data_structures:   1.747281 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  68.562665 ms
+  initialize_data_structures: 1.877719 ms
+  run:                        1971.656714 ms
+   performed iters:  10000
+   runtime per iter: 0.197166 ms
+  finalize_data_structures:   2.131003 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  68.571408 ms
+  initialize_data_structures: 1.896227 ms
+  run:                        1971.586708 ms
+   performed iters:  10000
+   runtime per iter: 0.197159 ms
+  finalize_data_structures:   2.168811 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  68.689538 ms
+  initialize_data_structures: 1.886903 ms
+  run:                        1971.515078 ms
+   performed iters:  10000
+   runtime per iter: 0.197152 ms
+  finalize_data_structures:   1.712127 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  68.592421 ms
+  initialize_data_structures: 1.899371 ms
+  run:                        1971.628141 ms
+   performed iters:  10000
+   runtime per iter: 0.197163 ms
+  finalize_data_structures:   1.739669 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  68.605711 ms
+  initialize_data_structures: 1.886752 ms
+  run:                        1971.557072 ms
+   performed iters:  10000
+   runtime per iter: 0.197156 ms
+  finalize_data_structures:   1.738447 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  68.605520 ms
+  initialize_data_structures: 1.897649 ms
+  run:                        1972.162240 ms
+   performed iters:  10000
+   runtime per iter: 0.197216 ms
+  finalize_data_structures:   2.181891 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  68.699423 ms
+  initialize_data_structures: 1.880533 ms
+  run:                        1971.549011 ms
+   performed iters:  10000
+   runtime per iter: 0.197155 ms
+  finalize_data_structures:   1.725758 ms
+
+exp-15
+next-experiment
+Hello
+Experiment Parameters:
+  algorithm_name: gol-cuda-local-one-cell-64--bit-tiles
+  grid_dimensions: 16384x16384
+  iterations: 10000
+  base_grid_encoding: char
+  max_runtime_seconds: 5000
+  warmup_rounds: 5
+  measurement_rounds: 10
+  data_loader_name: zeros
+  pattern_expression: glider[0,0]
+  measure_speedup: 0
+  speedup_bench_algorithm_name: gol-cuda-naive
+  validate: 0
+  print_validation_diff: 0
+  validation_algorithm_name: gol-cuda-naive
+  animate_output: 0
+  colorful: 0
+  random_seed: 42
+  tag: no-work
+  state_bits_count: 32
+  thread_block_size: 128
+  warp_dims_x: 32
+  warp_dims_y: 1
+  warp_tile_dims_x: 32
+  warp_tile_dims_y: 8
+  collect_touched_tiles_stats: 0
+  streaming_direction: in-x
+
+Loading data...              zeros
+  Data loaded in   26.4928 ms
+
+Warming up... 1 / 5
+Warming up... 2 / 5
+Warming up... 3 / 5
+Warming up... 4 / 5
+Warming up... 5 / 5
+
+
+Running experiment...        gol-cuda-local-one-cell-64--bit-tiles
+
+Measurement round 1 / 10
+Time report:
+  set_and_format_input_data:  68.545910 ms
+  initialize_data_structures: 1.889426 ms
+  run:                        827.978871 ms
+   performed iters:  10000
+   runtime per iter: 0.082798 ms
+  finalize_data_structures:   2.194970 ms
+
+Measurement round 2 / 10
+Time report:
+  set_and_format_input_data:  68.663348 ms
+  initialize_data_structures: 1.880133 ms
+  run:                        827.952912 ms
+   performed iters:  10000
+   runtime per iter: 0.082795 ms
+  finalize_data_structures:   1.732298 ms
+
+Measurement round 3 / 10
+Time report:
+  set_and_format_input_data:  68.648815 ms
+  initialize_data_structures: 1.889647 ms
+  run:                        827.967394 ms
+   performed iters:  10000
+   runtime per iter: 0.082797 ms
+  finalize_data_structures:   1.736544 ms
+
+Measurement round 4 / 10
+Time report:
+  set_and_format_input_data:  68.576095 ms
+  initialize_data_structures: 1.886772 ms
+  run:                        828.058963 ms
+   performed iters:  10000
+   runtime per iter: 0.082806 ms
+  finalize_data_structures:   2.109050 ms
+
+Measurement round 5 / 10
+Time report:
+  set_and_format_input_data:  68.655646 ms
+  initialize_data_structures: 1.882506 ms
+  run:                        828.078653 ms
+   performed iters:  10000
+   runtime per iter: 0.082808 ms
+  finalize_data_structures:   1.725197 ms
+
+Measurement round 6 / 10
+Time report:
+  set_and_format_input_data:  68.576286 ms
+  initialize_data_structures: 1.885791 ms
+  run:                        828.089669 ms
+   performed iters:  10000
+   runtime per iter: 0.082809 ms
+  finalize_data_structures:   1.709453 ms
+
+Measurement round 7 / 10
+Time report:
+  set_and_format_input_data:  68.551849 ms
+  initialize_data_structures: 1.883067 ms
+  run:                        828.023248 ms
+   performed iters:  10000
+   runtime per iter: 0.082802 ms
+  finalize_data_structures:   2.091333 ms
+
+Measurement round 8 / 10
+Time report:
+  set_and_format_input_data:  68.664630 ms
+  initialize_data_structures: 1.885180 ms
+  run:                        828.019633 ms
+   performed iters:  10000
+   runtime per iter: 0.082802 ms
+  finalize_data_structures:   1.714631 ms
+
+Measurement round 9 / 10
+Time report:
+  set_and_format_input_data:  68.590548 ms
+  initialize_data_structures: 1.882516 ms
+  run:                        828.032733 ms
+   performed iters:  10000
+   runtime per iter: 0.082803 ms
+  finalize_data_structures:   1.751116 ms
+
+Measurement round 10 / 10
+Time report:
+  set_and_format_input_data:  68.584448 ms
+  initialize_data_structures: 1.888825 ms
+  run:                        827.987344 ms
+   performed iters:  10000
+   runtime per iter: 0.082799 ms
+  finalize_data_structures:   1.731516 ms
+

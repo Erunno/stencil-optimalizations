@@ -45,7 +45,7 @@ MEASUREMENT_ROUNDS="1"
 DATA_LOADER_NAME="lexicon"
 PATTERN_EXPRESSION="blinker[10,10]"
 # PATTERN_EXPRESSION="glider[3,3] glider[10,10] glider[20,20]"
-# PATTERN_EXPRESSION="spacefiller[$((GRID_DIMENSIONS_X/2)),$((GRID_DIMENSIONS_Y/2))]"
+PATTERN_EXPRESSION="spacefiller[$((GRID_DIMENSIONS_X/2)),$((GRID_DIMENSIONS_Y/2))]"
 # PATTERN_EXPRESSION="gosper-glider-gun[0,0]"
 
 # used in the paper as "66% busy" - 6x5 spacefiller & 16k grid & 10000 iters

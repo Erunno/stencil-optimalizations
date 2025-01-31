@@ -91,16 +91,15 @@ __device__ __forceinline__ void cpy_to_output(
 template <typename state_store_type>
 __device__ __forceinline__ void set_changed_state_for_block(
     shm_private_value_t* block_store, state_store_type* global_store) {
-        
+    
     auto tiles = blockDim.y;
-    state_store_type result = 0;
+    auto thread_value = (threadIdx.x < tiles) ? block_store[threadIdx.x] : 0;
 
-    for (int i = 0; i < tiles; ++i) {
-        state_store_type val = block_store[i] ? 1 : 0;
-        result |= val << i;
+    auto result = __ballot_sync(0xFFFFFFFF, thread_value);
+    
+    if (threadIdx.x == 0) {
+        global_store[get_linear_block_idx()] = result;
     }
-
-    global_store[get_linear_block_idx()] = result;
 }
 
 template <typename state_store_type>
@@ -165,7 +164,7 @@ __device__ __forceinline__ void prefetch_state_stores(
         load_state_store(data, data.change_state_store.last, cache_last);
     }
     else if (thread_idx < StateStoreInfo::CACHE_SIZE * 2) {
-        load_state_store(data, data.change_state_store.before_last, cache_before_last);
+        load_state_store(data, data.change_state_store.current, cache_before_last);
     }
 }
 
@@ -203,7 +202,7 @@ __global__ void game_of_live_kernel(BitGridWithChangeInfo<word_type, state_store
 
     __syncthreads();
 
-    if (threadIdx.x == 0 && threadIdx.y == 0) {
+    if (threadIdx.y == 0) {
         set_changed_state_for_block(block_store, data.change_state_store.current);
     }
 }

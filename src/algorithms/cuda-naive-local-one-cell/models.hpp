@@ -6,7 +6,6 @@ namespace algorithms::cuda_local_one_cell {
 
 template <typename change_state_store_type>
 struct ChangeStateStore {
-    change_state_store_type* before_last;
     change_state_store_type* last;
     change_state_store_type* current;
 };

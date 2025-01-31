@@ -50,7 +50,6 @@ class GoLCudaLocalOneCellImpl : public infrastructure::Algorithm<2, grid_cell_t>
         CUCH(cudaMalloc(&cuda_data.input, size * sizeof(word_type)));
         CUCH(cudaMalloc(&cuda_data.output, size * sizeof(word_type)));
 
-        CUCH(cudaMalloc(&cuda_data.change_state_store.before_last, state_store_word_count() * sizeof(state_store_type)));
         CUCH(cudaMalloc(&cuda_data.change_state_store.last, state_store_word_count() * sizeof(state_store_type)));
         CUCH(cudaMalloc(&cuda_data.change_state_store.current, state_store_word_count() * sizeof(state_store_type)));
 
@@ -81,7 +80,6 @@ class GoLCudaLocalOneCellImpl : public infrastructure::Algorithm<2, grid_cell_t>
 
         CUCH(cudaFree(cuda_data.input));
         CUCH(cudaFree(cuda_data.output));
-        CUCH(cudaFree(cuda_data.change_state_store.before_last));
         CUCH(cudaFree(cuda_data.change_state_store.last));
         CUCH(cudaFree(cuda_data.change_state_store.current));
     }
@@ -119,13 +117,11 @@ class GoLCudaLocalOneCellImpl : public infrastructure::Algorithm<2, grid_cell_t>
     void reset_changed_stores() {
         state_store_type zero = 0;
 
-        CUCH(cudaMemset(cuda_data.change_state_store.before_last, ~zero, state_store_word_count() * sizeof(state_store_type)));
         CUCH(cudaMemset(cuda_data.change_state_store.last, ~zero, state_store_word_count() * sizeof(state_store_type)));
         CUCH(cudaMemset(cuda_data.change_state_store.current, ~zero, state_store_word_count() * sizeof(state_store_type)));
     }
 
     void rotate_state_stores() {
-        std::swap(cuda_data.change_state_store.before_last, cuda_data.change_state_store.last);
         std::swap(cuda_data.change_state_store.last, cuda_data.change_state_store.current);
     }
 
@@ -220,7 +216,7 @@ class GoLCudaLocalOneCellImpl : public infrastructure::Algorithm<2, grid_cell_t>
         std::vector<state_store_type> last(state_store_word_count(), 0);
         std::vector<state_store_type> before_last(state_store_word_count(), 0);
         CUCH(cudaMemcpy(last.data(), cuda_data.change_state_store.last, state_store_word_count() * sizeof(state_store_type), cudaMemcpyDeviceToHost));
-        CUCH(cudaMemcpy(before_last.data(), cuda_data.change_state_store.before_last, state_store_word_count() * sizeof(state_store_type), cudaMemcpyDeviceToHost));
+        CUCH(cudaMemcpy(before_last.data(), cuda_data.change_state_store.current, state_store_word_count() * sizeof(state_store_type), cudaMemcpyDeviceToHost));
 
         auto x_tiles = bit_grid->x_size() / 32;
         auto y_tiles = bit_grid->y_size() / 1;

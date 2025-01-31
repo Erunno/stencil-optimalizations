@@ -12,14 +12,14 @@ BASE_DIR = './final-measurements/{architecture}'
 
 GRAPH_DIR = './generated-graphs'
 
-MODE='png'
-# MODE='pdf'
+# MODE='png'
+MODE='pdf'
 
-X_LABEL_FONT_SIZE = 16
-Y_LABEL_FONT_SIZE = 16
-LEGEND_FONT_SIZE = 11
-X_TICKS_FONT_SIZE = 12
-Y_TICKS_FONT_SIZE = 12
+X_LABEL_FONT_SIZE = 20
+Y_LABEL_FONT_SIZE = 20
+LEGEND_FONT_SIZE = 13
+X_TICKS_FONT_SIZE = 17
+Y_TICKS_FONT_SIZE = 17
 
 X_TICKS_OFFSET = -0.02
 Y_LABEL_OFFSET = 12
@@ -506,6 +506,9 @@ def print_stats(results):
     naive_char = results.get_experiments_with([(ra.Key.algorithm_name, 'gol-cuda-naive'), (ra.Key.base_grid_encoding, 'char'), (ra.Key.grid_dimensions, grid)])[0]
     naive_char_val = naive_char.get_measurement_set().get_mean(lambda m: m.compute_runtime_per_cell_per_iter())
 
+    naive_int = results.get_experiments_with([(ra.Key.algorithm_name, 'gol-cuda-naive'), (ra.Key.base_grid_encoding, 'int'), (ra.Key.grid_dimensions, grid)])[0]
+    naive_int_val = naive_int.get_measurement_set().get_mean(lambda m: m.compute_runtime_per_cell_per_iter())
+
     sota_packed_32 = results.get_experiments_with([(ra.Key.algorithm_name, 'eff-sota-packed-32'), (ra.Key.grid_dimensions, grid)])[0]
     sota_packed_32_val = sota_packed_32.get_measurement_set().get_mean(lambda m: m.compute_runtime_per_cell_per_iter())
 
@@ -515,9 +518,24 @@ def print_stats(results):
     bitwise_tiles_64 = results.get_experiments_with([(ra.Key.algorithm_name, 'gol-cuda-naive-bitwise-tiles-64'), (ra.Key.grid_dimensions, grid)])[0]
     bitwise_tiles_64_val = bitwise_tiles_64.get_measurement_set().get_mean(lambda m: m.compute_runtime_per_cell_per_iter())
 
+    bitwise_cols_64 = results.get_experiments_with([(ra.Key.algorithm_name, 'gol-cuda-naive-bitwise-cols-64'), (ra.Key.grid_dimensions, grid)])[0]
+    bitwise_cols_64_val = bitwise_cols_64.get_measurement_set().get_mean(lambda m: m.compute_runtime_per_cell_per_iter())
+
     local_tiles_66 = results.get_experiments_with([(ra.Key.algorithm_name, 'gol-cuda-local-one-cell-64--bit-tiles'), (ra.Key.tag, 'no-work'), (ra.Key.grid_dimensions, grid)])[0]
     local_tiles_66_val = local_tiles_66.get_measurement_set().get_mean(lambda m: m.compute_runtime_per_cell_per_iter())
 
+    local_tiles_full_work = results.get_experiments_with([(ra.Key.algorithm_name, 'gol-cuda-local-one-cell-64--bit-tiles'), (ra.Key.tag, 'full-work'), (ra.Key.grid_dimensions, grid)])[0]
+    local_tiles_full_work_val = local_tiles_full_work.get_measurement_set().get_mean(lambda m: m.compute_runtime_per_cell_per_iter())
+
+    local_cols_full_work = results.get_experiments_with([(ra.Key.algorithm_name, 'gol-cuda-local-one-cell-cols-64'), (ra.Key.tag, 'full-work'), (ra.Key.grid_dimensions, grid)])[0]
+    local_cols_full_work_val = local_cols_full_work.get_measurement_set().get_mean(lambda m: m.compute_runtime_per_cell_per_iter())
+
+    local_tiles_no_work = results.get_experiments_with([(ra.Key.algorithm_name, 'gol-cuda-local-one-cell-64--bit-tiles'), (ra.Key.tag, 'no-work'), (ra.Key.grid_dimensions, grid)])[0]
+    local_tiles_no_work_val = local_tiles_no_work.get_measurement_set().get_mean(lambda m: m.compute_runtime_per_cell_per_iter())
+
+    local_cols_no_work = results.get_experiments_with([(ra.Key.algorithm_name, 'gol-cuda-local-one-cell-cols-64'), (ra.Key.tag, 'no-work'), (ra.Key.grid_dimensions, grid)])[0]
+    local_cols_no_work_val = local_cols_no_work.get_measurement_set().get_mean(lambda m: m.compute_runtime_per_cell_per_iter())
+    
     print(f'base case (no work reduction) speedup over best naive: {naive_char_val / bitwise_tiles_64_val:.2f} x')
     print(f'base case (no work reduction) speedup over best sota: {sota_packed_32_val / bitwise_tiles_64_val:.2f} x')
     print(f'base case (no work reduction) speedup over AN5D: {and5_val / bitwise_tiles_64_val:.2f} x')
@@ -525,6 +543,27 @@ def print_stats(results):
     print(f'work reduction (no work) speedup over best naive: {naive_char_val / local_tiles_66_val:.2f} x')
     print(f'work reduction (no work) speedup over best sota: {sota_packed_32_val / local_tiles_66_val:.2f} x')
     print(f'work reduction (no work) speedup over AN5D: {and5_val / local_tiles_66_val:.2f} x')
+
+    print(f'work reduction tiles (full work) slowdown over base: {local_tiles_full_work_val / bitwise_tiles_64_val:.2f} x')
+    print(f'work reduction cols (full work) slowdown over base: {local_cols_full_work_val / bitwise_cols_64_val:.2f} x')
+
+    print(f'work reduction tiles (no work) speedup over base: {bitwise_tiles_64_val / local_tiles_no_work_val:.2f} x')
+    print(f'work reduction cols (no work) speedup over base: {bitwise_cols_64_val / local_cols_no_work_val:.2f} x')
+
+    print(f'best "core" over baseline: {naive_char_val / bitwise_tiles_64_val:.2f}')
+    print(f'best "core" over sota: {sota_packed_32_val / bitwise_tiles_64_val:.2f}')
+    
+    print(f'best "optimized" over baseline: {naive_char_val / local_tiles_no_work_val:.2f}')
+    print(f'best "optimized" over sota: {sota_packed_32_val / local_tiles_no_work_val:.2f}')
+
+    print(f'best "core" over best "an5d": {and5_val / bitwise_tiles_64_val:.2f}')
+    print(f'best "optimized" over best "an5d": {and5_val / local_tiles_no_work_val:.2f}')
+
+    print(f'an5d over char baseline: {naive_char_val / and5_val:.2f}')
+    print(f'an5d over int baseline: {naive_int_val / and5_val:.2f}')
+
+
+
 
 for architecture in ARCHITECTURES:
     DATA_DIR = BASE_DIR.format(architecture=architecture)
