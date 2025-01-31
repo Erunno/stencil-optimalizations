@@ -124,34 +124,6 @@ struct BitTile<std::uint64_t> {
     }
 };
 
-template <typename bit_type>
-struct WastefulRows {
-    constexpr static std::size_t BITS = sizeof(bit_type) * 8;
-    constexpr static std::size_t BITS_PER_CELL = 4;
-    constexpr static std::size_t CELLS_PER_WORD = BITS / BITS_PER_CELL;
-
-    constexpr static std::size_t X_BITS = CELLS_PER_WORD;
-    constexpr static std::size_t Y_BITS = 1;
-
-    static bit_type get_bit_mask_for(std::size_t x, std::size_t y) {
-        (void)y;
-
-        bit_type one = 1;
-        auto x_bit_pos = x % X_BITS;
-
-        return one << (x_bit_pos * BITS_PER_CELL);
-    }
-
-    constexpr static bit_type first_mask = 1;
-    static bit_type move_next_mask(bit_type mask) {
-        return mask << BITS_PER_CELL;
-    }
-
-    static std::string name() {
-        return "Rows " + std::to_string(BITS) + " bits policy";
-    }
-};
-
 struct BitColumnsMode {
     template <typename bit_type>
     using policy = BitColumns<bit_type>;
@@ -167,15 +139,6 @@ struct BitTileMode {
 
     static std::string name() {
         return "ModeTiles";
-    }
-};
-
-struct BitWastefulRowsMode {
-    template <typename bit_type>
-    using policy = WastefulRows<bit_type>;
-
-    static std::string name() {
-        return "ModeWastefulRows";
     }
 };
 

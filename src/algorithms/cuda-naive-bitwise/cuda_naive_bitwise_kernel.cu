@@ -96,12 +96,4 @@ template class algorithms::GoLCudaNaiveBitwise<common::INT, 16, algorithms::BitT
 template class algorithms::GoLCudaNaiveBitwise<common::INT, 32, algorithms::BitTileMode>;
 template class algorithms::GoLCudaNaiveBitwise<common::INT, 64, algorithms::BitTileMode>;
 
-template class algorithms::GoLCudaNaiveBitwise<common::CHAR, 16, algorithms::BitWastefulRowsMode>;
-template class algorithms::GoLCudaNaiveBitwise<common::CHAR, 32, algorithms::BitWastefulRowsMode>;
-template class algorithms::GoLCudaNaiveBitwise<common::CHAR, 64, algorithms::BitWastefulRowsMode>;
-
-template class algorithms::GoLCudaNaiveBitwise<common::INT, 16, algorithms::BitWastefulRowsMode>;
-template class algorithms::GoLCudaNaiveBitwise<common::INT, 32, algorithms::BitWastefulRowsMode>;
-template class algorithms::GoLCudaNaiveBitwise<common::INT, 64, algorithms::BitWastefulRowsMode>;
-
 #endif // CUDA_NAIVE_KERNEL_CU

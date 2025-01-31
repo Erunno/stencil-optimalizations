@@ -6,7 +6,6 @@
 
 #include "baseline/GOL.hpp"
 #include "packed/GOL.hpp"
-#include "packed_vectors/GOL.hpp"
 
 namespace algorithms::rel_work {
 
@@ -26,8 +25,6 @@ struct Efficient_simulation_execution_of_cellular_automata_on_GPU {
 
         repo.template register_algorithm<GOL_Packed_sota<grid_cell_t, _32_bit_policy>>("eff-sota-packed-32");
         repo.template register_algorithm<GOL_Packed_sota<grid_cell_t, _64_bit_policy>>("eff-sota-packed-64");
-
-        repo.template register_algorithm<GOL_Packed_vectors<grid_cell_t, _32_bit_policy_vectors>>("eff-vectors-packed-32");
     }
 };
 

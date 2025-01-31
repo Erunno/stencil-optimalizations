@@ -1,6 +1,0 @@
-#include "cuda.h"
-
-__global__ void _32_kernel0_4(unsigned int *grid, int x_size_ext, int y_size_ext, int iters, int c0);
-__global__ void _32_kernel0_3(unsigned int *grid, int x_size_ext, int y_size_ext, int iters, int c0);
-__global__ void _32_kernel0_2(unsigned int *grid, int x_size_ext, int y_size_ext, int iters, int c0);
-__global__ void _32_kernel0_1(unsigned int *grid, int x_size_ext, int y_size_ext, int iters, int c0);

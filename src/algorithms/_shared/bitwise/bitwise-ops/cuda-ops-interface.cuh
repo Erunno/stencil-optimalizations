@@ -6,7 +6,6 @@
 #include "./macro-tiles.hpp"
 #include <cuda_runtime.h> 
 #include "../bit_modes.hpp"
-#include "./wasteful-rows.cuh"
 
 namespace algorithms {
 
@@ -104,18 +103,6 @@ public:
         word_type lb, word_type cb, word_type rb) {
 
         return __64_BITS__GOL_BITWISE_TILES_COMPUTE(lt, ct, rt, lc, cc, rc, lb, cb, rb);
-    }
-};
-
-template <typename word_type>
-class CudaBitwiseOps<word_type, BitWastefulRowsMode> {
-public:
-    __device__ static __forceinline__ word_type compute_center_word(
-        word_type lt, word_type ct, word_type rt, 
-        word_type lc, word_type cc, word_type rc,
-        word_type lb, word_type cb, word_type rb) {
-
-        return WastefulRowsImplantation<word_type>::compute_center_word(lt, ct, rt, lc, cc, rc, lb, cb, rb);
     }
 };
 

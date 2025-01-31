@@ -6,7 +6,6 @@
 #include <memory>
 #include <string>
 
-#include "../algorithms/an5d/an5d_cuda_timer.hpp"
 #include "experiment_params.hpp"
 #include "grid.hpp"
 #include "timer.hpp"
@@ -75,11 +74,6 @@ class Algorithm {
      */
     virtual void set_params(const ExperimentParams& params) {
         this->params = params;
-    }
-
-
-    virtual bool is_an5d_cuda_alg() const {
-        return false;
     }
 
   protected:
@@ -256,17 +250,6 @@ class TimedAlgorithm : public Algorithm<Dims, ElementType> {
     }
 
     TimeReport get_time_report() {
-        if (algorithm->is_an5d_cuda_alg()) {
-
-            time_report.set_and_format_input_data = TimeReport::INVALID;
-            time_report.initialize_data_structures = TimeReport::INVALID;
-
-            time_report.run = algorithms::An5dCudaTimer::elapsed_time_ms();
-
-            time_report.finalize_data_structures = TimeReport::INVALID;
-            time_report.fetch_result = TimeReport::INVALID;
-        }
-
         return time_report;
     }
 

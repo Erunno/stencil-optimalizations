@@ -1,6 +1,6 @@
 # Slaying a Life
 
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/skrhakv/CryptoBench/blob/master/LICENSE)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENCE) [![doi](https://img.shields.io/badge/DOI-TODO-blue)](todo)
 
 This repository is associated with the following paper:  
 
@@ -24,6 +24,7 @@ The paper discusses several optimization techniques. Below is an index to help n
 | **Linear Bitwise Optimization** | CUDA kernel for bit-wise encoded approaches. | [Kernel](./src/algorithms/cuda-naive-bitwise/cuda_naive_bitwise_kernel.cu#L33) |  
 | | Python script for generating macros. | [Script](./src/algorithms/_shared/bitwise/bitwise-ops/python-macro-generators/cols_macro_gen.py) |  
 | | Generated macros. | [Macros](./src/algorithms/_shared/bitwise/bitwise-ops/macro-cols.hpp) |  
+| | Templated implementation (on CPUs only) | [Code](./src/algorithms/_shared/bitwise/bitwise-ops/templated-cols.hpp#L31)|
 | **Tiled Bitwise Optimization** | Uses the same kernel as the Linear approach but modifies `CudaBitwiseOps<word_type, bit_grid_mode>::compute_center_word`, which calls a different macro. | [Kernel](./src/algorithms/cuda-naive-bitwise/cuda_naive_bitwise_kernel.cu#L33) |  
 | | Python script for generating macros. | [Script](./src/algorithms/_shared/bitwise/bitwise-ops/python-macro-generators/tiles_macro_gen.py) |  
 | | Generated macros. | [Macros](./src/algorithms/_shared/bitwise/bitwise-ops/macro-tiles.hpp) |  
@@ -47,7 +48,7 @@ $> ./run.sh
 
 Depending on your environment, you may need to modify some variables. The `./run.sh` script compiles the code and then runs it with default parameters. The executable should be located in `./build/src/stencils`. If this is not the case, update the [WORK_DIR](./run.sh#L13) and [GOL_EXE_NAME](./gol-run-with-defaults.sh#L6) variables accordingly.  
 
-You can modify the program's runtime parameters in the [./gol-run-with-defaults.sh](./gol-run-with-defaults.sh) script. A detailed explanation of these parameters can be found in the [program argument documentation](./src/infrastructure/README.md).  
+You can modify the program's runtime parameters in the [./gol-run-with-defaults.sh](./gol-run-with-defaults.sh) script. A detailed explanation of these parameters can be found in the [program argument documentation](./README-program-arguments.md).  
 
 ## Results  
 
@@ -68,3 +69,11 @@ $> cd cluster-experiments  # The working directory must be this folder
 $> ./run-all-experiments.sh > my-measurements/all-experiments.out
 $> ./result_analysis.sh  # You will need to adjust control variables as discussed
 ```
+
+## Contact us
+
+If you have any questions regarding the optimizations, our implementation, or if you have any suggestions, please feel free to contact us by raising [an issue](/issues)!
+
+## License
+
+This source code is licensed under the [MIT license](./LICENCE).

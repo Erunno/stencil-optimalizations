@@ -6,7 +6,6 @@
 #include <cstdint>
 #include <iostream>
 #include "../bit_modes.hpp"
-#include "./wasteful-rows.cuh"
 namespace algorithms {
 
 #undef POPCOUNT_16
@@ -133,24 +132,6 @@ class MacroTilesOperations<std::uint64_t> {
 
     // clang-format on
 };
-
-template <typename word_type>
-class WastefulRowsOps {
-  public:
-    using bit_grid_mode = BitWastefulRowsMode;
-
-    // clang-format off
-    static  word_type compute_center_word(
-        word_type lt, word_type ct, word_type rt, 
-        word_type lc, word_type cc, word_type rc,
-        word_type lb, word_type cb, word_type rb) {
-            
-        return WastefulRowsImplantation<word_type>::compute_center_word(
-            lt, ct, rt, lc, cc, rc, lb, cb, rb);
-    }
-
-};
-
 
 
 } // namespace algorithms

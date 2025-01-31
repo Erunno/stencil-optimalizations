@@ -1,7 +1,6 @@
 #ifndef INFRASTRUCTURE_EXPERIMENT_MANAGER_HPP
 #define INFRASTRUCTURE_EXPERIMENT_MANAGER_HPP
 
-#include "../algorithms/an5d/an5d-cpu-alg.hpp"
 #include "../algorithms/_shared/bitwise/bitwise-ops/cpu-ops-interface.hpp"
 #include "../algorithms/cpu-bitwise-general/gol_cpu_bitwise_general.hpp"
 #include "../algorithms/cpu-bitwise-general-naive/gol_cpu_bitwise_general_naive.hpp"
@@ -9,9 +8,6 @@
 #include "../algorithms/cuda-naive-bitwise/gol_cuda_naive_bitwise.hpp"
 #include "../algorithms/cuda-naive/gol_cuda_naive.hpp"
 #include "../algorithms/cuda-memcpy/cuda_memcpy_bench.hpp"
-#include "../algorithms/cuda-naive-bitwise-no-macro/gol_cuda_naive_bitwise_no_macro.hpp"
-#include "../algorithms/cuda-naive-local/gol_cuda_naive_local.hpp"
-#include "../algorithms/cuda-naive-local/gol_cuda_naive_just_tiling.hpp"
 #include "../algorithms/cuda-naive-local-one-cell/cuda_local_one_cell.hpp"
 #include "./data_loader.hpp"
 #include "../algorithms/rel-work/eff-sim-ex-of-cell-auto-GPU/register-all-algs.hpp"
@@ -34,7 +30,6 @@
 
 using namespace debug_utils;
 namespace alg = algorithms;
-namespace cuda_naive_local = algorithms::cuda_naive_local;
 namespace cuda_local_one_cell = algorithms::cuda_local_one_cell;
 
 using state_in_64_bits_t = std::uint64_t;
@@ -56,9 +51,6 @@ class ExperimentManager {
     template <typename word_type>
     using ColsTemplatedOps = algorithms::BitwiseColsTemplatedOps<word_type>;
 
-    template <typename word_type>
-    using WastefulRowsOps = algorithms::WastefulRowsOps<word_type>;
-
     enum class AlgMode {
         Timed = 0,
         NotTimed = 1,
@@ -71,8 +63,10 @@ class ExperimentManager {
 
         // CPU
 
+        // baseline
         _2d_repo-> template register_algorithm<alg::GoLCpuNaive<grid_cell_t>>("gol-cpu-naive");
 
+        // this is naive implementation which is ignorant of the underling bitwise encoding
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwiseNaive<grid_cell_t, 16, alg::BitColumnsMode>>("gol-cpu-bitwise-cols-naive-16");
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwiseNaive<grid_cell_t, 32, alg::BitColumnsMode>>("gol-cpu-bitwise-cols-naive-32");
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwiseNaive<grid_cell_t, 64, alg::BitColumnsMode>>("gol-cpu-bitwise-cols-naive-64");
@@ -81,25 +75,20 @@ class ExperimentManager {
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwiseNaive<grid_cell_t, 32, alg::BitTileMode>>("gol-cpu-bitwise-tiles-naive-32");
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwiseNaive<grid_cell_t, 64, alg::BitTileMode>>("gol-cpu-bitwise-tiles-naive-64");
 
-        _2d_repo-> template register_algorithm<alg::GoLCpuBitwiseNaive<grid_cell_t, 16, alg::BitWastefulRowsMode>>("gol-cpu-bitwise-wrows-naive-16");
-        _2d_repo-> template register_algorithm<alg::GoLCpuBitwiseNaive<grid_cell_t, 32, alg::BitWastefulRowsMode>>("gol-cpu-bitwise-wrows-naive-32");
-        _2d_repo-> template register_algorithm<alg::GoLCpuBitwiseNaive<grid_cell_t, 64, alg::BitWastefulRowsMode>>("gol-cpu-bitwise-wrows-naive-64");
-
+        // this is avare that the encoding are bit columns and uses templates to take advantage of that
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 16, ColsTemplatedOps>>("gol-cpu-bitwise-cols-16");
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 32, ColsTemplatedOps>>("gol-cpu-bitwise-cols-32");
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 64, ColsTemplatedOps>>("gol-cpu-bitwise-cols-64");
 
+        // this is avare that the encoding are bit columns and uses generated macro
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 16, ColsMacroOps>>("gol-cpu-bitwise-cols-macro-16");
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 32, ColsMacroOps>>("gol-cpu-bitwise-cols-macro-32");
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 64, ColsMacroOps>>("gol-cpu-bitwise-cols-macro-64");
 
+        // this is avare that the encoding are bit tiles and uses generated macro
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 16, TilesMacroOps>>("gol-cpu-bitwise-tiles-macro-16");
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 32, TilesMacroOps>>("gol-cpu-bitwise-tiles-macro-32");
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 64, TilesMacroOps>>("gol-cpu-bitwise-tiles-macro-64");
-
-        _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 16, WastefulRowsOps>>("gol-cpu-bitwise-wrows-simd-16");
-        _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 32, WastefulRowsOps>>("gol-cpu-bitwise-wrows-simd-32");
-        _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 64, WastefulRowsOps>>("gol-cpu-bitwise-wrows-simd-64");
 
         // CUDA
 
@@ -115,34 +104,6 @@ class ExperimentManager {
         _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 32, alg::BitTileMode>>("gol-cuda-naive-bitwise-tiles-32");
         _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 64, alg::BitTileMode>>("gol-cuda-naive-bitwise-tiles-64");
 
-        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 16, alg::BitWastefulRowsMode>>("gol-cuda-naive-bitwise-wrows-16");
-        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 32, alg::BitWastefulRowsMode>>("gol-cuda-naive-bitwise-wrows-32");
-        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 64, alg::BitWastefulRowsMode>>("gol-cuda-naive-bitwise-wrows-64");
-
-        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwiseNoMacro<grid_cell_t, 16>>("gol-cuda-naive-bitwise-no-macro-16");
-        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwiseNoMacro<grid_cell_t, 32>>("gol-cuda-naive-bitwise-no-macro-32");
-        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwiseNoMacro<grid_cell_t, 64>>("gol-cuda-naive-bitwise-no-macro-64");
-
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveLocal<grid_cell_t, 16, alg::BitColumnsMode>>("gol-cuda-naive-local-16");
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveLocal<grid_cell_t, 32, alg::BitColumnsMode>>("gol-cuda-naive-local-32");
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveLocal<grid_cell_t, 64, alg::BitColumnsMode>>("gol-cuda-naive-local-64");
-
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveLocal<grid_cell_t, 16, alg::BitTileMode>>("gol-cuda-naive-local-16--bit-tiles");
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveLocal<grid_cell_t, 32, alg::BitTileMode>>("gol-cuda-naive-local-32--bit-tiles");
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveLocal<grid_cell_t, 64, alg::BitTileMode>>("gol-cuda-naive-local-64--bit-tiles");
-
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveJustTiling<grid_cell_t, 16, alg::BitColumnsMode>>("gol-cuda-naive-just-tiling-cols-16");
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveJustTiling<grid_cell_t, 32, alg::BitColumnsMode>>("gol-cuda-naive-just-tiling-cols-32");
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveJustTiling<grid_cell_t, 64, alg::BitColumnsMode>>("gol-cuda-naive-just-tiling-cols-64");
-
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveJustTiling<grid_cell_t, 16, alg::BitTileMode>>("gol-cuda-naive-just-tiling-16--bit-tiles");
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveJustTiling<grid_cell_t, 32, alg::BitTileMode>>("gol-cuda-naive-just-tiling-32--bit-tiles");
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveJustTiling<grid_cell_t, 64, alg::BitTileMode>>("gol-cuda-naive-just-tiling-64--bit-tiles");
-
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveJustTiling<grid_cell_t, 16, alg::BitWastefulRowsMode>>("gol-cuda-naive-just-tiling-16--wrows");
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveJustTiling<grid_cell_t, 32, alg::BitWastefulRowsMode>>("gol-cuda-naive-just-tiling-32--wrows");
-        _2d_repo-> template register_algorithm<cuda_naive_local::GoLCudaNaiveJustTiling<grid_cell_t, 64, alg::BitWastefulRowsMode>>("gol-cuda-naive-just-tiling-64--wrows");
-
         _2d_repo-> template register_algorithm<cuda_local_one_cell::GoLCudaLocalOneCell<grid_cell_t, 16, alg::BitColumnsMode>>("gol-cuda-local-one-cell-cols-16");
         _2d_repo-> template register_algorithm<cuda_local_one_cell::GoLCudaLocalOneCell<grid_cell_t, 32, alg::BitColumnsMode>>("gol-cuda-local-one-cell-cols-32");
         _2d_repo-> template register_algorithm<cuda_local_one_cell::GoLCudaLocalOneCell<grid_cell_t, 64, alg::BitColumnsMode>>("gol-cuda-local-one-cell-cols-64");
@@ -151,21 +112,7 @@ class ExperimentManager {
         _2d_repo-> template register_algorithm<cuda_local_one_cell::GoLCudaLocalOneCell<grid_cell_t, 32, alg::BitTileMode>>("gol-cuda-local-one-cell-32--bit-tiles");
         _2d_repo-> template register_algorithm<cuda_local_one_cell::GoLCudaLocalOneCell<grid_cell_t, 64, alg::BitTileMode>>("gol-cuda-local-one-cell-64--bit-tiles");
 
-        // AN5D
-
-        _2d_repo-> template register_algorithm<alg::An5dAlg<grid_cell_t, 32, alg::ExecModel::CPU, alg::BitColumnsMode>>("an5d-cpu-32-cols");
-        _2d_repo-> template register_algorithm<alg::An5dAlg<grid_cell_t, 64, alg::ExecModel::CPU, alg::BitColumnsMode>>("an5d-cpu-64-cols");
-
-        _2d_repo-> template register_algorithm<alg::An5dAlg<grid_cell_t, 32, alg::ExecModel::CUDA, alg::BitColumnsMode>>("an5d-cuda-32-cols");
-        _2d_repo-> template register_algorithm<alg::An5dAlg<grid_cell_t, 64, alg::ExecModel::CUDA, alg::BitColumnsMode>>("an5d-cuda-64-cols");
-
-        _2d_repo-> template register_algorithm<alg::An5dAlg<grid_cell_t, 32, alg::ExecModel::CPU, alg::BitTileMode>>("an5d-cpu-32-tiles");
-        _2d_repo-> template register_algorithm<alg::An5dAlg<grid_cell_t, 64, alg::ExecModel::CPU, alg::BitTileMode>>("an5d-cpu-64-tiles");
-
-        _2d_repo-> template register_algorithm<alg::An5dAlg<grid_cell_t, 32, alg::ExecModel::CUDA, alg::BitTileMode>>("an5d-cuda-32-tiles");
-        _2d_repo-> template register_algorithm<alg::An5dAlg<grid_cell_t, 64, alg::ExecModel::CUDA, alg::BitTileMode>>("an5d-cuda-64-tiles");
-
-        // other related work algorithms
+        // related work algorithms
 
         algorithms::rel_work::Efficient_simulation_execution_of_cellular_automata_on_GPU::register_all_algs(*_2d_repo);
     }
