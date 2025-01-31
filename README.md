@@ -12,7 +12,7 @@ This repository is associated with the following paper:
 
 ## About  
 
-Iterative stencil loops (ISLs) are widely used in simulations, image processing, and cellular automata. This project focuses on optimizing Conway's Game of Life on GPUs. While existing implementations are efficient, we identified areas for significant improvement. Our approach minimizes unnecessary computations by skipping unchanged grid regions and employs a more efficient bit-wise encoding. The result is a **22× speedup** over a basic GPU implementation, **7.3× faster** performance compared to the packet-coding method, and **18.4× faster** execution than AN5D-generated code.  
+Iterative stencil loops (ISLs) are widely used in simulations, image processing, and cellular automata. This project focuses on optimizing Conway's Game of Life on GPUs. While existing implementations are efficient, we identified areas for significant improvement. Our approach minimizes unnecessary computations by skipping unchanged grid regions and employs a more efficient bit-wise encoding. The result is a **22.8× speedup** over a basic GPU implementation, **7.5× faster** performance compared to the packet-coding method, and **19.1× faster** execution than AN5D-generated code.  
 
 ## Index  
 
