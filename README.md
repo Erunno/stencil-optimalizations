@@ -56,7 +56,15 @@ To interpret the outputs, use the Python abstraction in [results_abstraction.py]
 Graphs similar to those in the paper can be found in [./cluster-experiments/generated-graphs](./cluster-experiments/generated-graphs). To generate graphs from your own measurements, use the [result_analysis.py](./cluster-experiments/result_analysis.py) script. You may need to modify the following control variables:  
 
 - [BASE_DIR](./cluster-experiments/result_analysis.py#L11)  
-- [ARCHITECTURES](./cluster-experiments/result_analysis.py#L10)  
-- [BASE_DIR](./cluster-experiments/result_analysis.py#L13) *(possibly redundant reference, check if needed)*  
+- [ARCHITECTURES](./cluster-experiments/result_analysis.py#L10)
 - [MODE](./cluster-experiments/result_analysis.py#L15)
   
+### Replication  
+
+To replicate our experiments exactly, run the script [./cluster-experiments/run-all-experiments.sh](./cluster-experiments/run-all-experiments.sh):  
+
+```bash
+$> cd cluster-experiments  # The working directory must be this folder
+$> ./run-all-experiments.sh > my-measurements/all-experiments.out
+$> ./result_analysis  # You will need to adjust control variables as discussed
+```

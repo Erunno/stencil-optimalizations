@@ -2,7 +2,7 @@
 
 echo next-experiment
 
-EXECUTABLE=../build-stable/src/stencils
+EXECUTABLE=../build/src/stencils
 
 PATTERN_EXPRESSION=${PATTERN_EXPRESSION:-glider[0,0]}
 SPEEDUP_BENCH_ALGORITHM_NAME=${SPEEDUP_BENCH_ALGORITHM_NAME:-gol-cuda-naive}
