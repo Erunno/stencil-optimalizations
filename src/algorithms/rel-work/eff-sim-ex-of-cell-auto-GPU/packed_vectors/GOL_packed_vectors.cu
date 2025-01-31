@@ -2,6 +2,7 @@
 
 #include <cuda_runtime.h>
 #include <iostream>
+#include <type_traits>
 
 #include "../../../../infrastructure/timer.hpp"
 #include "../../../_shared/common_grid_types.hpp"
@@ -11,59 +12,57 @@ namespace algorithms::rel_work::eff_sim_ex_of_cell_auto_GPU {
 namespace {
 
 template <typename policy, typename CELL_TYPE>
-__global__ void GOL_packed_vectors (int GRID_SIZE, CELL_TYPE *grid, CELL_TYPE *newGrid)
+__global__ void GOL_packed_vectors (int GRID_SIZE, const CELL_TYPE *__restrict__ grid, CELL_TYPE *__restrict__ newGrid)
 {
     constexpr int ELEMENTS_PER_CELL = policy::ELEMENTS_PER_CELL;
-    constexpr unsigned int twos = 0x02020202U;
-    constexpr unsigned int threes = 0x03030303U;
-    constexpr unsigned int ones = 0x01010101U;
+    constexpr CELL_TYPE CELL_TYPE_SIZE = sizeof(CELL_TYPE) * 8;
+    constexpr CELL_TYPE BITS_PER_CELL = CELL_TYPE_SIZE / ELEMENTS_PER_CELL;
+
+    constexpr CELL_TYPE vones = static_cast<CELL_TYPE>(-1) / static_cast<CELL_TYPE>((1 << BITS_PER_CELL) - 1);
+
+    constexpr CELL_TYPE vtwos = vones << 1U;
+    constexpr CELL_TYPE vfours = vones << 2U;
+    constexpr CELL_TYPE veights = vones << 3U;
 
     const int ROW_SIZE = GRID_SIZE / ELEMENTS_PER_CELL;
 
-    constexpr unsigned int shift_next = (ELEMENTS_PER_CELL-1)*8;
+    constexpr CELL_TYPE shift_next = (ELEMENTS_PER_CELL-1)*BITS_PER_CELL;
 
     // We want id ∈ [1,SIZE]
     const int iy = blockDim.y * blockIdx.y + threadIdx.y + 1;
     const int ix = blockDim.x * blockIdx.x + threadIdx.x + 1;
     const int id = iy * (ROW_SIZE+2) + ix;
 
-    unsigned int numNeighbors = 0;
-    if (iy>0 && iy <= GRID_SIZE && ix> 0 && ix <= ROW_SIZE) {
-        const auto up_cell = grid[id-(ROW_SIZE+2)];
-        numNeighbors = __vaddus4(numNeighbors, up_cell >> 8);
-        numNeighbors = __vaddus4(numNeighbors, up_cell);
-        numNeighbors = __vaddus4(numNeighbors, up_cell << 8);
-
-        const auto down_cell = grid[id+(ROW_SIZE+2)];
-        numNeighbors = __vaddus4(numNeighbors, down_cell >> 8);
-        numNeighbors = __vaddus4(numNeighbors, down_cell);
-        numNeighbors = __vaddus4(numNeighbors, down_cell << 8);
-
-        const auto left_cell = grid[id+1] << shift_next;
-        numNeighbors = __vaddus4(numNeighbors, left_cell);
-        const auto upleft_cell = grid[id-(ROW_SIZE+1)] << shift_next;
-        numNeighbors = __vaddus4(numNeighbors, upleft_cell);
-        const auto downleft_cell = grid[id+(ROW_SIZE+3)] << shift_next;
-        numNeighbors = __vaddus4(numNeighbors, downleft_cell);
-
-        const auto right_cell = grid[id-1] >> shift_next;
-        numNeighbors = __vaddus4(numNeighbors, right_cell);
-        const auto upright_cell = grid[id-(ROW_SIZE+3)] >> shift_next;
-        numNeighbors = __vaddus4(numNeighbors, upright_cell);
-        const auto downright_cell = grid[id+(ROW_SIZE+1)] >> shift_next;
-        numNeighbors = __vaddus4(numNeighbors, downright_cell);
-
-        // fill a vectors filled with 2 and 3
-        const auto cell = grid[id];
-        numNeighbors = __vaddus4(numNeighbors, cell >> 8);
-        numNeighbors = __vaddus4(numNeighbors, cell << 8);
-
-        const auto alive_rule = __vcmpeq4(numNeighbors, twos) & cell;
-        const auto general_rule = __vcmpeq4(numNeighbors, threes) & ones;
-
-        // Copy new_cell to newGrid:
-        newGrid[id] = alive_rule | general_rule;
+    if (iy<=0 || iy > GRID_SIZE || ix<=0 || ix > ROW_SIZE) {
+        return;
     }
+
+    auto&& cell = grid[id];
+
+    auto&& up_cell = grid[id-(ROW_SIZE+2)];
+    auto&& down_cell = grid[id+(ROW_SIZE+2)];
+
+    auto&& left_cell = grid[id+1];
+    auto&& upleft_cell = grid[id-(ROW_SIZE+1)];
+    auto&& downleft_cell = grid[id+(ROW_SIZE+3)];
+
+    auto&& right_cell = grid[id-1];
+    auto&& upright_cell = grid[id-(ROW_SIZE+3)];
+    auto&& downright_cell = grid[id+(ROW_SIZE+1)];
+
+    const CELL_TYPE numNeighbors = up_cell + down_cell +
+        ((up_cell + cell + down_cell) << BITS_PER_CELL) +
+        ((up_cell + cell + down_cell) >> BITS_PER_CELL) +
+        ((left_cell + upleft_cell + downleft_cell) << shift_next) +
+        ((right_cell + upright_cell + downright_cell) >> shift_next);
+
+    // const auto alive_rule = __vcmpeq4(numNeighbors, vtwos) & cell;
+    // const auto general_rule = __vcmpeq4(numNeighbors, threes) & vones;
+    // newGrid[id] = alive_rule | general_rule;
+
+    const auto bit2 = ((numNeighbors & vtwos) >> 1U) & ~((numNeighbors & vfours) >> 2U) & ~((numNeighbors & veights) >> 3U);
+    const auto bit1 = (numNeighbors & vones) | cell;
+    newGrid[id] = bit1 & bit2;
 }
 
 } // namespace
@@ -71,8 +70,8 @@ __global__ void GOL_packed_vectors (int GRID_SIZE, CELL_TYPE *grid, CELL_TYPE *n
 template <typename grid_cell_t, typename policy>
 void GOL_Packed_vectors<grid_cell_t, policy>::run_kernel(size_type iterations) {
     dim3 blockSize(BLOCK_SIZE, BLOCK_SIZE,1);
-    int linGridx = (int)ceil(ROW_SIZE/(float)BLOCK_SIZE);
-    int linGridy = (int)ceil(GRID_SIZE/(float)BLOCK_SIZE);
+    int linGridx = (ROW_SIZE+BLOCK_SIZE-1)/BLOCK_SIZE;
+    int linGridy = (GRID_SIZE+BLOCK_SIZE-1)/BLOCK_SIZE;
     dim3 gridSize(linGridx,linGridy,1);
  
     infrastructure::StopWatch stop_watch(this->params.max_runtime_seconds);
@@ -98,3 +97,6 @@ void GOL_Packed_vectors<grid_cell_t, policy>::run_kernel(size_type iterations) {
 
 template class algorithms::rel_work::eff_sim_ex_of_cell_auto_GPU::GOL_Packed_vectors<common::CHAR, algorithms::rel_work::eff_sim_ex_of_cell_auto_GPU::_32_bit_policy_vectors>;
 template class algorithms::rel_work::eff_sim_ex_of_cell_auto_GPU::GOL_Packed_vectors<common::INT, algorithms::rel_work::eff_sim_ex_of_cell_auto_GPU::_32_bit_policy_vectors>;
+
+template class algorithms::rel_work::eff_sim_ex_of_cell_auto_GPU::GOL_Packed_vectors<common::CHAR, algorithms::rel_work::eff_sim_ex_of_cell_auto_GPU::_64_bit_policy_vectors>;
+template class algorithms::rel_work::eff_sim_ex_of_cell_auto_GPU::GOL_Packed_vectors<common::INT, algorithms::rel_work::eff_sim_ex_of_cell_auto_GPU::_64_bit_policy_vectors>;

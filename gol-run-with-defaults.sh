@@ -43,6 +43,8 @@ __31="2147483648"
 # ALGORITHM="eff-baseline-texture"
 # ALGORITHM="eff-sota-packed-32"
 # ALGORITHM="eff-sota-packed-64"
+# ALGORITHM="eff-vectors-packed-32"
+# ALGORITHM="eff-vectors-packed-64"
 
 # ALGORITHM="gol-cpu-bitwise-wrows-naive-64"
 # ALGORITHM="gol-cpu-bitwise-wrows-simd-64"
