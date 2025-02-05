@@ -6,17 +6,51 @@
 #include <iostream>
 #include "../bit_modes.hpp"
 #include <cuda_runtime.h>
+#include "../../template_helpers/striped_constants.hpp"
 
 namespace algorithms {
 
 template <typename word_type>
 struct WastefulRowsImplantation {
 
+    constexpr static int STRIDE_SIZE = 4;
+
+    template <int c>
+    using constant = Consts<word_type, c, STRIDE_SIZE>;
+
     constexpr static std::size_t BITS_PER_CELL = WastefulRows<word_type>::BITS_PER_CELL;
     constexpr static std::size_t BITS = WastefulRows<word_type>::BITS;
     constexpr static std::size_t CELLS_PER_WORD = WastefulRows<word_type>::CELLS_PER_WORD;
 
     constexpr static word_type CELL_MASK = (static_cast<word_type>(1) << BITS_PER_CELL) - 1;
+
+    static __host__ __device__ __forceinline__  word_type compute_center_word(
+        word_type lt, word_type ct, word_type rt, 
+        word_type lc, word_type cc, word_type rc,
+        word_type lb, word_type cb, word_type rb) {
+
+        word_type neighborhoods = ct + cc + cb;
+        neighborhoods += (neighborhoods >> BITS_PER_CELL) + (neighborhoods << BITS_PER_CELL);
+
+        word_type right_neighborhoods = (rt + rc + rb) << (BITS - BITS_PER_CELL);
+        word_type left_neighborhoods = (lt + lc + lb) >> (BITS - BITS_PER_CELL);
+
+        neighborhoods += right_neighborhoods + left_neighborhoods;
+        
+        neighborhoods -= cc;
+
+        word_type is_3 = (cc | neighborhoods) ^ constant<0b1100>::expanded;
+        is_3 = (is_3 >> 2) & is_3;
+        is_3 = (is_3 >> 1) & is_3;
+
+        word_type result = is_3 & constant<0b0001>::expanded;
+
+        return result;
+    }
+
+    // ------------------------------
+    // SIMPLER VERSIONS
+    // ------------------------------
 
     static __host__ __device__ __forceinline__  word_type compute_center_word_simple(
         word_type lt, word_type ct, word_type rt, 
@@ -59,7 +93,7 @@ struct WastefulRowsImplantation {
 
     constexpr static word_type bit_table = static_cast<word_type>(0b0000'0110'0000'1000);
 
-    static __host__ __device__ __forceinline__  word_type compute_center_word(
+    static __host__ __device__ __forceinline__  word_type compute_center_word_bit_lookup(
         word_type lt, word_type ct, word_type rt, 
         word_type lc, word_type cc, word_type rc,
         word_type lb, word_type cb, word_type rb) {
