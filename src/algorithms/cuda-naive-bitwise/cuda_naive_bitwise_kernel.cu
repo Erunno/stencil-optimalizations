@@ -104,4 +104,20 @@ template class algorithms::GoLCudaNaiveBitwise<common::INT, 16, algorithms::BitW
 template class algorithms::GoLCudaNaiveBitwise<common::INT, 32, algorithms::BitWastefulRowsMode>;
 template class algorithms::GoLCudaNaiveBitwise<common::INT, 64, algorithms::BitWastefulRowsMode>;
 
+template class algorithms::GoLCudaNaiveBitwise<common::CHAR, 16, algorithms::HalfPackedRowsMode>;
+template class algorithms::GoLCudaNaiveBitwise<common::CHAR, 32, algorithms::HalfPackedRowsMode>;
+template class algorithms::GoLCudaNaiveBitwise<common::CHAR, 64, algorithms::HalfPackedRowsMode>;
+
+template class algorithms::GoLCudaNaiveBitwise<common::INT, 16, algorithms::HalfPackedRowsMode>;
+template class algorithms::GoLCudaNaiveBitwise<common::INT, 32, algorithms::HalfPackedRowsMode>;
+template class algorithms::GoLCudaNaiveBitwise<common::INT, 64, algorithms::HalfPackedRowsMode>;
+
+template class algorithms::GoLCudaNaiveBitwise<common::CHAR, 16, algorithms::FullyPackedRowsMode>;
+template class algorithms::GoLCudaNaiveBitwise<common::CHAR, 32, algorithms::FullyPackedRowsMode>;
+template class algorithms::GoLCudaNaiveBitwise<common::CHAR, 64, algorithms::FullyPackedRowsMode>;
+
+template class algorithms::GoLCudaNaiveBitwise<common::INT, 16, algorithms::FullyPackedRowsMode>;
+template class algorithms::GoLCudaNaiveBitwise<common::INT, 32, algorithms::FullyPackedRowsMode>;
+template class algorithms::GoLCudaNaiveBitwise<common::INT, 64, algorithms::FullyPackedRowsMode>;
+
 #endif // CUDA_NAIVE_KERNEL_CU

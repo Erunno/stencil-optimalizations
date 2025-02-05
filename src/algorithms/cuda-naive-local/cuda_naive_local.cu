@@ -287,5 +287,17 @@ template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::CHAR
 template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::INT, 16, algorithms::BitWastefulRowsMode>;
 template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::INT, 32, algorithms::BitWastefulRowsMode>;
 template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::INT, 64, algorithms::BitWastefulRowsMode>;
+template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::CHAR, 16, algorithms::HalfPackedRowsMode>;
+template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::CHAR, 32, algorithms::HalfPackedRowsMode>;
+template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::CHAR, 64, algorithms::HalfPackedRowsMode>;
+template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::INT, 16, algorithms::HalfPackedRowsMode>;
+template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::INT, 32, algorithms::HalfPackedRowsMode>;
+template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::INT, 64, algorithms::HalfPackedRowsMode>;
+template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::CHAR, 16, algorithms::FullyPackedRowsMode>;
+template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::CHAR, 32, algorithms::FullyPackedRowsMode>;
+template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::CHAR, 64, algorithms::FullyPackedRowsMode>;
+template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::INT, 16, algorithms::FullyPackedRowsMode>;
+template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::INT, 32, algorithms::FullyPackedRowsMode>;
+template class algorithms::cuda_naive_local::GoLCudaNaiveJustTiling<common::INT, 64, algorithms::FullyPackedRowsMode>;
 
 #endif // CUDA_NAIVE_LOCAL_CU

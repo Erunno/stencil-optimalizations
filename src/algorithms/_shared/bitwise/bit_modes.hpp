@@ -124,11 +124,11 @@ struct BitTile<std::uint64_t> {
     }
 };
 
-template <typename bit_type>
-struct WastefulRows {
+template <typename bit_type, int bits_per_cell>
+struct GeneralPackedRows {
     constexpr static std::size_t BITS = sizeof(bit_type) * 8;
-    constexpr static std::size_t BITS_PER_CELL = 4;
-    constexpr static std::size_t CELLS_PER_WORD = BITS / BITS_PER_CELL;
+    constexpr static std::size_t CELLS_PER_WORD = BITS / bits_per_cell;
+    constexpr static std::size_t BITS_PER_CELL = bits_per_cell;
 
     constexpr static std::size_t X_BITS = CELLS_PER_WORD;
     constexpr static std::size_t Y_BITS = 1;
@@ -148,9 +148,19 @@ struct WastefulRows {
     }
 
     static std::string name() {
-        return "Rows " + std::to_string(BITS) + " bits policy";
+        return "Packed rows " + std::to_string(BITS) + " bits policy, " 
+            + std::to_string(BITS_PER_CELL) + " bits per cell";
     }
 };
+
+template <typename bit_type>
+using WastefulRows = GeneralPackedRows<bit_type, 4>;
+
+template <typename bit_type>
+using HalfPackedRows = GeneralPackedRows<bit_type, 2>;
+
+template <typename bit_type>
+using FullyPackedRows = GeneralPackedRows<bit_type, 1>;
 
 struct BitColumnsMode {
     template <typename bit_type>
@@ -176,6 +186,24 @@ struct BitWastefulRowsMode {
 
     static std::string name() {
         return "ModeWastefulRows";
+    }
+};
+
+struct HalfPackedRowsMode {
+    template <typename bit_type>
+    using policy = HalfPackedRows<bit_type>;
+
+    static std::string name() {
+        return "ModeHalfPackedRows";
+    }
+};
+
+struct FullyPackedRowsMode {
+    template <typename bit_type>
+    using policy = FullyPackedRows<bit_type>;
+
+    static std::string name() {
+        return "ModeFullyPackedRows";
     }
 };
 

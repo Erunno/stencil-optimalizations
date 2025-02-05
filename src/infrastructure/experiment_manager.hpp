@@ -59,6 +59,12 @@ class ExperimentManager {
     template <typename word_type>
     using WastefulRowsOps = algorithms::WastefulRowsOps<word_type>;
 
+    template <typename word_type>
+    using HalfPackedRows = algorithms::HalfPackedRowsWithVectorOps<word_type>;
+    
+    template <typename word_type>
+    using FullyPackedRows = algorithms::FullyPackedRowsWithVectorOps<word_type>;
+
     enum class AlgMode {
         Timed = 0,
         NotTimed = 1,
@@ -101,6 +107,14 @@ class ExperimentManager {
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 32, WastefulRowsOps>>("gol-cpu-bitwise-wrows-simd-32");
         _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 64, WastefulRowsOps>>("gol-cpu-bitwise-wrows-simd-64");
 
+        _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 16, HalfPackedRows>>("gol-cpu-bitwise-half-packed-rows-simd-16");
+        _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 32, HalfPackedRows>>("gol-cpu-bitwise-half-packed-rows-simd-32");
+        _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 64, HalfPackedRows>>("gol-cpu-bitwise-half-packed-rows-simd-64");
+
+        _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 16, FullyPackedRows>>("gol-cpu-bitwise-fully-packed-rows-simd-16");
+        _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 32, FullyPackedRows>>("gol-cpu-bitwise-fully-packed-rows-simd-32");
+        _2d_repo-> template register_algorithm<alg::GoLCpuBitwise<grid_cell_t, 64, FullyPackedRows>>("gol-cpu-bitwise-fully-packed-rows-simd-64");
+
         // CUDA
 
         _2d_repo-> template register_algorithm<alg::GoLCudaNaive<grid_cell_t>>("gol-cuda-naive");
@@ -118,6 +132,14 @@ class ExperimentManager {
         _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 16, alg::BitWastefulRowsMode>>("gol-cuda-naive-bitwise-wrows-16");
         _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 32, alg::BitWastefulRowsMode>>("gol-cuda-naive-bitwise-wrows-32");
         _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 64, alg::BitWastefulRowsMode>>("gol-cuda-naive-bitwise-wrows-64");
+        
+        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 16, alg::HalfPackedRowsMode>>("gol-cuda-naive-bitwise-half-packed-rows-16");
+        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 32, alg::HalfPackedRowsMode>>("gol-cuda-naive-bitwise-half-packed-rows-32");
+        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 64, alg::HalfPackedRowsMode>>("gol-cuda-naive-bitwise-half-packed-rows-64");
+        
+        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 16, alg::FullyPackedRowsMode>>("gol-cuda-naive-bitwise-fully-packed-rows-16");
+        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 32, alg::FullyPackedRowsMode>>("gol-cuda-naive-bitwise-fully-packed-rows-32");
+        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 64, alg::FullyPackedRowsMode>>("gol-cuda-naive-bitwise-fully-packed-rows-64");
 
         _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwiseNoMacro<grid_cell_t, 16>>("gol-cuda-naive-bitwise-no-macro-16");
         _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwiseNoMacro<grid_cell_t, 32>>("gol-cuda-naive-bitwise-no-macro-32");
