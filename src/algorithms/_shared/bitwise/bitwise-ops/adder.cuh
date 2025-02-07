@@ -28,8 +28,8 @@ struct AdderOperationsImplementation {
         word_type _0_right_nei, _1_right_nei;
         word_type _0_left_nei, _1_left_nei;
         
-        load_right_neighborhood(rt, rc, rb, _0_right_nei, _1_right_nei); // 5 ops + 3 ifs
-        load_left_neighborhood(lt, lc, lb, _0_left_nei, _1_left_nei); // 5 ops + 3 ifs
+        load_right_neighborhood(rt, rc, rb, _0_right_nei, _1_right_nei); // 5 ops + 3 ifs (+ 3 ops if 'ifs' are not used)
+        load_left_neighborhood(lt, lc, lb, _0_left_nei, _1_left_nei); // 5 ops + 3 ifs (+ 2 ops if 'ifs' are not used)
 
         word_type r_0 = _0; 
         word_type r_1 = _1; 
@@ -39,15 +39,15 @@ struct AdderOperationsImplementation {
         
         add_two<_2a_is_zero>(
             (_0 << 1) | _0_left_nei, (_1 << 1) | _1_left_nei, 0,
-            r_0, r_1, r_2); // 8 ops
+            r_0, r_1, r_2); // 8 ops + 4 ops
 
         add_two<_2a_is_zero>(
             (_0 >> 1) | _0_right_nei, (_1 >> 1) | _1_right_nei, 0, 
-            r_0, r_1, r_2); // 8 ops
+            r_0, r_1, r_2); // 8 ops + 4 ops
 
         return GOL(cc, r_0, r_1, r_2); // 9 ops
 
-        // total 41 ops + 6 ifs
+        // total 49 ops + 6 ifs (+ 5 ops if 'ifs' are not used)
     }
 
     constexpr static word_type ones = ~static_cast<word_type>(0);
@@ -112,7 +112,7 @@ struct AdderOperationsImplementation {
         auto count = (rt & 1) + (rc & 1) + (rb & 1);
         set_words<0, ONE>(count, _0, _1);
 
-        // used 5 ops + 3 ifs
+        // used 5 ops + 3 ifs (+ 3 ops if 'ifs' are not used)
     }
 
     static __host__ __device__ __forceinline__  void load_left_neighborhood(
@@ -124,7 +124,7 @@ struct AdderOperationsImplementation {
         auto count = (lt >> SHIFT) + (lc >> SHIFT) + (lb >> SHIFT);
         set_words<0, 1>(count, _0, _1);
 
-        // used 5 ops + 3 ifs
+        // used 5 ops + 3 ifs (+ 2 ops if 'ifs' are not used)
     }
 
     template <word_type zero, word_type one>
@@ -145,6 +145,18 @@ struct AdderOperationsImplementation {
             _0 = one;
             _1 = one;
         }
+
+        // variant without ifs (just a bit slower)
+
+        // if constexpr (one == 1) {
+        //     _0 = count & 1;
+        //     _1 = count >> 1;
+        // } 
+        // else {
+        //     _0 = count << (BITS - 1);
+        //     _1 = (count << (BITS - 2)) & one;
+        // }
+
     }
 };
 
