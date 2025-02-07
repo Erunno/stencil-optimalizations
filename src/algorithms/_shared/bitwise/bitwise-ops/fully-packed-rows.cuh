@@ -24,10 +24,6 @@ struct FullyPackedWithVectorOperationsImplementation {
     constexpr static word_type mask_0011 = constant_4<0b0011>::expanded;
     constexpr static word_type mask_1100 = constant_4<0b1100>::expanded;
 
-    constexpr static int USE_2_BITS = 2;
-    constexpr static int USE_3_BITS = 3;
-
-
     static __host__ __device__ __forceinline__  word_type compute_center_word(
         word_type lt, word_type ct, word_type rt, 
         word_type lc, word_type cc, word_type rc,
@@ -35,29 +31,33 @@ struct FullyPackedWithVectorOperationsImplementation {
 
         word_type _0 = cc;
         word_type _1 = 0;
-        word_type _2 = 0;
 
-        add<USE_2_BITS>(ct, _0, _1, _2);
-        add<USE_2_BITS>(cb, _0, _1, _2);
+        add(ct, _0, _1); // 3 ops
+        add(cb, _0, _1); // 3 ops
 
         word_type _0_right_nei, _1_right_nei;
         word_type _0_left_nei, _1_left_nei;
         
-        load_right_neighborhood(rt, rc, rb, _0_right_nei, _1_right_nei);
-        load_left_neighborhood(lt, lc, lb, _0_left_nei, _1_left_nei);
+        load_right_neighborhood(rt, rc, rb, _0_right_nei, _1_right_nei); // 5 ops + 3 ifs
+        load_left_neighborhood(lt, lc, lb, _0_left_nei, _1_left_nei); // 5 ops + 3 ifs
 
         word_type r_0 = _0; 
         word_type r_1 = _1; 
-        word_type r_2 = _2;
+        word_type r_2 = 0;
+    
+        constexpr bool _2a_is_zero = false;
         
-        add_two<USE_3_BITS>(
-            (_0 << 1) | _0_left_nei, (_1 << 1) | _1_left_nei, _2 << 1, 
-            r_0, r_1, r_2);
-        add_two<USE_3_BITS>(
-            (_0 >> 1) | _0_right_nei, (_1 >> 1) | _1_right_nei, _2 >> 1, 
-            r_0, r_1, r_2);
+        add_two<_2a_is_zero>(
+            (_0 << 1) | _0_left_nei, (_1 << 1) | _1_left_nei, 0,
+            r_0, r_1, r_2); // 8 ops
 
-        return GOL(cc, r_0, r_1, r_2);
+        add_two<_2a_is_zero>(
+            (_0 >> 1) | _0_right_nei, (_1 >> 1) | _1_right_nei, 0, 
+            r_0, r_1, r_2); // 8 ops
+
+        return GOL(cc, r_0, r_1, r_2); // 13 ops
+
+        // total 45 ops + 6 ifs
     }
 
     constexpr static word_type ones = ~static_cast<word_type>(0);
@@ -66,69 +66,56 @@ struct FullyPackedWithVectorOperationsImplementation {
     static __host__ __device__ __forceinline__ word_type GOL(
         word_type alive, word_type _0, word_type _1, word_type _2) {
 
-        minus(alive, _0, _1, _2);
-        _0 = _0 | alive;
-        return _0 & _1 & (_2 ^ ones);  
+        minus(alive, _0, _1, _2); // 9 ops
+        _0 = _0 | alive; // 1 op
+        return _0 & _1 & (_2 ^ ones); // 3 ops
+
+        // total 13 ops
     }
 
     static __host__ __device__ __forceinline__ void minus(word_type a, word_type& _0, word_type& _1, word_type& _2) {
-        add_two<USE_3_BITS>(a, a, a, _0, _1, _2);
+        add_two(a, a, a, _0, _1, _2);
+
+        // used 9 ops
     }
 
-    template <int bits = USE_3_BITS>
-    static __host__ __device__ __forceinline__ void add(word_type a, word_type& _0, word_type& _1, word_type& _2) {
+    static __host__ __device__ __forceinline__ void add(word_type a, word_type& _0, word_type& _1) {
         auto r_0 = a ^ _0;
-
-        if constexpr (bits == 1) {
-            _0 = r_0;
-            return;
-        }
-
         word_type _0_carry = a & _0;
+
         auto r_1 = _0_carry ^ _1;
-
-        if constexpr (bits == 2) {
-            _0 = r_0;
-            _1 = r_1;
-            return;
-        }
-
-        word_type _1_carry = _0_carry & _1;
-        auto r_2 = _1_carry ^ _2;
 
         _0 = r_0;
         _1 = r_1;
-        _2 = r_2;
+
+        // used 3 ops
     }
 
 
-    template <int bits = USE_3_BITS>
+    template <bool _2a_is_zero = false>
     static __host__ __device__ __forceinline__ void add_two(
         word_type _0a, word_type _1a, word_type _2a,
         word_type& _0, word_type& _1, word_type& _2
     ){
+        auto _1_xor_1a = _1 ^ _1a;
+
         auto r_0 = _0a ^ _0;
 
-        if constexpr (bits == 1) {
-            _0 = r_0;
-            return;
-        }
-
         auto _0_carry = _0a & _0;
-        auto r_1 = _1 ^ _1a ^ _0_carry;
+        auto r_1 = _1_xor_1a ^ _0_carry;
 
-        if constexpr (bits == 2) {
-            _0 = r_0;
-            _1 = r_1;
-            return;
+        auto _1_carry = (_1 & _1a) | (_0_carry & (_1_xor_1a));
+
+        if constexpr (_2a_is_zero) {
+            _2 = _2 ^ _1_carry;
+            // used 8 ops
+        } else {
+            _2 = _2 ^ _2a ^ _1_carry;
+            // used 9 ops
         }
-
-        auto _1_carry = (_1 & _1a) | (_0_carry & (_1 ^ _1a));
-        auto r_2 = _2 ^ _2a ^ _1_carry;
 
         _0 = r_0;
         _1 = r_1;
-        _2 = r_2;
     }
 
     static __host__ __device__ __forceinline__  void load_right_neighborhood(
@@ -139,6 +126,8 @@ struct FullyPackedWithVectorOperationsImplementation {
 
         auto count = (rt & 1) + (rc & 1) + (rb & 1);
         set_words<0, ONE>(count, _0, _1);
+
+        // used 5 ops + 3 ifs
     }
 
     static __host__ __device__ __forceinline__  void load_left_neighborhood(
@@ -149,6 +138,8 @@ struct FullyPackedWithVectorOperationsImplementation {
 
         auto count = (lt >> SHIFT) + (lc >> SHIFT) + (lb >> SHIFT);
         set_words<0, 1>(count, _0, _1);
+
+        // used 5 ops + 3 ifs
     }
 
     template <word_type zero, word_type one>
@@ -170,10 +161,6 @@ struct FullyPackedWithVectorOperationsImplementation {
             _1 = one;
         }
     }
-
-
-
-
 
     static __host__ __device__ __forceinline__  word_type compute_center_word_split_to_four(
         word_type lt, word_type ct, word_type rt, 
