@@ -55,9 +55,9 @@ struct FullyPackedWithVectorOperationsImplementation {
             (_0 >> 1) | _0_right_nei, (_1 >> 1) | _1_right_nei, 0, 
             r_0, r_1, r_2); // 8 ops
 
-        return GOL(cc, r_0, r_1, r_2); // 13 ops
+        return GOL(cc, r_0, r_1, r_2); // 9 ops
 
-        // total 45 ops + 6 ifs
+        // total 41 ops + 6 ifs
     }
 
     constexpr static word_type ones = ~static_cast<word_type>(0);
@@ -66,17 +66,12 @@ struct FullyPackedWithVectorOperationsImplementation {
     static __host__ __device__ __forceinline__ word_type GOL(
         word_type alive, word_type _0, word_type _1, word_type _2) {
 
-        minus(alive, _0, _1, _2); // 9 ops
-        _0 = _0 | alive; // 1 op
-        return _0 & _1 & (_2 ^ ones); // 3 ops
+        auto is_3 = _0 & _1 & (_2 ^ ones);
+        auto is_4 = (_0 ^ ones) & (_1 ^ ones) & _2;
 
-        // total 13 ops
-    }
+        return is_3 | (is_4 & alive);
 
-    static __host__ __device__ __forceinline__ void minus(word_type a, word_type& _0, word_type& _1, word_type& _2) {
-        add_two(a, a, a, _0, _1, _2);
-
-        // used 9 ops
+        // total 9 ops
     }
 
     static __host__ __device__ __forceinline__ void add(word_type a, word_type& _0, word_type& _1) {
