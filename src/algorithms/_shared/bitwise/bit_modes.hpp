@@ -207,6 +207,15 @@ struct FullyPackedRowsMode {
     }
 };
 
+struct FujitaMode {
+    template <typename bit_type>
+    using policy = BitColumns<bit_type>;
+
+    static std::string name() {
+        return "ModeFujita";
+    }
+};
+
 } // namespace algorithms
 
 #endif // ALGORITHMS_BITWISE_BIT_MODES_HPP

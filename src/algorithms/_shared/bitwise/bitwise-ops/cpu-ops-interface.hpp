@@ -9,6 +9,7 @@
 #include "./wasteful-rows.cuh"
 #include "./fully-packed-rows.cuh"
 #include "./half-packed-rows.cuh"
+#include "./fujita.cuh"
 
 namespace algorithms {
 
@@ -185,6 +186,24 @@ class FullyPackedRowsWithVectorOps {
         word_type lb, word_type cb, word_type rb) {
             
         return FullyPackedWithVectorOperationsImplementation<word_type>::compute_center_word(
+            lt, ct, rt, lc, cc, rc, lb, cb, rb);
+    }
+
+    // clang-format on
+};
+
+template <typename word_type>
+class FujitaOps {
+  public:
+    using bit_grid_mode = FullyPackedRowsMode;
+
+    // clang-format off
+    static  word_type compute_center_word(
+        word_type lt, word_type ct, word_type rt, 
+        word_type lc, word_type cc, word_type rc,
+        word_type lb, word_type cb, word_type rb) {
+            
+        return FujitaImplantation<word_type>::compute_center_word(
             lt, ct, rt, lc, cc, rc, lb, cb, rb);
     }
 

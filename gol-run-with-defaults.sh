@@ -44,10 +44,16 @@ __31="2147483648"
 # ALGORITHM="eff-sota-packed-32"
 # ALGORITHM="eff-sota-packed-64"
 
+# ALGORITHM="gol-fujita-64"
+
 # ALGORITHM="gol-cpu-bitwise-wrows-naive-64"
 # ALGORITHM="gol-cpu-bitwise-wrows-simd-64"
 # ALGORITHM="gol-cuda-naive-bitwise-wrows-64"
 # ALGORITHM="gol-cuda-naive-just-tiling-64--wrows"
+
+# ALGORITHM="gol-cuda-naive-bitwise-half-packed-rows-64"
+ALGORITHM="gol-cuda-naive-bitwise-fully-packed-rows-64"
+# ALGORITHM="gol-cpu-bitwise-fully-packed-rows-simd-64"
 
 # ALGORITHM="gol-cpu-naive"
 # ALGORITHM="gol-cpu-bitwise-tiles-macro-64"
@@ -57,7 +63,7 @@ __31="2147483648"
 # ALGORITHM="gol-cpu-bitwise-cols-macro-64"
 # ALGORITHM="gol-cpu-bitwise-cols-naive-64"
 # ALGORITHM="gol-cuda-naive-bitwise-tiles-32"
-ALGORITHM="gol-cuda-naive-bitwise-tiles-64"
+# ALGORITHM="gol-cuda-naive-bitwise-tiles-64"
 # ALGORITHM="gol-cuda-naive-bitwise-no-macro-64"
 # ALGORITHM="an5d-cpu-64"
 # ALGORITHM="cuda-memcpy"
@@ -70,21 +76,21 @@ ALGORITHM="gol-cuda-naive-bitwise-tiles-64"
 # ALGORITHM="gol-cuda-naive-just-tiling-64--bit-tiles"
 # ALGORITHM="gol-cuda-naive-just-tiling-32--bit-tiles"
 # ALGORITHM="gol-cuda-naive-just-tiling-cols-64"
-ALGORITHM="gol-cuda-local-one-cell-32--bit-tiles"
-ALGORITHM="gol-cuda-local-one-cell-64--bit-tiles"
+# ALGORITHM="gol-cuda-local-one-cell-32--bit-tiles"
+# ALGORITHM="gol-cuda-local-one-cell-64--bit-tiles"
 GRID_DIMENSIONS_X=$__14
 GRID_DIMENSIONS_Y=$__14
 # GRID_DIMENSIONS_X=$((8 * 6))
 # GRID_DIMENSIONS_Y=$((8 * 6))
-ITERATIONS="10000"
+ITERATIONS="100000"
 
 BASE_GRID_ENCODING="char"
 # BASE_GRID_ENCODING="int"
 
 WARMUP_ROUNDS="1"
-MEASUREMENT_ROUNDS="3"
+MEASUREMENT_ROUNDS="1"
 
-# DATA_LOADER_NAME="random-ones-zeros"
+DATA_LOADER_NAME="random-ones-zeros"
 # DATA_LOADER_NAME="always-changing"
 # DATA_LOADER_NAME="zeros"
 DATA_LOADER_NAME="lexicon"
@@ -107,9 +113,9 @@ PATTERN_EXPRESSION="spacefiller[$((GRID_DIMENSIONS_X/2)),$((GRID_DIMENSIONS_Y/2)
 # PATTERN_EXPRESSION="spacefiller[4096, 4096]; spacefiller[4096, 8192]; spacefiller[4096, 12288]; spacefiller[8192, 4096]; spacefiller[8192, 8192]; spacefiller[8192, 12288]; spacefiller[12288, 4096]; spacefiller[12288, 8192]; spacefiller[12288, 12288];"
 
 
-# MEASURE_SPEEDUP="true"
-MEASURE_SPEEDUP="false"
-SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-bitwise-tiles-64"
+MEASURE_SPEEDUP="true"
+# MEASURE_SPEEDUP="false"
+# SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-bitwise-tiles-64"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-just-tiling-64--bit-tiles"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cpu-naive"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cpu-bitwise-cols-naive-64"
@@ -117,12 +123,14 @@ SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-bitwise-tiles-64"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-just-tiling-64"
 # SPEEDUP_BENCH_ALGORITHM_NAME="eff-sota-packed-64"
+# SPEEDUP_BENCH_ALGORITHM_NAME="eff-sota-packed-32"
+SPEEDUP_BENCH_ALGORITHM_NAME="gol-fujita-64"
 
 VALIDATE="true"
 # VALIDATE="false"
 # PRINT_VALIDATION_DIFF="true"
 PRINT_VALIDATION_DIFF="false"
-VALIDATION_ALGORITHM_NAME="gol-cpu-naive"
+# VALIDATION_ALGORITHM_NAME="gol-cpu-naive"
 VALIDATION_ALGORITHM_NAME="gol-cuda-naive"
 
 ANIMATE_OUTPUT="false"

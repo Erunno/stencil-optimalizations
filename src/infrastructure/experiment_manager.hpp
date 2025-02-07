@@ -190,6 +190,10 @@ class ExperimentManager {
         // other related work algorithms
 
         algorithms::rel_work::Efficient_simulation_execution_of_cellular_automata_on_GPU::register_all_algs(*_2d_repo);
+
+        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 16, alg::FujitaMode>>("gol-fujita-16");
+        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 32, alg::FujitaMode>>("gol-fujita-32");
+        _2d_repo-> template register_algorithm<alg::GoLCudaNaiveBitwise<grid_cell_t, 64, alg::FujitaMode>>("gol-fujita-64");
     }
 
     void run(const ExperimentParams& params) {

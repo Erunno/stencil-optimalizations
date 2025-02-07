@@ -120,4 +120,12 @@ template class algorithms::GoLCudaNaiveBitwise<common::INT, 16, algorithms::Full
 template class algorithms::GoLCudaNaiveBitwise<common::INT, 32, algorithms::FullyPackedRowsMode>;
 template class algorithms::GoLCudaNaiveBitwise<common::INT, 64, algorithms::FullyPackedRowsMode>;
 
+template class algorithms::GoLCudaNaiveBitwise<common::CHAR, 16, algorithms::FujitaMode>;
+template class algorithms::GoLCudaNaiveBitwise<common::CHAR, 32, algorithms::FujitaMode>;
+template class algorithms::GoLCudaNaiveBitwise<common::CHAR, 64, algorithms::FujitaMode>;
+
+template class algorithms::GoLCudaNaiveBitwise<common::INT, 16, algorithms::FujitaMode>;
+template class algorithms::GoLCudaNaiveBitwise<common::INT, 32, algorithms::FujitaMode>;
+template class algorithms::GoLCudaNaiveBitwise<common::INT, 64, algorithms::FujitaMode>;
+
 #endif // CUDA_NAIVE_KERNEL_CU
