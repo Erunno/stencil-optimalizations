@@ -52,8 +52,9 @@ __31="2147483648"
 # ALGORITHM="gol-cuda-naive-just-tiling-64--wrows"
 
 # ALGORITHM="gol-cuda-naive-bitwise-half-packed-rows-64"
-ALGORITHM="gol-cuda-naive-bitwise-fully-packed-rows-64"
-# ALGORITHM="gol-cpu-bitwise-fully-packed-rows-simd-64"
+# ALGORITHM="gol-cuda-naive-bitwise-fully-packed-rows-64"
+
+ALGORITHM="gol-cuda-naive-bitwise-adder-64"
 
 # ALGORITHM="gol-cpu-naive"
 # ALGORITHM="gol-cpu-bitwise-tiles-macro-64"
@@ -78,8 +79,8 @@ ALGORITHM="gol-cuda-naive-bitwise-fully-packed-rows-64"
 # ALGORITHM="gol-cuda-naive-just-tiling-cols-64"
 # ALGORITHM="gol-cuda-local-one-cell-32--bit-tiles"
 # ALGORITHM="gol-cuda-local-one-cell-64--bit-tiles"
-GRID_DIMENSIONS_X=$__14
-GRID_DIMENSIONS_Y=$__14
+GRID_DIMENSIONS_X=$__10
+GRID_DIMENSIONS_Y=$__10
 # GRID_DIMENSIONS_X=$((8 * 6))
 # GRID_DIMENSIONS_Y=$((8 * 6))
 ITERATIONS="100000"

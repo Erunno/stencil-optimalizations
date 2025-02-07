@@ -207,6 +207,15 @@ struct FullyPackedRowsMode {
     }
 };
 
+struct AdderMode {
+    template <typename bit_type>
+    using policy = FullyPackedRows<bit_type>;
+
+    static std::string name() {
+        return "ModeAdder";
+    }
+};
+
 struct FujitaMode {
     template <typename bit_type>
     using policy = BitColumns<bit_type>;
