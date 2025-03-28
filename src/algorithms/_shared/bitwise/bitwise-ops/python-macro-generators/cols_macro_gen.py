@@ -155,7 +155,7 @@ class END_BITS:
         neighborhood = f'(' \
                        f'({consts.offset_center_cols(f"({lc} & {site_mask})", 7)}) | ' \
                        f'({consts.offset_center_cols(f"({cc} & {center_mask})", 5)}) | ' \
-                       f'({consts.offset_center_cols(f"({rc} & {site_mask})", 3)}) | ' \
+                       f'({rc} & {site_mask}) | ' \
                        f'({consts.offset_top_bottom_cols(f"({_l} & {up_bottom_mask})", 2)}) | ' \
                        f'({consts.offset_top_bottom_cols(f"({_c} & {up_bottom_mask})", 1)}) | ' \
                        f'({_r} & {up_bottom_mask}))'

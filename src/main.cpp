@@ -19,7 +19,6 @@
 
 using namespace debug_utils;
 
-
 int main(int argc, char** argv) {
     std::cout << "Hello" << std::endl;
 
