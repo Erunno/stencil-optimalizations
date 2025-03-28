@@ -55,42 +55,48 @@ __global__ void game_of_live_kernel(TiledGridOnCuda<word_type> data) {
     int constexpr shared_x_size = block_x_size + 2;
     int constexpr shared_y_size = block_y_size + 2;
 
-    __shared__ word_type shared[shared_x_size * shared_y_size];
+    __shared__ word_type buffer0[shared_x_size * shared_y_size];
+    __shared__ word_type buffer1[shared_x_size * shared_y_size];
+    
+    word_type* current_buffer = buffer0;
+    word_type* next_buffer = buffer1;
 
     auto shm_idx = [=](idx_t x, idx_t y) {
         return y * shared_x_size + x;
     };
 
-    shared[shm_idx(x_to_shared, y_to_shared)] = load(x, y, data);
+    current_buffer[shm_idx(x_to_shared, y_to_shared)] = load(x, y, data);
 
     __syncthreads();
 
     for (int time_step = 0; time_step < temporal_steps; ++time_step) {
-        word_type lt = shared[shm_idx(x_to_shared - 1, y_to_shared - 1)];
-        word_type ct = shared[shm_idx(x_to_shared, y_to_shared - 1)];
-        word_type rt = shared[shm_idx(x_to_shared + 1, y_to_shared - 1)];
+        word_type lt = current_buffer[shm_idx(x_to_shared - 1, y_to_shared - 1)];
+        word_type ct = current_buffer[shm_idx(x_to_shared, y_to_shared - 1)];
+        word_type rt = current_buffer[shm_idx(x_to_shared + 1, y_to_shared - 1)];
 
-        word_type lc = shared[shm_idx(x_to_shared - 1, y_to_shared)];
-        word_type cc = shared[shm_idx(x_to_shared, y_to_shared)];
-        word_type rc = shared[shm_idx(x_to_shared + 1, y_to_shared)];
+        word_type lc = current_buffer[shm_idx(x_to_shared - 1, y_to_shared)];
+        word_type cc = current_buffer[shm_idx(x_to_shared, y_to_shared)];
+        word_type rc = current_buffer[shm_idx(x_to_shared + 1, y_to_shared)];
 
-        word_type lb = shared[shm_idx(x_to_shared - 1, y_to_shared + 1)];
-        word_type cb = shared[shm_idx(x_to_shared, y_to_shared + 1)];
-        word_type rb = shared[shm_idx(x_to_shared + 1, y_to_shared + 1)];
+        word_type lb = current_buffer[shm_idx(x_to_shared - 1, y_to_shared + 1)];
+        word_type cb = current_buffer[shm_idx(x_to_shared, y_to_shared + 1)];
+        word_type rb = current_buffer[shm_idx(x_to_shared + 1, y_to_shared + 1)];
 
         word_type new_value = CudaBitwiseOps<word_type, bit_grid_mode>::compute_center_word(lt, ct, rt, lc, cc, rc, lb, cb, rb);
 
+        next_buffer[shm_idx(x_to_shared, y_to_shared)] = new_value;
+        
         __syncthreads();
         
-        shared[shm_idx(x_to_shared, y_to_shared)] = new_value;
-
-        __syncthreads();
+        word_type* temp = current_buffer;
+        current_buffer = next_buffer;
+        next_buffer = temp;
     }
 
     if (threadIdx.x == 0 || threadIdx.x == block_x_size - 1 || threadIdx.y == 0 || threadIdx.y == block_y_size - 1)
         return;
 
-    data.output[get_idx(x, y, data.x_size)] = shared[shm_idx(x_to_shared, y_to_shared)];
+    data.output[get_idx(x, y, data.x_size)] = current_buffer[shm_idx(x_to_shared, y_to_shared)];
 }
 
 } // namespace
