@@ -38,6 +38,9 @@ __29="536870912"
 __30="1073741824"
 __31="2147483648"
 
+__base_dim_size=$((64 * 3 * 5 * 7)) # 6720
+__16k_like=$(($__base_dim_size * 3)) # 20160 
+
 # ALGORITHM="eff-baseline"
 # ALGORITHM="eff-baseline-shm"
 # ALGORITHM="eff-baseline-texture"
@@ -54,7 +57,9 @@ __31="2147483648"
 # ALGORITHM="gol-cuda-naive-bitwise-half-packed-rows-64"
 # ALGORITHM="gol-cuda-naive-bitwise-fully-packed-rows-64"
 
-ALGORITHM="gol-cuda-naive-bitwise-adder-64"
+# ALGORITHM="gol-cuda-naive-bitwise-adder-64"
+
+ALGORITHM="gol-cuda-temporal-simple-64"
 
 # ALGORITHM="gol-cpu-naive"
 # ALGORITHM="gol-cpu-bitwise-tiles-macro-64"
@@ -79,16 +84,18 @@ ALGORITHM="gol-cuda-naive-bitwise-adder-64"
 # ALGORITHM="gol-cuda-naive-just-tiling-cols-64"
 # ALGORITHM="gol-cuda-local-one-cell-32--bit-tiles"
 # ALGORITHM="gol-cuda-local-one-cell-64--bit-tiles"
-GRID_DIMENSIONS_X=$__10
-GRID_DIMENSIONS_Y=$__10
+# GRID_DIMENSIONS_X=$__10
+# GRID_DIMENSIONS_Y=$__10
 # GRID_DIMENSIONS_X=$((8 * 6))
 # GRID_DIMENSIONS_Y=$((8 * 6))
-ITERATIONS="100000"
+GRID_DIMENSIONS_X=$__16k_like
+GRID_DIMENSIONS_Y=$__16k_like
+ITERATIONS=$((10 * 1024))
 
 BASE_GRID_ENCODING="char"
 # BASE_GRID_ENCODING="int"
 
-WARMUP_ROUNDS="1"
+WARMUP_ROUNDS="2"
 MEASUREMENT_ROUNDS="1"
 
 DATA_LOADER_NAME="random-ones-zeros"
@@ -115,8 +122,8 @@ PATTERN_EXPRESSION="spacefiller[$((GRID_DIMENSIONS_X/2)),$((GRID_DIMENSIONS_Y/2)
 
 
 MEASURE_SPEEDUP="true"
-# MEASURE_SPEEDUP="false"
-# SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-bitwise-tiles-64"
+MEASURE_SPEEDUP="false"
+SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-bitwise-tiles-64"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-just-tiling-64--bit-tiles"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cpu-naive"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cpu-bitwise-cols-naive-64"
@@ -125,14 +132,15 @@ MEASURE_SPEEDUP="true"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-just-tiling-64"
 # SPEEDUP_BENCH_ALGORITHM_NAME="eff-sota-packed-64"
 # SPEEDUP_BENCH_ALGORITHM_NAME="eff-sota-packed-32"
-SPEEDUP_BENCH_ALGORITHM_NAME="gol-fujita-64"
+# SPEEDUP_BENCH_ALGORITHM_NAME="gol-fujita-64"
 
 VALIDATE="true"
 # VALIDATE="false"
 # PRINT_VALIDATION_DIFF="true"
 PRINT_VALIDATION_DIFF="false"
 # VALIDATION_ALGORITHM_NAME="gol-cpu-naive"
-VALIDATION_ALGORITHM_NAME="gol-cuda-naive"
+# VALIDATION_ALGORITHM_NAME="gol-cuda-naive"
+VALIDATION_ALGORITHM_NAME="gol-fujita-64"
 
 ANIMATE_OUTPUT="false"
 # ANIMATE_OUTPUT="true"
@@ -143,11 +151,15 @@ RANDOM_SEED="42"
 STATE_BITS_COUNT="64"
 # STATE_BITS_COUNT="32"
 
-# THREAD_BLOCK_SIZE="1024"
+THREAD_BLOCK_SIZE="1024"
 # THREAD_BLOCK_SIZE="512"
-THREAD_BLOCK_SIZE="256"
+# THREAD_BLOCK_SIZE="256"
 # THREAD_BLOCK_SIZE="128"
 # THREAD_BLOCK_SIZE="64"
+
+TEMPORAL_STEPS="8"
+# TEMPORAL_STEPS="4"
+# TEMPORAL_STEPS="2"
 
 WARP_DIMS_X="32"
 WARP_DIMS_Y="1"
@@ -192,5 +204,6 @@ srun -p gpu-short -A kdss --cpus-per-task=64 --mem=256GB --gres=gpu:H100 --time=
     --warp-tile-dims-y="$WARP_TILE_DIMS_Y" \
     --streaming-direction="$STREAMING_DIRECTION" \
     --state-bits-count="$STATE_BITS_COUNT" \
+    --temporal-steps="$TEMPORAL_STEPS" \
     --tag="$TAG" \
     --collect-touched-tiles-stats="$COLLECT_TOUCHED_TILES_STATS" \

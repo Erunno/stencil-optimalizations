@@ -13,6 +13,7 @@
 #include "../algorithms/cuda-naive-local/gol_cuda_naive_local.hpp"
 #include "../algorithms/cuda-naive-local/gol_cuda_naive_just_tiling.hpp"
 #include "../algorithms/cuda-naive-local-one-cell/cuda_local_one_cell.hpp"
+#include "../algorithms/cuda-temporal-simple-tiled/temporal_simple_tiled.hpp"
 #include "./data_loader.hpp"
 #include "../algorithms/rel-work/eff-sim-ex-of-cell-auto-GPU/register-all-algs.hpp"
 #include "algorithm.hpp"
@@ -183,6 +184,8 @@ class ExperimentManager {
         _2d_repo-> template register_algorithm<cuda_local_one_cell::GoLCudaLocalOneCell<grid_cell_t, 16, alg::BitTileMode>>("gol-cuda-local-one-cell-16--bit-tiles");
         _2d_repo-> template register_algorithm<cuda_local_one_cell::GoLCudaLocalOneCell<grid_cell_t, 32, alg::BitTileMode>>("gol-cuda-local-one-cell-32--bit-tiles");
         _2d_repo-> template register_algorithm<cuda_local_one_cell::GoLCudaLocalOneCell<grid_cell_t, 64, alg::BitTileMode>>("gol-cuda-local-one-cell-64--bit-tiles");
+
+        _2d_repo-> template register_algorithm<alg::GoLCudaTemporalSimpleTiled<grid_cell_t, 64, alg::BitTileMode>>("gol-cuda-temporal-simple-64");
 
         // AN5D
 

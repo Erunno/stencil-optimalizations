@@ -59,6 +59,8 @@ class ExperimentParams {
     std::size_t warp_tile_dims_x;
     std::size_t warp_tile_dims_y;
 
+    std::size_t temporal_steps = 1;
+
     StreamingDirection streaming_direction;
 
     std::string pretty_print() {
@@ -95,6 +97,7 @@ class ExperimentParams {
       ss << label_color << "  warp_dims_y: " << value_color << warp_dims_y << std::endl << c::extra_line_in_params();
       ss << label_color << "  warp_tile_dims_x: " << value_color << warp_tile_dims_x << std::endl;
       ss << label_color << "  warp_tile_dims_y: " << value_color << warp_tile_dims_y << std::endl << c::extra_line_in_params();
+      ss << label_color << "  temporal_steps: " << value_color << temporal_steps << std::endl << c::extra_line_in_params();
       ss << label_color << "  collect_touched_tiles_stats: " << value_color << collect_touched_tiles_stats << std::endl << c::extra_line_in_params();
       
       ss << label_color << "  streaming_direction: " << value_color;
@@ -139,6 +142,7 @@ const std::string STATE_BITS_COUNT             = "state-bits-count";
 const std::string BASE_GRID_ENCODING           = "base-grid-encoding";
 const std::string TAG                          = "tag";
 const std::string COLLECT_TOUCHED_TILES_STATS  = "collect-touched-tiles-stats";
+const std::string TEMPORAL_STEPS               = "temporal-steps";
 // clang-format on
 }
 
@@ -229,7 +233,10 @@ class ParamsParser {
         (opts::TAG, "Tag", cxxopts::value<std::string>()->default_value(""))
 
         (opts::COLLECT_TOUCHED_TILES_STATS, "Collect touched tiles stats",
-          cxxopts::value<bool>()->default_value("false"));
+          cxxopts::value<bool>()->default_value("false"))
+          
+        (opts::TEMPORAL_STEPS, "Number of temporal steps",
+          cxxopts::value<std::size_t>()->default_value("1"));
       ;
 
       auto result = optConfig.parse(argc, argv);
@@ -293,6 +300,8 @@ class ParamsParser {
       params.tag = result[opts::TAG].as<std::string>();
 
       params.collect_touched_tiles_stats = result[opts::COLLECT_TOUCHED_TILES_STATS].as<bool>();
+      
+      params.temporal_steps = result[opts::TEMPORAL_STEPS].as<std::size_t>();
 
       return params;
     }
