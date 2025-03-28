@@ -79,58 +79,59 @@ class GoLCudaTemporalSimpleTiled : public infrastructure::Algorithm<2, grid_cell
     void call_correct_kernel(size_type iterations, int block_y_size, int temporal_steps) {
         bool err = false;
 
-        if (temporal_steps == 1) {
-            if (block_y_size == 32) {
-                run_kernel<32, 1>(iterations);
-            }
-            else if (block_y_size == 16) {
-                run_kernel<16, 1>(iterations);
-            }
-            else if (block_y_size == 8) {
-                run_kernel<8, 1>(iterations);
-            }
-            else if (block_y_size == 4) {
-                run_kernel<4, 1>(iterations);
-            }
-            else {
-                err = true;
-            }
-        }
-        else if (temporal_steps == 2) {
-            if (block_y_size == 32) {
-                run_kernel<32, 2>(iterations);
-            }
-            else if (block_y_size == 16) {
-                run_kernel<16, 2>(iterations);
-            }
-            else if (block_y_size == 8) {
-                run_kernel<8, 2>(iterations);
-            }
-            else if (block_y_size == 4) {
-                run_kernel<4, 2>(iterations);
-            }
-            else {
-                err = true;
-            }
-        }
-        else if (temporal_steps == 4) {
-            if (block_y_size == 32) {
-                run_kernel<32, 4>(iterations);
-            }
-            else if (block_y_size == 16) {
-                run_kernel<16, 4>(iterations);
-            }
-            else if (block_y_size == 8) {
-                run_kernel<8, 4>(iterations);
-            }
-            else if (block_y_size == 4) {
-                run_kernel<4, 4>(iterations);
-            }
-            else {
-                err = true;
-            }
-        }
-        else if (temporal_steps == 8) {
+        // if (temporal_steps == 1) {
+        //     if (block_y_size == 32) {
+        //         run_kernel<32, 1>(iterations);
+        //     }
+        //     else if (block_y_size == 16) {
+        //         run_kernel<16, 1>(iterations);
+        //     }
+        //     else if (block_y_size == 8) {
+        //         run_kernel<8, 1>(iterations);
+        //     }
+        //     else if (block_y_size == 4) {
+        //         run_kernel<4, 1>(iterations);
+        //     }
+        //     else {
+        //         err = true;
+        //     }
+        // }
+        // else if (temporal_steps == 2) {
+        //     if (block_y_size == 32) {
+        //         run_kernel<32, 2>(iterations);
+        //     }
+        //     else if (block_y_size == 16) {
+        //         run_kernel<16, 2>(iterations);
+        //     }
+        //     else if (block_y_size == 8) {
+        //         run_kernel<8, 2>(iterations);
+        //     }
+        //     else if (block_y_size == 4) {
+        //         run_kernel<4, 2>(iterations);
+        //     }
+        //     else {
+        //         err = true;
+        //     }
+        // }
+        // else if (temporal_steps == 4) {
+        //     if (block_y_size == 32) {
+        //         run_kernel<32, 4>(iterations);
+        //     }
+        //     else if (block_y_size == 16) {
+        //         run_kernel<16, 4>(iterations);
+        //     }
+        //     else if (block_y_size == 8) {
+        //         run_kernel<8, 4>(iterations);
+        //     }
+        //     else if (block_y_size == 4) {
+        //         run_kernel<4, 4>(iterations);
+        //     }
+        //     else {
+        //         err = true;
+        //     }
+        // }
+        // else if (temporal_steps == 8) {
+        if (temporal_steps == 8) {
             if (block_y_size == 32) {
                 run_kernel<32, 8>(iterations);
             }

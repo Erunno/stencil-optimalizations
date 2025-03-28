@@ -225,6 +225,15 @@ struct FujitaMode {
     }
 };
 
+struct TiledFullAdderMode {
+    template <typename bit_type>
+    using policy = BitTile<bit_type>;
+
+    static std::string name() {
+        return "ModeTiledFullAdder";
+    }
+};
+
 } // namespace algorithms
 
 #endif // ALGORITHMS_BITWISE_BIT_MODES_HPP

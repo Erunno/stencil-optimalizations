@@ -138,5 +138,7 @@ void GoLCudaTemporalSimpleTiled<grid_cell_t, Bits, bit_grid_mode>::run_kernel(si
 
 template class algorithms::GoLCudaTemporalSimpleTiled<common::CHAR, 64, algorithms::BitTileMode>;
 template class algorithms::GoLCudaTemporalSimpleTiled<common::INT, 64, algorithms::BitTileMode>;
+template class algorithms::GoLCudaTemporalSimpleTiled<common::CHAR, 64, algorithms::TiledFullAdderMode>;
+template class algorithms::GoLCudaTemporalSimpleTiled<common::INT, 64, algorithms::TiledFullAdderMode>;
 
 #endif // CUDA_NAIVE_KERNEL_CU

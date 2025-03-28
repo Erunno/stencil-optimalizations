@@ -11,6 +11,7 @@
 #include "./half-packed-rows.cuh"
 #include "./fujita.cuh"
 #include "./adder.cuh"
+#include "./tiled-full-adder.cuh"
 
 namespace algorithms {
 
@@ -168,6 +169,18 @@ public:
         word_type lb, word_type cb, word_type rb) {
 
         return FujitaImplantation<word_type>::compute_center_word(lt, ct, rt, lc, cc, rc, lb, cb, rb);
+    }
+};
+
+template <typename word_type>
+class CudaBitwiseOps<word_type, TiledFullAdderMode> {
+public:
+    __device__ static __forceinline__ word_type compute_center_word(
+        word_type lt, word_type ct, word_type rt, 
+        word_type lc, word_type cc, word_type rc,
+        word_type lb, word_type cb, word_type rb) {
+
+        return TiledFullAdder<word_type>::compute_center_word(lt, ct, rt, lc, cc, rc, lb, cb, rb);
     }
 };
 

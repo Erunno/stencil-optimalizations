@@ -136,4 +136,7 @@ template class algorithms::GoLCudaNaiveBitwise<common::INT, 16, algorithms::Fuji
 template class algorithms::GoLCudaNaiveBitwise<common::INT, 32, algorithms::FujitaMode>;
 template class algorithms::GoLCudaNaiveBitwise<common::INT, 64, algorithms::FujitaMode>;
 
+template class algorithms::GoLCudaNaiveBitwise<common::INT, 64, algorithms::TiledFullAdderMode>;
+template class algorithms::GoLCudaNaiveBitwise<common::CHAR, 64, algorithms::TiledFullAdderMode>;
+
 #endif // CUDA_NAIVE_KERNEL_CU
