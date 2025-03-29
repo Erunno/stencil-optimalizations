@@ -87,19 +87,19 @@ ALGORITHM="gol-cuda-naive-full-adder-tiles-64"
 # ALGORITHM="gol-cuda-naive-just-tiling-cols-64"
 # ALGORITHM="gol-cuda-local-one-cell-32--bit-tiles"
 # ALGORITHM="gol-cuda-local-one-cell-64--bit-tiles"
-GRID_DIMENSIONS_X=$__6
-GRID_DIMENSIONS_Y=$__6
+# GRID_DIMENSIONS_X=$__6
+# GRID_DIMENSIONS_Y=$__8
 # GRID_DIMENSIONS_X=$((8 * 6))
 # GRID_DIMENSIONS_Y=$((8 * 6))
-# GRID_DIMENSIONS_X=$__16k_like
-# GRID_DIMENSIONS_Y=$__16k_like
-# ITERATIONS=$((10 * 1024))
-ITERATIONS="1"
+GRID_DIMENSIONS_X=$__16k_like
+GRID_DIMENSIONS_Y=$__16k_like
+ITERATIONS=$((10 * 1024))
+# ITERATIONS="1"
 
 BASE_GRID_ENCODING="char"
 # BASE_GRID_ENCODING="int"
 
-WARMUP_ROUNDS="0"
+WARMUP_ROUNDS="2"
 MEASUREMENT_ROUNDS="1"
 
 DATA_LOADER_NAME="random-ones-zeros"
@@ -125,9 +125,9 @@ PATTERN_EXPRESSION="spacefiller[$((GRID_DIMENSIONS_X/2)),$((GRID_DIMENSIONS_Y/2)
 # PATTERN_EXPRESSION="spacefiller[4096, 4096]; spacefiller[4096, 8192]; spacefiller[4096, 12288]; spacefiller[8192, 4096]; spacefiller[8192, 8192]; spacefiller[8192, 12288]; spacefiller[12288, 4096]; spacefiller[12288, 8192]; spacefiller[12288, 12288];"
 
 
-# MEASURE_SPEEDUP="true"
-MEASURE_SPEEDUP="false"
-SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-bitwise-tiles-64"
+MEASURE_SPEEDUP="true"
+# MEASURE_SPEEDUP="false"
+# SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-bitwise-tiles-64"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-just-tiling-64--bit-tiles"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cpu-naive"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cpu-bitwise-cols-naive-64"
@@ -136,15 +136,15 @@ SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-bitwise-tiles-64"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-just-tiling-64"
 # SPEEDUP_BENCH_ALGORITHM_NAME="eff-sota-packed-64"
 # SPEEDUP_BENCH_ALGORITHM_NAME="eff-sota-packed-32"
-# SPEEDUP_BENCH_ALGORITHM_NAME="gol-fujita-64"
+SPEEDUP_BENCH_ALGORITHM_NAME="gol-fujita-64"
 
 VALIDATE="true"
 # VALIDATE="false"
-PRINT_VALIDATION_DIFF="true"
-# PRINT_VALIDATION_DIFF="false"
+# PRINT_VALIDATION_DIFF="true"
+PRINT_VALIDATION_DIFF="false"
 # VALIDATION_ALGORITHM_NAME="gol-cpu-naive"
-VALIDATION_ALGORITHM_NAME="gol-cuda-naive"
-# VALIDATION_ALGORITHM_NAME="gol-fujita-64"
+# VALIDATION_ALGORITHM_NAME="gol-cuda-naive"
+VALIDATION_ALGORITHM_NAME="gol-fujita-64"
 
 ANIMATE_OUTPUT="false"
 # ANIMATE_OUTPUT="true"
