@@ -30,14 +30,9 @@ struct TiledFullAdder {
 
         constexpr word_type A_cc_mask = ~TOP_LINE & ~LEFT_BORDER;
         constexpr word_type A_ct_mask = (TOP_LINE >> 1) & TOP_LINE;
-        constexpr word_type A_lt_mask = TOP_LINE << (X_BITS - 1);
         constexpr word_type A_lc_mask = (LEFT_BORDER >> X_BITS);
 
-        constexpr word_type B_cc_mask = ~TOP_LINE;
-        constexpr word_type B_ct_mask = TOP_LINE;
-
         constexpr word_type C_cc_mask = ~TOP_LINE & ~RIGHT_BORDER;
-        constexpr word_type C_ct_mask = TOP_LINE << 1;
         constexpr word_type C_rc_mask = RIGHT_BORDER >> X_BITS;
         constexpr word_type C_rt_mask = (TOP_LINE >> (X_BITS - 1)) & TOP_LINE;
 
@@ -50,15 +45,10 @@ struct TiledFullAdder {
         constexpr word_type F_cc_mask = ~LEFT_BORDER & ~ BOTTOM_LINE;
         constexpr word_type F_lc_mask = LEFT_BORDER << X_BITS;
         constexpr word_type F_lb_mask = 1 << (X_BITS - 1);
-        constexpr word_type F_cb_mask = BOTTOM_LINE >> 1;
-        
-        constexpr word_type G_cc_mask = ~BOTTOM_LINE;
-        constexpr word_type G_cb_mask = BOTTOM_LINE;
         
         constexpr word_type H_cc_mask = ~RIGHT_BORDER & ~BOTTOM_LINE;
         constexpr word_type H_rc_mask = RIGHT_BORDER << X_BITS;
         constexpr word_type H_cb_mask = (BOTTOM_LINE << 1) & BOTTOM_LINE;
-        constexpr word_type H_rb_mask = 1;
 
         // Shifts
 
@@ -99,13 +89,13 @@ struct TiledFullAdder {
             ((cc >> A_cc_R_shift) & A_cc_mask) |
             ((ct << A_ct_L_shift) & A_ct_mask) |
             ((lc >> A_lc_R_shift) & A_lc_mask) |
-            ((lt << A_lt_L_shift) & A_lt_mask);
+             (lt << A_lt_L_shift);
         word_type B =
-            ((cc >> B_cc_R_shift) & B_cc_mask) |
-            ((ct << B_ct_L_shift) & B_ct_mask);
+             (cc >> B_cc_R_shift) |
+             (ct << B_ct_L_shift);
         word_type C =
             ((cc >> C_cc_R_shift) & C_cc_mask) |
-            ((ct << C_ct_L_shift) & C_ct_mask) |
+             (ct << C_ct_L_shift) |
             ((rc >> C_rc_R_shift) & C_rc_mask) |
             ((rt << C_rt_L_shift) & C_rt_mask);
         word_type D =
@@ -116,17 +106,17 @@ struct TiledFullAdder {
             ((rc >> E_rc_R_shift) & E_rc_mask);
         word_type F =
             ((cc << F_cc_L_shift) & F_cc_mask) |
-            ((cb >> F_cb_R_shift) & F_cb_mask) |
+             (cb >> F_cb_R_shift) |
             ((lc << F_lc_L_shift) & F_lc_mask) |
             ((lb >> F_lb_R_shift) & F_lb_mask);
         word_type G =
-            ((cc << G_cc_L_shift) & G_cc_mask) |
-            ((cb >> G_cb_R_shift) & G_cb_mask);
+             (cc << G_cc_L_shift) |
+             (cb >> G_cb_R_shift);
         word_type H =
             ((cc << H_cc_L_shift) & H_cc_mask) |
             ((cb >> H_cb_R_shift) & H_cb_mask) |
             ((rc << H_rc_L_shift) & H_rc_mask) |
-            ((rb >> H_rb_R_shift) & H_rb_mask);
+             (rb >> H_rb_R_shift);
 
         word_type I = cc;
         
