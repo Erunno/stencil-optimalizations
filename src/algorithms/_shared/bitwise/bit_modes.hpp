@@ -234,6 +234,15 @@ struct TiledFullAdderMode {
     }
 };
 
+struct WarpExchangeFullAdderOnRowsMode {
+    template <typename bit_type>
+    using policy = FullyPackedRows<bit_type>;
+
+    static std::string name() {
+        return "ModeWarpExchangeFullAdderOnRows";
+    }
+};
+
 } // namespace algorithms
 
 #endif // ALGORITHMS_BITWISE_BIT_MODES_HPP

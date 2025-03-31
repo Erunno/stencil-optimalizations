@@ -1,6 +1,3 @@
-#ifndef CUDA_NAIVE_KERNEL_BITWISE_CU
-#define CUDA_NAIVE_KERNEL_BITWISE_CU
-
 #include "../_shared/bitwise/bitwise-ops/cuda-ops-interface.cuh"
 #include "../_shared/bitwise/bitwise-ops/macro-cols.hpp"
 #include "../_shared/bitwise/bit_modes.hpp"
@@ -140,5 +137,3 @@ template class algorithms::GoLCudaTemporalSimpleTiled<common::CHAR, 64, algorith
 template class algorithms::GoLCudaTemporalSimpleTiled<common::INT, 64, algorithms::BitTileMode>;
 template class algorithms::GoLCudaTemporalSimpleTiled<common::CHAR, 64, algorithms::TiledFullAdderMode>;
 template class algorithms::GoLCudaTemporalSimpleTiled<common::INT, 64, algorithms::TiledFullAdderMode>;
-
-#endif // CUDA_NAIVE_KERNEL_CU
