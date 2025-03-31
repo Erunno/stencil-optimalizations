@@ -189,11 +189,11 @@ template <typename word_type>
 class CudaBitwiseOps<word_type, WarpExchangeFullAdderOnRowsMode> {
 public:
     __device__ static __forceinline__ word_type compute_center_word(
-        word_type lt, word_type ct, word_type rt, 
-        word_type lc, word_type cc, word_type rc,
-        word_type lb, word_type cb, word_type rb) {
+        word_type ct, 
+        word_type cc,
+        word_type cb) {
 
-        return WarpExchangeFullAdderOnRows<word_type>::compute_center_word(lt, ct, rt, lc, cc, rc, lb, cb, rb);
+        return WarpExchangeFullAdderOnRows<word_type>::compute_center_word(ct, cc, cb);
     }
 };
 

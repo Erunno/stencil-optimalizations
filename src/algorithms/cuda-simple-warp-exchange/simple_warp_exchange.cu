@@ -37,19 +37,11 @@ __global__ void game_of_live_kernel(BitGridForSimpleWarpExchange<word_type> data
     idx_t x = blockIdx.x * effective_x_block_size + threadIdx.x - 1;
     idx_t y = blockIdx.y * blockDim.y + threadIdx.y;
 
-    word_type lt = load(x - 1, y - 1, data);
     word_type ct = load(x, y - 1, data);
-    word_type rt = load(x + 1, y - 1, data);
-
-    word_type lc = load(x - 1, y, data);
     word_type cc = load(x, y, data);
-    word_type rc = load(x + 1, y, data);
-
-    word_type lb = load(x - 1, y + 1, data);
     word_type cb = load(x, y + 1, data);
-    word_type rb = load(x + 1, y + 1, data);
 
-    word_type new_value = CudaBitwiseOps<word_type, bit_grid_mode>::compute_center_word(lt, ct, rt, lc, cc, rc, lb, cb, rb);
+    word_type new_value = CudaBitwiseOps<word_type, bit_grid_mode>::compute_center_word(ct, cc, cb);
 
     if (threadIdx.x == 0 || threadIdx.x == x_block_size - 1)
         return;
