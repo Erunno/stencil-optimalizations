@@ -64,12 +64,15 @@ __16k_like=$(($__base_dim_size * 3)) # 20160
 
 # ALGORITHM="gol-cuda-naive-full-adder-tiles-64"
 # ALGORITHM="gol-cuda-temporal-simple-full-adder-64"
-ALGORITHM="gol-cuda-simple-warp-ex-full-adder-rows-64"
+# ALGORITHM="gol-cuda-simple-warp-ex-full-adder-rows-64"
 
 # ALGORITHM="gol-cpu-naive"
 # ALGORITHM="gol-cpu-bitwise-tiles-macro-64"
 # ALGORITHM="gol-cpu-bitwise-cols-naive-32"
 # ALGORITHM="gol-cpu-bitwise-tiles-naive-64"
+
+# ALGORITHM="gol-temporal-fujita-64"
+ALGORITHM="gol-temporal-rowed-warp-ex-full-adder-64"
 
 # ALGORITHM="gol-cpu-bitwise-cols-macro-64"
 # ALGORITHM="gol-cpu-bitwise-cols-naive-64"
@@ -93,24 +96,29 @@ ALGORITHM="gol-cuda-simple-warp-ex-full-adder-rows-64"
 # GRID_DIMENSIONS_Y=$__6
 # GRID_DIMENSIONS_X=$((8 * 6))
 # GRID_DIMENSIONS_Y=$((8 * 6))
-GRID_DIMENSIONS_X=$(($__16k_like * 2))
-GRID_DIMENSIONS_Y=$__16k_like
-ITERATIONS=$((10 * 1024))
-# ITERATIONS="1"
+# GRID_DIMENSIONS_X=$(($__16k_like * 2))
+# GRID_DIMENSIONS_Y=$(($__16k_like * 2))
+GRID_DIMENSIONS_X=$((64 * 30))
+# GRID_DIMENSIONS_Y=$((128))
+GRID_DIMENSIONS_Y=$((14 * 2))
+# ITERATIONS=$((10 * 1024))
+# ITERATIONS=$((17 * 128))
+ITERATIONS="2"
 
 BASE_GRID_ENCODING="char"
 # BASE_GRID_ENCODING="int"
 
-WARMUP_ROUNDS="2"
+WARMUP_ROUNDS="0"
 MEASUREMENT_ROUNDS="1"
 
 DATA_LOADER_NAME="random-ones-zeros"
 # DATA_LOADER_NAME="always-changing"
 # DATA_LOADER_NAME="zeros"
-DATA_LOADER_NAME="lexicon"
+# DATA_LOADER_NAME="lexicon"
 # PATTERN_EXPRESSION="blinker[10,10]"
 # PATTERN_EXPRESSION="glider[3,3] glider[10,10] glider[20,20]"
-PATTERN_EXPRESSION="spacefiller[$((GRID_DIMENSIONS_X/2)),$((GRID_DIMENSIONS_Y/2))]"
+PATTERN_EXPRESSION="glider[100,40]"
+# PATTERN_EXPRESSION="spacefiller[$((GRID_DIMENSIONS_X/2)),$((GRID_DIMENSIONS_Y/2))]"
 # PATTERN_EXPRESSION="gosper-glider-gun[0,0]"
 
 # 6x5 sp & 16k & 10000 iters --> total cca 63w/37off workload (on 64 bit)
@@ -127,8 +135,8 @@ PATTERN_EXPRESSION="spacefiller[$((GRID_DIMENSIONS_X/2)),$((GRID_DIMENSIONS_Y/2)
 # PATTERN_EXPRESSION="spacefiller[4096, 4096]; spacefiller[4096, 8192]; spacefiller[4096, 12288]; spacefiller[8192, 4096]; spacefiller[8192, 8192]; spacefiller[8192, 12288]; spacefiller[12288, 4096]; spacefiller[12288, 8192]; spacefiller[12288, 12288];"
 
 
-MEASURE_SPEEDUP="true"
-# MEASURE_SPEEDUP="false"
+# MEASURE_SPEEDUP="true"
+MEASURE_SPEEDUP="false"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-bitwise-tiles-64"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-just-tiling-64--bit-tiles"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cpu-naive"
@@ -143,10 +151,10 @@ SPEEDUP_BENCH_ALGORITHM_NAME="gol-fujita-64"
 VALIDATE="true"
 # VALIDATE="false"
 PRINT_VALIDATION_DIFF="false"
-# PRINT_VALIDATION_DIFF="true"
+PRINT_VALIDATION_DIFF="true"
 # VALIDATION_ALGORITHM_NAME="gol-cpu-naive"
-# VALIDATION_ALGORITHM_NAME="gol-cuda-naive"
-VALIDATION_ALGORITHM_NAME="gol-fujita-64"
+VALIDATION_ALGORITHM_NAME="gol-cuda-naive"
+# VALIDATION_ALGORITHM_NAME="gol-fujita-64"
 
 ANIMATE_OUTPUT="false"
 # ANIMATE_OUTPUT="true"
@@ -184,8 +192,8 @@ TAG="test-run"
 # COLLECT_TOUCHED_TILES_STATS="true"
 COLLECT_TOUCHED_TILES_STATS="false"
 
-# srun -p gpu-short -A kdss --cpus-per-task=64 --mem=256GB --gres=gpu:H100 --time=2:00:00 $GOL_EXE_NAME \
-srun -p gpu-short -A kdss --cpus-per-task=64 --mem=256GB --gres=gpu:L40 --time=2:00:00 $GOL_EXE_NAME \
+# srun -p gpu-short -A kdss --cpus-per-task=64 --mem=256GB --gres=gpu:L40 --time=2:00:00 $GOL_EXE_NAME \
+srun -p gpu-short -A kdss --cpus-per-task=64 --mem=256GB --gres=gpu:H100 --time=2:00:00 $GOL_EXE_NAME \
     --algorithm="$ALGORITHM" \
     --grid-dimensions-x="$GRID_DIMENSIONS_X" \
     --grid-dimensions-y="$GRID_DIMENSIONS_Y" \

@@ -15,6 +15,7 @@
 #include "../algorithms/cuda-naive-local-one-cell/cuda_local_one_cell.hpp"
 #include "../algorithms/cuda-temporal-simple-tiled/temporal_simple_tiled.hpp"
 #include "../algorithms/cuda-simple-warp-exchange/simple_warp_exchange.hpp"
+#include "../algorithms/cuda-temporal-rowed/temporal_rowed.hpp"
 #include "./data_loader.hpp"
 #include "../algorithms/rel-work/eff-sim-ex-of-cell-auto-GPU/register-all-algs.hpp"
 #include "algorithm.hpp"
@@ -193,7 +194,9 @@ class ExperimentManager {
         
         _2d_repo-> template register_algorithm<alg::GoLCudaSimpleWarpExchange<grid_cell_t, 32, alg::WarpExchangeFullAdderOnRowsMode>>("gol-cuda-simple-warp-ex-full-adder-rows-32");
         _2d_repo-> template register_algorithm<alg::GoLCudaSimpleWarpExchange<grid_cell_t, 64, alg::WarpExchangeFullAdderOnRowsMode>>("gol-cuda-simple-warp-ex-full-adder-rows-64");
-
+        
+        // _2d_repo-> template register_algorithm<alg::GoLCudaTemporalRowed<grid_cell_t, 64, alg::BitTileMode>>("gol-temporal-fujita-64");
+        _2d_repo-> template register_algorithm<alg::GoLCudaTemporalRowed<grid_cell_t, 64, alg::WarpExchangeFullAdderOnRowsMode>>("gol-temporal-rowed-warp-ex-full-adder-64");
 
         // AN5D
 
