@@ -100,11 +100,12 @@ ALGORITHM="gol-temporal-rowed-warp-ex-full-adder-64"
 # GRID_DIMENSIONS_Y=$(($__16k_like * 2))
 GRID_DIMENSIONS_X=$((64 * 30 * 8))
 # GRID_DIMENSIONS_Y=$((128))
-GRID_DIMENSIONS_Y=$((12 * 2 * 256))
+GRID_DIMENSIONS_Y=$((140 * 64))
 # ITERATIONS=$((10 * 1024))
 # ITERATIONS=$((17 * 128))
-ITERATIONS="2000"
-
+ITERATIONS=$((16 * 5 * 7 * 9))
+ITERATIONS=$((3 * 5 * 7 * 64))
+ 
 BASE_GRID_ENCODING="char"
 # BASE_GRID_ENCODING="int"
 
@@ -135,8 +136,8 @@ PATTERN_EXPRESSION="glider[100,40]"
 # PATTERN_EXPRESSION="spacefiller[4096, 4096]; spacefiller[4096, 8192]; spacefiller[4096, 12288]; spacefiller[8192, 4096]; spacefiller[8192, 8192]; spacefiller[8192, 12288]; spacefiller[12288, 4096]; spacefiller[12288, 8192]; spacefiller[12288, 12288];"
 
 
-# MEASURE_SPEEDUP="true"
-MEASURE_SPEEDUP="false"
+MEASURE_SPEEDUP="true"
+# MEASURE_SPEEDUP="false"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-bitwise-tiles-64"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cuda-naive-just-tiling-64--bit-tiles"
 # SPEEDUP_BENCH_ALGORITHM_NAME="gol-cpu-naive"
@@ -150,13 +151,13 @@ SPEEDUP_BENCH_ALGORITHM_NAME="gol-fujita-64"
 
 VALIDATE="true"
 # VALIDATE="false"
-PRINT_VALIDATION_DIFF="false"
+# PRINT_VALIDATION_DIFF="false"
 PRINT_VALIDATION_DIFF="true"
-USE_CONTRACTED_DIFF="false"
+# USE_CONTRACTED_DIFF="false"
 USE_CONTRACTED_DIFF="true"
 # VALIDATION_ALGORITHM_NAME="gol-cpu-naive"
-VALIDATION_ALGORITHM_NAME="gol-cuda-naive"
-# VALIDATION_ALGORITHM_NAME="gol-fujita-64"
+# VALIDATION_ALGORITHM_NAME="gol-cuda-naive"
+VALIDATION_ALGORITHM_NAME="gol-fujita-64"
 
 ANIMATE_OUTPUT="false"
 # ANIMATE_OUTPUT="true"

@@ -81,7 +81,7 @@ class GoLCudaTemporalRowed : public infrastructure::Algorithm<2, grid_cell_t> {
     void call_correct_kernel(size_type iterations, idx_t block_y_size, idx_t temporal_steps) {
         bool err = false;
 
-        run_kernel<8, 2, 1>(iterations);
+        run_kernel<16, 11, 10>(iterations);
 
         // if (temporal_steps == 1) {
         //     if (block_y_size == 32) {

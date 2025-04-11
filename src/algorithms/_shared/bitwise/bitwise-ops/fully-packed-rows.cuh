@@ -29,6 +29,13 @@ struct FullyPackedWithVectorOperationsImplementation {
         word_type lc, word_type cc, word_type rc,
         word_type lb, word_type cb, word_type rb) {
 
+        (void)lt;
+        (void)rt;
+        (void)lc;
+        (void)rc;
+        (void)lb;
+        (void)rb;
+
         word_type _0 = cc;
         word_type _1 = 0;
         word_type _2 = 0;
