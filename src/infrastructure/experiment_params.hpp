@@ -38,6 +38,7 @@ class ExperimentParams {
 
     bool validate = false;
     bool print_validation_diff = false;
+    bool use_contracted_diff = false;
 
     std::string validation_algorithm_name = "gol-cpu-naive";
 
@@ -86,6 +87,7 @@ class ExperimentParams {
       ss << label_color << "  speedup_bench_algorithm_name: " << value_color << speedup_bench_algorithm_name << std::endl << c::extra_line_in_params();
       ss << label_color << "  validate: " << value_color << validate << std::endl;
       ss << label_color << "  print_validation_diff: " << value_color << print_validation_diff << std::endl;
+      ss << label_color << "  use_contracted_diff: " << value_color << use_contracted_diff << std::endl;
       ss << label_color << "  validation_algorithm_name: " << value_color << validation_algorithm_name << std::endl << c::extra_line_in_params();
       ss << label_color << "  animate_output: " << value_color << animate_output << std::endl;
       ss << label_color << "  colorful: " << value_color << colorful << std::endl << c::extra_line_in_params();
@@ -128,6 +130,7 @@ const std::string MEASURE_SPEEDUP              = "measure-speedup";
 const std::string SPEEDUP_BENCH_ALGORITHM_NAME = "speedup-bench-algorithm";
 const std::string VALIDATE                     = "validate";
 const std::string PRINT_VALIDATION_DIFF        = "print-validation-diff";
+const std::string USE_CONTRACTED_DIFF          = "use-contracted-diff";
 const std::string VALIDATION_ALGORITHM_NAME    = "validation-algorithm";
 const std::string ANIMATE_OUTPUT               = "animate-output";
 const std::string COLORFUL                     = "colorful";
@@ -192,6 +195,9 @@ class ParamsParser {
           cxxopts::value<bool>()->default_value("false"))
         
         (opts::PRINT_VALIDATION_DIFF, "Print validation diff",
+          cxxopts::value<bool>()->default_value("false"))
+        
+        (opts::USE_CONTRACTED_DIFF, "Use contracted diff for large grids",
           cxxopts::value<bool>()->default_value("false"))
         
         (opts::VALIDATION_ALGORITHM_NAME, "Validation algorithm",
@@ -268,6 +274,7 @@ class ParamsParser {
 
       params.validate = result[opts::VALIDATE].as<bool>();
       params.print_validation_diff = result[opts::PRINT_VALIDATION_DIFF].as<bool>();
+      params.use_contracted_diff = result[opts::USE_CONTRACTED_DIFF].as<bool>();
       params.validation_algorithm_name =
         result[opts::VALIDATION_ALGORITHM_NAME].as<std::string>();
 

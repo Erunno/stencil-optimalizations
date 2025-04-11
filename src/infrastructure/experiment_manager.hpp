@@ -296,7 +296,11 @@ class ExperimentManager {
             std::cout << c::error_color() << "Validation failed" << c::reset_color() << std::endl;
 
             if (params.print_validation_diff) {
-                auto diff = debug_utils::diff(*validation_data.get(), result);
+                
+                auto diff = params.use_contracted_diff 
+                    ? debug_utils::diff_on_big_grid(*validation_data.get(), result)
+                    : debug_utils::diff(*validation_data.get(), result);
+
                 std::cout << "Diff: \n" << diff << std::endl;
             }
         }
