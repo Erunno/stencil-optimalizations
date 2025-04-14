@@ -7,10 +7,12 @@
 #include "../../infrastructure/timer.hpp"
 #include "../_shared/common_grid_types.hpp"
 #include "../_shared/cuda-helpers/block_to_2dim.hpp"
+#include "../_shared/cuda-helpers/border_policies.cuh"
 
 namespace algorithms {
 
 using idx_t = std::int64_t;
+using border_policy_independent = border_policies::border_policy_independent;
 
 namespace {
 
@@ -18,7 +20,7 @@ __device__ __forceinline__ idx_t get_idx(idx_t x, idx_t y, idx_t x_size) {
     return y * x_size + x;
 }
 
-template <typename grid_cell_t>
+template <typename border_policy, typename grid_cell_t>
 __global__ void game_of_live_kernel(NaiveGridOnCuda<grid_cell_t> data) {
     idx_t x = blockIdx.x * blockDim.x + threadIdx.x;
     idx_t y = blockIdx.y * blockDim.y + threadIdx.y;
@@ -29,7 +31,7 @@ __global__ void game_of_live_kernel(NaiveGridOnCuda<grid_cell_t> data) {
     if (x >= x_size || y >= y_size)
         return;
 
-    idx_t idx = get_idx(x, y, x_size);
+    idx_t idx = border_policy_independent::get_idx(x, y, x_size);
     idx_t live_neighbors = 0;
 
     for (int i = -1; i <= 1; ++i) {
@@ -40,9 +42,7 @@ __global__ void game_of_live_kernel(NaiveGridOnCuda<grid_cell_t> data) {
             idx_t nx = x + i;
             idx_t ny = y + j;
 
-            if (nx >= 0 && nx < x_size && ny >= 0 && ny < data.y_size) {
-                live_neighbors += data.input[get_idx(nx, ny, x_size)];
-            }
+            live_neighbors += border_policy::load(nx, ny, data);
         }
     }
 
@@ -57,6 +57,7 @@ __global__ void game_of_live_kernel(NaiveGridOnCuda<grid_cell_t> data) {
 } // namespace
 
 template <typename grid_cell_t>
+template <typename border_policy>
 void GoLCudaNaive<grid_cell_t>::run_kernel(size_type iterations) {
     dim3 block = get_2d_block(this->params.thread_block_size);
     dim3 grid((cuda_data.x_size + block.x - 1) / block.x, (cuda_data.y_size + block.y - 1) / block.y);
@@ -74,7 +75,7 @@ void GoLCudaNaive<grid_cell_t>::run_kernel(size_type iterations) {
             std::swap(cuda_data.input, cuda_data.output);
         }
 
-        game_of_live_kernel<<<grid, block>>>(cuda_data);
+        game_of_live_kernel<border_policy><<<grid, block>>>(cuda_data);
         CUCH(cudaPeekAtLastError());
     }
 }

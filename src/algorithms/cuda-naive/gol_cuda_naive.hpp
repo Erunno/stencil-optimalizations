@@ -3,6 +3,7 @@
 
 #include "../../infrastructure/algorithm.hpp"
 #include "../_shared/cuda-helpers/cuch.hpp"
+#include "../_shared/cuda-helpers/border_policies.cuh"
 #include "models.hpp"
 #include <cstddef>
 #include <iostream>
@@ -35,7 +36,11 @@ class GoLCudaNaive : public infrastructure::Algorithm<2, grid_cell_t> {
     }
 
     void run(size_type iterations) override {
-        run_kernel(iterations);
+        border_policies::apply_border_policy(this->params.border_mode,
+            [this, iterations]<typename policy>() {
+                this->run_kernel<policy>(iterations);
+            }
+        );
     }
 
     void finalize_data_structures() override {
@@ -60,6 +65,9 @@ class GoLCudaNaive : public infrastructure::Algorithm<2, grid_cell_t> {
   private:
     DataGrid grid;
     NaiveGridOnCuda<grid_cell_t> cuda_data;
+
+    template <typename BorderPolicy>
+    void run_kernel(size_type iterations);
 
     void run_kernel(size_type iterations);
 

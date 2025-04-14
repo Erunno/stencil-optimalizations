@@ -5,6 +5,7 @@
 #include "../_shared/bitwise/bit_word_types.hpp"
 #include "../_shared/bitwise/general_bit_grid.hpp"
 #include "../_shared/cuda-helpers/cuch.hpp"
+#include "../_shared/cuda-helpers/border_policies.cuh"
 #include "./models.hpp"
 #include <cstddef>
 #include <memory>
@@ -40,7 +41,11 @@ class GoLCudaNaiveBitwise : public infrastructure::Algorithm<2, grid_cell_t> {
     }
 
     void run(size_type iterations) override {
-        run_kernel(iterations);
+        border_policies::apply_border_policy(this->params.border_mode,
+            [this, iterations]<typename policy>() {
+                this->run_kernel<policy>(iterations);
+            }
+        );
     }
 
     void finalize_data_structures() override {
@@ -67,6 +72,7 @@ class GoLCudaNaiveBitwise : public infrastructure::Algorithm<2, grid_cell_t> {
     BitGrid_ptr bit_grid;
     BitGridOnCuda<col_type> cuda_data;
 
+    template <typename border_policy>
     void run_kernel(size_type iterations);
 
     std::size_t _performed_iterations;
