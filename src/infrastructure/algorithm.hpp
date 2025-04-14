@@ -193,6 +193,10 @@ struct TimeReport {
                reset_color + correction + "\n";
     }
 
+    double from_ms_to_ns(double time) const {
+        return time * 1e6;
+    }
+
     std::string pretty_number_of_iterations(std::size_t iterations) const {
         std::string labels_color = c::time_report_sublabels();
         std::string time_color = c::time_report_time();
@@ -200,6 +204,8 @@ struct TimeReport {
 
         auto line = labels_color + "   performed iters:  " + time_color + std::to_string(iterations) + reset_color + "\n";
         line +=     labels_color + "   runtime per iter: " + time_color + std::to_string(runtime_per_iteration()) + " ms" + reset_color + "\n";
+        line +=     labels_color + "   runtime norm.:    " + time_color +
+            std::to_string(from_ms_to_ns(runtime_per_iteration() / iterations)) + " ns" + reset_color + "\n";
 
         return line;
     }
@@ -212,6 +218,8 @@ struct TimeReport {
         std::string line = labels_color + "   performed iters:  " + time_color + std::to_string(iterations) + reset_color + "\n";
         line +=            labels_color + "   runtime per iter: " + time_color + std::to_string(runtime_per_iteration()) + 
             " ms ~ " + speedup_str(bench.runtime_per_iteration(), runtime_per_iteration()) + reset_color + "\n";
+        line +=            labels_color + "   runtime norm.:    " + time_color +
+            std::to_string(from_ms_to_ns(runtime_per_iteration() / iterations)) + " ns ~ " + speedup_str(bench.runtime_per_iteration() / iterations, runtime_per_iteration() / iterations) + reset_color + "\n";
 
         return line;
     }

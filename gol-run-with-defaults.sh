@@ -98,18 +98,18 @@ ALGORITHM="gol-temporal-rowed-warp-ex-full-adder-64"
 # GRID_DIMENSIONS_Y=$((8 * 6))
 # GRID_DIMENSIONS_X=$(($__16k_like * 2))
 # GRID_DIMENSIONS_Y=$(($__16k_like * 2))
-GRID_DIMENSIONS_X=$((64 * 30 * 8))
+GRID_DIMENSIONS_X=$((64 * 30 * 8 * 2))
 # GRID_DIMENSIONS_Y=$((128))
-GRID_DIMENSIONS_Y=$((140 * 64))
+GRID_DIMENSIONS_Y=$((140 * 64 * 2))
 # ITERATIONS=$((10 * 1024))
 # ITERATIONS=$((17 * 128))
 ITERATIONS=$((16 * 5 * 7 * 9))
-ITERATIONS=$((3 * 5 * 7 * 64))
- 
+ITERATIONS=$((3 * 5 * 11 * 64 * 2))
+
 BASE_GRID_ENCODING="char"
 # BASE_GRID_ENCODING="int"
 
-WARMUP_ROUNDS="0"
+WARMUP_ROUNDS="2"
 MEASUREMENT_ROUNDS="1"
 
 DATA_LOADER_NAME="random-ones-zeros"
