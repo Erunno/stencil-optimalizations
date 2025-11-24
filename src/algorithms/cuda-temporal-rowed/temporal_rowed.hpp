@@ -5,6 +5,8 @@
 #include "../_shared/bitwise/bit_word_types.hpp"
 #include "../_shared/bitwise/general_bit_grid.hpp"
 #include "../_shared/cuda-helpers/cuch.hpp"
+#include "../_shared/cuda-helpers/border_policies.cuh"
+#include "../_shared/template_helpers/static_switch.hpp"
 #include "./models.hpp"
 #include <cstddef>
 #include <cstdint>
@@ -46,8 +48,12 @@ class GoLCudaTemporalRowed : public infrastructure::Algorithm<2, grid_cell_t> {
     void run(size_type iterations) override {
         auto y_block_size = this->params.thread_block_size / 32;
         auto temporal_steps = this->params.temporal_steps;
+        auto words_per_thread = 1; // Default value for words_per_thread parameter
 
-        call_correct_kernel(iterations, y_block_size, temporal_steps);
+        border_policies::apply_border_policy(this->params.border_mode,
+            [this, iterations, y_block_size, temporal_steps, words_per_thread]<typename border_policy>() {
+                call_correct_kernel<border_policy>(iterations, y_block_size, temporal_steps, words_per_thread);
+            });
     }
 
     void finalize_data_structures() override {
@@ -73,15 +79,38 @@ class GoLCudaTemporalRowed : public infrastructure::Algorithm<2, grid_cell_t> {
     BitGrid_ptr bit_grid;
     RowedGridOnCudaForTemporal<row_type> cuda_data;
 
-    template <idx_t block_y_size, idx_t temporal_steps, idx_t words_per_thread>
+    template <idx_t block_y_size, idx_t temporal_steps, idx_t words_per_thread, typename border_policy>
     void run_kernel(size_type iterations);
+
 
     std::size_t _performed_iterations;
 
-    void call_correct_kernel(size_type iterations, idx_t block_y_size, idx_t temporal_steps) {
-        bool err = false;
+    template <typename border_policy>
+    void call_correct_kernel(size_type iterations,
+        idx_t block_y_size, idx_t temporal_steps, idx_t words_per_thread) {
 
-        run_kernel<16, 11, 10>(iterations);
+        templates::static_switch<
+            // block_y_size
+            templates::options<16>,
+            // temporal_steps
+            templates::options<4>,
+            // words_per_thread
+            templates::options<2>
+        >::call_with(block_y_size, temporal_steps, words_per_thread,
+            
+            [this, iterations]<idx_t block_y_size, idx_t temporal_steps, idx_t words_per_thread>() {
+                this->run_kernel<block_y_size, temporal_steps, words_per_thread, border_policy>(iterations);
+            },
+            
+            [this, iterations]() {
+                std::stringstream error_msg;
+                error_msg << "Invalid block size and temporal steps combination: " 
+                          << this->params.thread_block_size << " (thread block size) and " 
+                          << this->params.temporal_steps << " (temporal steps) - not compiled for this combination";
+                throw std::runtime_error(error_msg.str());
+            }
+        );
+
 
         // if (temporal_steps == 1) {
         //     if (block_y_size == 32) {
@@ -156,13 +185,13 @@ class GoLCudaTemporalRowed : public infrastructure::Algorithm<2, grid_cell_t> {
         //     err = true;
         // }
 
-        if (err) {
-            std::stringstream error_msg;
-            error_msg << "Invalid block size and temporal steps combination: " 
-                      << block_y_size << " (y block size) and " << temporal_steps << " (temporal steps)";
+        // if (err) {
+        //     std::stringstream error_msg;
+        //     error_msg << "Invalid block size and temporal steps combination: " 
+        //               << block_y_size << " (y block size) and " << temporal_steps << " (temporal steps)";
 
-            throw std::runtime_error(error_msg.str());
-        }
+        //     throw std::runtime_error(error_msg.str());
+        // }
     }
 };
 

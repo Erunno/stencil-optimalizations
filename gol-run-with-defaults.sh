@@ -98,13 +98,14 @@ ALGORITHM="gol-temporal-rowed-warp-ex-full-adder-64"
 # GRID_DIMENSIONS_Y=$((8 * 6))
 # GRID_DIMENSIONS_X=$(($__16k_like * 2))
 # GRID_DIMENSIONS_Y=$(($__16k_like * 2))
-GRID_DIMENSIONS_X=$((64 * 30 * 8 * 2))
+GRID_DIMENSIONS_X=$((64 * 30 * 8 * 2 * 2))
 # GRID_DIMENSIONS_Y=$((128))
-GRID_DIMENSIONS_Y=$((140 * 64 * 2))
+GRID_DIMENSIONS_Y=$((140 * 64 * 2 * 2))
 # ITERATIONS=$((10 * 1024))
 # ITERATIONS=$((17 * 128))
 ITERATIONS=$((16 * 5 * 7 * 9))
 ITERATIONS=$((3 * 5 * 11 * 64 * 2))
+# ITERATIONS=$((115))
 
 BASE_GRID_ENCODING="char"
 # BASE_GRID_ENCODING="int"
@@ -115,11 +116,11 @@ MEASUREMENT_ROUNDS="1"
 DATA_LOADER_NAME="random-ones-zeros"
 # DATA_LOADER_NAME="always-changing"
 # DATA_LOADER_NAME="zeros"
-# DATA_LOADER_NAME="lexicon"
+DATA_LOADER_NAME="lexicon"
 # PATTERN_EXPRESSION="blinker[10,10]"
 # PATTERN_EXPRESSION="glider[3,3] glider[10,10] glider[20,20]"
-PATTERN_EXPRESSION="glider[100,40]"
-# PATTERN_EXPRESSION="spacefiller[$((GRID_DIMENSIONS_X/2)),$((GRID_DIMENSIONS_Y/2))]"
+# PATTERN_EXPRESSION="glider[100,40]"
+PATTERN_EXPRESSION="spacefiller[$((GRID_DIMENSIONS_X/2)),$((GRID_DIMENSIONS_Y/2))]"
 # PATTERN_EXPRESSION="gosper-glider-gun[0,0]"
 
 # 6x5 sp & 16k & 10000 iters --> total cca 63w/37off workload (on 64 bit)
@@ -153,7 +154,7 @@ VALIDATE="true"
 # VALIDATE="false"
 # PRINT_VALIDATION_DIFF="false"
 PRINT_VALIDATION_DIFF="true"
-# USE_CONTRACTED_DIFF="false"
+USE_CONTRACTED_DIFF="false"
 USE_CONTRACTED_DIFF="true"
 # VALIDATION_ALGORITHM_NAME="gol-cpu-naive"
 # VALIDATION_ALGORITHM_NAME="gol-cuda-naive"
@@ -192,11 +193,14 @@ MAX_RUNTIME_SECONDS="10000"
 
 TAG="test-run"
 
+# BORDER_MODE="zeros"
+BORDER_MODE="wrap_around"
+
 # COLLECT_TOUCHED_TILES_STATS="true"
 COLLECT_TOUCHED_TILES_STATS="false"
 
 # srun -p gpu-short -A kdss --cpus-per-task=64 --mem=256GB --gres=gpu:L40 --time=2:00:00 $GOL_EXE_NAME \
-srun -p gpu-short -A kdss --cpus-per-task=64 --mem=256GB --gres=gpu:H100 --time=2:00:00 $GOL_EXE_NAME \
+srun -p gpu-short -A kdss --cpus-per-task=64 --mem=64GB --gres=gpu:H100 --time=2:00:00 $GOL_EXE_NAME \
     --algorithm="$ALGORITHM" \
     --grid-dimensions-x="$GRID_DIMENSIONS_X" \
     --grid-dimensions-y="$GRID_DIMENSIONS_Y" \
@@ -224,5 +228,6 @@ srun -p gpu-short -A kdss --cpus-per-task=64 --mem=256GB --gres=gpu:H100 --time=
     --streaming-direction="$STREAMING_DIRECTION" \
     --state-bits-count="$STATE_BITS_COUNT" \
     --temporal-steps="$TEMPORAL_STEPS" \
+    --border-mode="$BORDER_MODE" \
     --tag="$TAG" \
     --collect-touched-tiles-stats="$COLLECT_TOUCHED_TILES_STATS" \

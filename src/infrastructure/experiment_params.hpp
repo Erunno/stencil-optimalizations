@@ -53,6 +53,8 @@ class ExperimentParams {
 
     std::size_t state_bits_count = 64;
 
+    std::string border_mode = "zeros";
+
     std::size_t thread_block_size;
 
     std::size_t warp_dims_x;
@@ -94,6 +96,7 @@ class ExperimentParams {
       ss << label_color << "  random_seed: " << value_color << random_seed << std::endl << c::extra_line_in_params();
       ss << label_color << "  tag: " << value_color << tag << std::endl << c::extra_line_in_params();
       ss << label_color << "  state_bits_count: " << value_color << state_bits_count << std::endl << c::extra_line_in_params();
+      ss << label_color << "  border_mode: " << value_color << border_mode << std::endl << c::extra_line_in_params();
       ss << label_color << "  thread_block_size: " << value_color << thread_block_size << std::endl << c::extra_line_in_params();
       ss << label_color << "  warp_dims_x: " << value_color << warp_dims_x << std::endl;
       ss << label_color << "  warp_dims_y: " << value_color << warp_dims_y << std::endl << c::extra_line_in_params();
@@ -144,6 +147,7 @@ const std::string STREAMING_DIRECTION          = "streaming-direction";
 const std::string STATE_BITS_COUNT             = "state-bits-count";
 const std::string BASE_GRID_ENCODING           = "base-grid-encoding";
 const std::string TAG                          = "tag";
+const std::string BORDER_MODE                  = "border-mode";
 const std::string COLLECT_TOUCHED_TILES_STATS  = "collect-touched-tiles-stats";
 const std::string TEMPORAL_STEPS               = "temporal-steps";
 // clang-format on
@@ -237,6 +241,9 @@ class ParamsParser {
           cxxopts::value<std::string>()->default_value("char"))
 
         (opts::TAG, "Tag", cxxopts::value<std::string>()->default_value(""))
+        
+        (opts::BORDER_MODE, "Border mode handling (zeros|wrap_around)",
+          cxxopts::value<std::string>()->default_value("zeros"))
 
         (opts::COLLECT_TOUCHED_TILES_STATS, "Collect touched tiles stats",
           cxxopts::value<bool>()->default_value("false"))
@@ -305,6 +312,8 @@ class ParamsParser {
       params.base_grid_encoding = result[opts::BASE_GRID_ENCODING].as<std::string>();
 
       params.tag = result[opts::TAG].as<std::string>();
+      
+      params.border_mode = result[opts::BORDER_MODE].as<std::string>();
 
       params.collect_touched_tiles_stats = result[opts::COLLECT_TOUCHED_TILES_STATS].as<bool>();
       
