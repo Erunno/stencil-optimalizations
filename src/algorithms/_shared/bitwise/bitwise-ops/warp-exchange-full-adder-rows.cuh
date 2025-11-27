@@ -54,37 +54,154 @@ struct WarpExchangeFullAdderOnRows {
         word_type i1, word_type i2, word_type i3, word_type i4,
         word_type i5, word_type i6, word_type i7) {
         
-        // Hidden layer 1
-        const word_type h1_0 = i2 | i6;
-        const word_type h1_1 = i7;
-        const word_type h1_2 = i1 & i4;
-        const word_type h1_3 = i3 | i4;
-        const word_type h1_4 = i1;
-        const word_type h1_5 = i2 & i6;
-        const word_type h1_6 = i3 ^ i5;
-        const word_type h1_7 = i1 ^ i3;
-    
-        // Hidden layer 2
-        const word_type h2_0 = h1_1;
-        const word_type h2_1 = h1_4 ^ h1_6;
-        const word_type h2_2 = h1_6 & h1_7;
-        const word_type h2_3 = h1_5;
-        const word_type h2_4 = h1_0 ^ h1_3;
-        const word_type h2_5 = h1_0 & h1_2;
-    
-        // Hidden layer 3
-        const word_type h3_0 = h2_3 | h2_5;
-        const word_type h3_1 = h2_0 | h2_1;
-        const word_type h3_2 = h2_2 ^ h2_4;
-    
-        // Hidden layer 4
-        const word_type h4_0 = h3_0 ^ h3_2;
-        const word_type h4_1 = h3_1 & h3_2;
-    
-        // Output layer
-        const word_type o1 = h4_0 & h4_1;
+        // .model spec
+        // .inputs 1 2 3 4 5 6 7
+        // .outputs 8
+        // .names 1 3 5 22
+        // 010 1
+        // 101 1
+        // .names 3 4 22 11
+        // 001 1
+        // 010 1
+        // 100 1
+        // 110 1
+        // 111 1
+        // .names 2 6 11 12
+        // 001 1
+        // 010 1
+        // 100 1
+        // .names 1 4 7 21
+        // 001 1
+        // 011 1
+        // 100 1
+        // 110 1
+        // 111 1
+        // .names 3 5 21 9
+        // 010 1
+        // 011 1
+        // 100 1
+        // 101 1
+        // .names 1 21 9 10
+        // 001 1
+        // 010 1
+        // 011 1
+        // 100 1
+        // 101 1
+        // 110 1
+        // .names 10 12 23
+        // 11 1
+        // .names 23 8
+        // 1 1
+        // .end
 
-        return o1;
+        
+        
+        if constexpr (BITS == 32) {
+            constexpr unsigned int ta = 0xF0;
+            constexpr unsigned int tb = 0xCC;
+            constexpr unsigned int tc = 0xAA;
+
+            // immLut has to be given as an immediate value
+
+            // gate_22
+            constexpr unsigned int immLut_22 = (~ta & tb & ~tc) | (ta & ~tb & tc);
+            word_type gate_22;
+            asm volatile (
+                "lop3.b32 %0, %1, %2, %3, 0x24;"
+                : "=r"(gate_22)
+                : "r"(i1), "r"(i3), "r"(i5)
+            );
+            static_assert(immLut_22 == 0x24u, "LUT mismatch");
+
+            // gate_11
+            constexpr unsigned int immLut_11 = (~ta & ~tb & tc) | (~ta & tb & ~tc) | (ta & tb & ~tc) | (ta & tb & tc);
+            word_type gate_11;
+            asm volatile (
+                "lop3.b32 %0, %1, %2, %3, 0xc6;"
+                : "=r"(gate_11)
+                : "r"(i3), "r"(i4), "r"(gate_22)
+            );
+            static_assert(immLut_11 == 0xc6u, "LUT mismatch");
+
+            // gate_12
+            constexpr unsigned int immLut_12 = (~ta & ~tb & tc) | (~ta & tb & ~tc) | (ta & ~tb & ~tc);
+            word_type gate_12;
+            asm volatile (
+                "lop3.b32 %0, %1, %2, %3, 0x16;"
+                : "=r"(gate_12)
+                : "r"(i2), "r"(i6), "r"(gate_11)
+            );
+            static_assert(immLut_12 == 0x16u, "LUT mismatch");
+
+            // gate_21
+            constexpr unsigned int immLut_21 = (~ta & ~tb & tc) | (~ta & tb & tc) | (ta & ~tb & ~tc) | (ta & tb & ~tc) | (ta & tb & tc);
+            word_type gate_21;
+            asm volatile (
+                "lop3.b32 %0, %1, %2, %3, 0xda;"
+                : "=r"(gate_21)
+                : "r"(i1), "r"(i4), "r"(i7)
+            );
+            static_assert(immLut_21 == 0xdau, "LUT mismatch");
+
+            // gate_9
+            constexpr unsigned int immLut_9 = (~ta & tb & ~tc) | (~ta & tb & tc) | (ta & ~tb & ~tc) | (ta & ~tb & tc);
+            word_type gate_9;
+            asm volatile (
+                "lop3.b32 %0, %1, %2, %3, 0x3c;"
+                : "=r"(gate_9)
+                : "r"(i3), "r"(i5), "r"(gate_21)
+            );
+            static_assert(immLut_9 == 0x3cu, "LUT mismatch");
+
+            // gate_10
+            constexpr unsigned int immLut_10 = (~ta & ~tb & tc) | (~ta & tb & ~tc) | (~ta & tb & tc) | (ta & ~tb & ~tc) | (ta & ~tb & tc) | (ta & tb & ~tc);
+            word_type gate_10;
+            asm volatile (
+                "lop3.b32 %0, %1, %2, %3, 0x7e;"
+                : "=r"(gate_10)
+                : "r"(i1), "r"(gate_21), "r"(gate_9)
+            );
+            static_assert(immLut_10 == 0x7eu, "LUT mismatch");
+
+            // gate_23
+            word_type gate_23 = gate_10 & gate_12;
+
+            // output
+            return gate_23;
+
+        } else {
+            // Hidden layer 1
+            const word_type h1_0 = i2 | i6;
+            const word_type h1_1 = i7;
+            const word_type h1_2 = i1 & i4;
+            const word_type h1_3 = i3 | i4;
+            const word_type h1_4 = i1;
+            const word_type h1_5 = i2 & i6;
+            const word_type h1_6 = i3 ^ i5;
+            const word_type h1_7 = i1 ^ i3;
+        
+            // Hidden layer 2
+            const word_type h2_0 = h1_1;
+            const word_type h2_1 = h1_4 ^ h1_6;
+            const word_type h2_2 = h1_6 & h1_7;
+            const word_type h2_3 = h1_5;
+            const word_type h2_4 = h1_0 ^ h1_3;
+            const word_type h2_5 = h1_0 & h1_2;
+        
+            // Hidden layer 3
+            const word_type h3_0 = h2_3 | h2_5;
+            const word_type h3_1 = h2_0 | h2_1;
+            const word_type h3_2 = h2_2 ^ h2_4;
+        
+            // Hidden layer 4
+            const word_type h4_0 = h3_0 ^ h3_2;
+            const word_type h4_1 = h3_1 & h3_2;
+        
+            // Output layer
+            const word_type o1 = h4_0 & h4_1;
+
+            return o1;
+        }
     }
 };
 

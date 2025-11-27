@@ -26,6 +26,7 @@ class ExperimentParams {
     std::size_t max_runtime_seconds = infrastructure::StopWatch::MAX_TIME;
 
     std::string base_grid_encoding = "char"; // char, int
+    std::string border_mode = "wrap_around";
 
     std::size_t warmup_rounds = 0;
     std::size_t measurement_rounds = 1;
