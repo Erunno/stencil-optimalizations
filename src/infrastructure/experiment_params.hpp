@@ -54,8 +54,6 @@ class ExperimentParams {
 
     std::size_t state_bits_count = 64;
 
-    std::string border_mode = "zeros";
-
     std::size_t thread_block_size;
 
     std::size_t warp_dims_x;
