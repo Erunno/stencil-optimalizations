@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -euo pipefail
+
 if [ ! -d build ] || [ ! -f build/Makefile ]; then
     bash configure.sh || exit 1
 fi
