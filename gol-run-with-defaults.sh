@@ -65,7 +65,7 @@ __16k_like=$(($__base_dim_size * 3)) # 20160
 
 # ALGORITHM="gol-cuda-naive-full-adder-tiles-64"
 # ALGORITHM="gol-cuda-temporal-simple-full-adder-64"
-# ALGORITHM="gol-cuda-simple-warp-ex-full-adder-rows-64"
+ALGORITHM="gol-cuda-simple-warp-ex-full-adder-rows-64"
 
 # ALGORITHM="gol-cpu-naive"
 # ALGORITHM="gol-cpu-bitwise-tiles-macro-64"
@@ -73,7 +73,7 @@ __16k_like=$(($__base_dim_size * 3)) # 20160
 # ALGORITHM="gol-cpu-bitwise-tiles-naive-64"
 
 # ALGORITHM="gol-cuda-naive-bitwise-cols-32"
-ALGORITHM="gol-cuda-simple-warp-ex-full-adder-rows-32"
+# ALGORITHM="gol-cuda-simple-warp-ex-full-adder-rows-32"
 
 # ALGORITHM="gol-cpu-bitwise-cols-macro-64"
 # ALGORITHM="gol-cpu-bitwise-cols-naive-64"
@@ -175,9 +175,9 @@ RANDOM_SEED="42"
 STATE_BITS_COUNT="64"
 # STATE_BITS_COUNT="32"
 
-THREAD_BLOCK_SIZE="1024"
+# THREAD_BLOCK_SIZE="1024"
 # THREAD_BLOCK_SIZE="512"
-# THREAD_BLOCK_SIZE="256"
+THREAD_BLOCK_SIZE="256"
 # THREAD_BLOCK_SIZE="128"
 # THREAD_BLOCK_SIZE="64"
 
