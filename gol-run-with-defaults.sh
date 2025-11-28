@@ -47,6 +47,7 @@ __16k_like=$(($__base_dim_size * 3)) # 20160
 # ALGORITHM="eff-sota-packed-32"
 # ALGORITHM="eff-sota-packed-64"
 
+# ALGORITHM="gol-fujita-32"
 # ALGORITHM="gol-fujita-64"
 
 # ALGORITHM="gol-cpu-bitwise-wrows-naive-64"
@@ -71,8 +72,8 @@ __16k_like=$(($__base_dim_size * 3)) # 20160
 # ALGORITHM="gol-cpu-bitwise-cols-naive-32"
 # ALGORITHM="gol-cpu-bitwise-tiles-naive-64"
 
-ALGORITHM="gol-cuda-naive-bitwise-cols-32"
-# ALGORITHM="gol-cuda-simple-warp-ex-full-adder-rows-32"
+# ALGORITHM="gol-cuda-naive-bitwise-cols-32"
+ALGORITHM="gol-cuda-simple-warp-ex-full-adder-rows-32"
 
 # ALGORITHM="gol-cpu-bitwise-cols-macro-64"
 # ALGORITHM="gol-cpu-bitwise-cols-naive-64"
@@ -98,19 +99,22 @@ ALGORITHM="gol-cuda-naive-bitwise-cols-32"
 # GRID_DIMENSIONS_Y=$((8 * 6))
 # GRID_DIMENSIONS_X=$(($__16k_like * 2))
 # GRID_DIMENSIONS_Y=$(($__16k_like * 2))
-GRID_DIMENSIONS_X=$((64 * 30 * 8 * 2 * 2))
+# GRID_DIMENSIONS_X=$((64 * 30 * 8 * 2 * 2))
 # GRID_DIMENSIONS_Y=$((128))
-GRID_DIMENSIONS_Y=$((140 * 64 * 2 * 2))
+# GRID_DIMENSIONS_Y=$((140 * 64 * 2 * 2))
+GRID_DIMENSIONS_X=$((15360))
+GRID_DIMENSIONS_Y=$((8192))
 # ITERATIONS=$((10 * 1024))
 # ITERATIONS=$((17 * 128))
-ITERATIONS=$((16 * 5 * 7 * 9))
-ITERATIONS=$((3 * 5 * 11 * 64 * 2))
+# ITERATIONS=$((16 * 5 * 7 * 9))
+# ITERATIONS=$((3 * 5 * 11 * 64 * 2))
 # ITERATIONS=$((115))
+ITERATIONS=$((100))
 
 BASE_GRID_ENCODING="char"
 # BASE_GRID_ENCODING="int"
 
-WARMUP_ROUNDS="2"
+WARMUP_ROUNDS="3"
 MEASUREMENT_ROUNDS="1"
 
 # DATA_LOADER_NAME="random-ones-zeros"
@@ -155,7 +159,7 @@ VALIDATE="true"
 # VALIDATE="false"
 # PRINT_VALIDATION_DIFF="false"
 PRINT_VALIDATION_DIFF="true"
-USE_CONTRACTED_DIFF="false"
+# USE_CONTRACTED_DIFF="false"
 USE_CONTRACTED_DIFF="true"
 # VALIDATION_ALGORITHM_NAME="gol-cpu-naive"
 # VALIDATION_ALGORITHM_NAME="gol-cuda-naive"
