@@ -106,7 +106,7 @@ struct WarpExchangeFullAdderOnRows {
             // gate_22
             constexpr unsigned int immLut_22 = (~ta & tb & ~tc) | (ta & ~tb & tc);
             word_type gate_22;
-            asm volatile (
+            asm (
                 "lop3.b32 %0, %1, %2, %3, 0x24;"
                 : "=r"(gate_22)
                 : "r"(i1), "r"(i3), "r"(i5)
@@ -114,19 +114,19 @@ struct WarpExchangeFullAdderOnRows {
             static_assert(immLut_22 == 0x24u, "LUT mismatch");
 
             // gate_11
-            constexpr unsigned int immLut_11 = (~ta & ~tb & tc) | (~ta & tb & ~tc) | (ta & tb & ~tc) | (ta & tb & tc);
+            constexpr unsigned int immLut_11 = (~ta & ~tb & tc) | (~ta & tb & ~tc) | (ta & ~tb & ~tc) | (ta & tb & ~tc) | (ta & tb & tc);
             word_type gate_11;
-            asm volatile (
-                "lop3.b32 %0, %1, %2, %3, 0xc6;"
+            asm (
+                "lop3.b32 %0, %1, %2, %3, 0xd6;"
                 : "=r"(gate_11)
                 : "r"(i3), "r"(i4), "r"(gate_22)
             );
-            static_assert(immLut_11 == 0xc6u, "LUT mismatch");
+            static_assert(immLut_11 == 0xd6u, "LUT mismatch");
 
             // gate_12
             constexpr unsigned int immLut_12 = (~ta & ~tb & tc) | (~ta & tb & ~tc) | (ta & ~tb & ~tc);
             word_type gate_12;
-            asm volatile (
+            asm (
                 "lop3.b32 %0, %1, %2, %3, 0x16;"
                 : "=r"(gate_12)
                 : "r"(i2), "r"(i6), "r"(gate_11)
@@ -136,7 +136,7 @@ struct WarpExchangeFullAdderOnRows {
             // gate_21
             constexpr unsigned int immLut_21 = (~ta & ~tb & tc) | (~ta & tb & tc) | (ta & ~tb & ~tc) | (ta & tb & ~tc) | (ta & tb & tc);
             word_type gate_21;
-            asm volatile (
+            asm (
                 "lop3.b32 %0, %1, %2, %3, 0xda;"
                 : "=r"(gate_21)
                 : "r"(i1), "r"(i4), "r"(i7)
@@ -146,7 +146,7 @@ struct WarpExchangeFullAdderOnRows {
             // gate_9
             constexpr unsigned int immLut_9 = (~ta & tb & ~tc) | (~ta & tb & tc) | (ta & ~tb & ~tc) | (ta & ~tb & tc);
             word_type gate_9;
-            asm volatile (
+            asm (
                 "lop3.b32 %0, %1, %2, %3, 0x3c;"
                 : "=r"(gate_9)
                 : "r"(i3), "r"(i5), "r"(gate_21)
@@ -156,7 +156,7 @@ struct WarpExchangeFullAdderOnRows {
             // gate_10
             constexpr unsigned int immLut_10 = (~ta & ~tb & tc) | (~ta & tb & ~tc) | (~ta & tb & tc) | (ta & ~tb & ~tc) | (ta & ~tb & tc) | (ta & tb & ~tc);
             word_type gate_10;
-            asm volatile (
+            asm (
                 "lop3.b32 %0, %1, %2, %3, 0x7e;"
                 : "=r"(gate_10)
                 : "r"(i1), "r"(gate_21), "r"(gate_9)
