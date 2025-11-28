@@ -16,10 +16,6 @@ using border_policy_independent = border_policies::border_policy_independent;
 
 namespace {
 
-__device__ __forceinline__ idx_t get_idx(idx_t x, idx_t y, idx_t x_size) {
-    return y * x_size + x;
-}
-
 template <typename border_policy, typename grid_cell_t>
 __global__ void game_of_live_kernel(NaiveGridOnCuda<grid_cell_t> data) {
     idx_t x = blockIdx.x * blockDim.x + threadIdx.x;
