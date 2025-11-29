@@ -69,14 +69,18 @@ struct WarpExchangeFullAdderOnRows {
         const word_type _1_center_only_neighbors = ct & cb;
 
         const word_type _0_center_full_column = _0_center_only_neighbors ^ cc;
+
+        // TODO: this one could use LOP3 as well
         const word_type _1_center_full_column = _1_center_only_neighbors | (_0_center_only_neighbors & cc);
 
+        // TODO: since the shuffle instructions synchronize, reordering them might change performance
         const word_type _0_right = shift_val_within_warp<ShiftDirection::LEFT>(_0_center_full_column);
         const word_type _1_right = shift_val_within_warp<ShiftDirection::LEFT>(_1_center_full_column);
 
         const word_type _0_left = shift_val_within_warp<ShiftDirection::RIGHT>(_0_center_full_column);
         const word_type _1_left = shift_val_within_warp<ShiftDirection::RIGHT>(_1_center_full_column);
 
+        // TODO: could use funnel shift here to reduce the number of operations
         const word_type _0_shifted_left = (_0_center_full_column << 1) | (_0_left >> (BITS - 1)); // 3 ops
         const word_type _1_shifted_left = (_1_center_full_column << 1) | (_1_left >> (BITS - 1)); // 3 ops
 
@@ -155,6 +159,10 @@ struct WarpExchangeFullAdderOnRows {
         if constexpr (BITS == 32) {
             return compute_32(i1, i2, i3, i4, i5, i6, i7);
         } else if constexpr (BITS == 64) {
+            // TODO: this is the most trivial way to extend to 64 bits
+            //   one, more elegant way, could be to do the whole computation in 32-bit batches (first extreme)
+            //   another way could be to break each 64-bit operation into two 32-bit operations separately (second extreme)
+            //   the most efficient way is one of the extremes or somewhere in between
             return compute_32(
                 static_cast<uint32_t>(i1),
                 static_cast<uint32_t>(i2),
